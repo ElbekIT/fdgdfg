@@ -836,12 +836,13 @@
   <script type="module">
     // Import Firebase functions
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-    import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    import { getDatabase, ref, push, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
     // Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyA_B0OC6Y91ontwJWM-o615jg7Dr5jUVvA",
       authDomain: "dizaynowner.firebaseapp.com",
+      databaseURL: "https://dizaynowner-default-rtdb.firebaseio.com/",
       projectId: "dizaynowner",
       storageBucket: "dizaynowner.firebasestorage.app",
       messagingSenderId: "976762018041",
@@ -851,7 +852,7 @@
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    const database = getDatabase(app);
 
     // Price mapping for website types
     const websitePrices = {
@@ -976,9 +977,12 @@
       submitBtn.innerHTML = '<span>⏳</span> Yuborilmoqda...';
 
       try {
-        // 1. Save to Firebase first
-        const docRef = await addDoc(collection(db, 'orders'), formData);
-        console.log('✅ Firebase\'ga saqlandi:', docRef.id);
+        console.log('🔥 Firebase Realtime Database ga saqlash boshlandi...');
+        
+        // 1. Save to Firebase Realtime Database
+        const ordersRef = ref(database, 'orders');
+        const newOrderRef = await push(ordersRef, formData);
+        console.log('✅ Firebase Realtime Database ga saqlandi:', newOrderRef.key);
 
         // 2. Send to Telegram Bot
         const price = websitePrices[formData.websiteType];
@@ -1009,9 +1013,11 @@ ${selectedFeatures.length > 0 ? selectedFeatures.map(f => `• ${f}`).join('\n')
 ${formData.requirements}
 
 📅 *Sana:* ${new Date().toLocaleString('uz-UZ')}
+🔑 *Firebase ID:* ${newOrderRef.key}
 
-🔗 *Owner Panel:* https://ownerweb.netlify.app/admin/owner.html
-⚠️ *Diqqat:* Yangi web dizayn buyurtmasi keldi! Iltimos owner panelga kirib tekshiring.`;
+⚠️ *Diqqat:* Yangi web dizayn buyurtmasi keldi! Mijoz bilan bog'laning.`;
+
+        console.log('📱 Telegram xabar yuborilmoqda...');
 
         const telegramResponse = await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendMessage`, {
           method: 'POST',
@@ -1025,61 +1031,35 @@ ${formData.requirements}
           })
         });
 
+        console.log('📱 Telegram response status:', telegramResponse.status);
         const telegramData = await telegramResponse.json();
+        console.log('📱 Telegram response data:', telegramData);
         
         if (telegramData.ok) {
           console.log('✅ Telegram botga yuborildi');
+          showMessage('✅ Web dizayn buyurtmangiz muvaffaqiyatli yuborildi! Firebase Realtime Database va Telegram botga saqlandi. 24-48 soat ichida siz bilan bog\'lanamiz.', 'success');
           
-          // 3. Send owner notification
-          const ownerNotification = `🚨 *OWNER OGOHLANTIRISHИ*
-
-📋 Yangi web dizayn buyurtmasi qabul qilindi!
-👤 Mijoz: ${formData.user}
-🏢 Kompaniya: ${formData.companyName}
-🎯 Tur: ${formData.websiteType}
-💰 Narx: ${priceText}
-
-🔗 *Tekshirish uchun:*
-https://ownerweb.netlify.app/admin/owner.html
-
-⏰ *Vaqt:* ${new Date().toLocaleString('uz-UZ')}
-📞 *Amal:* Mijoz bilan bog'laning va loyihani muhokama qiling!`;
-
-      await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendMessage`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          chat_id: '7833115003',
-          text: ownerNotification,
-          parse_mode: 'Markdown'
-        })
-      });
-
-      showMessage('✅ Web dizayn buyurtmangiz muvaffaqiyatli yuborildi! Firebase va Telegram botga saqlandi. 24-48 soat ichida siz bilan bog\'lanamiz.', 'success');
-      
-      // Reset form
-      document.getElementById('webDesignForm').reset();
-      document.getElementById('priceDisplay').classList.remove('show');
-      document.querySelectorAll('.checkbox-item').forEach(item => {
-        item.classList.remove('selected');
-      });
-      document.querySelectorAll('.radio-item').forEach(item => {
-        item.classList.remove('selected');
-      });
-    } else {
-      throw new Error('Telegram bot xatosi: ' + JSON.stringify(telegramData));
-    }
-  } catch (error) {
-    console.error('❌ Xatolik:', error);
-    showMessage('❌ Xatolik yuz berdi! Firebase yoki Telegram botda muammo. Iltimos, qayta urinib ko\'ring.', 'error');
-  } finally {
-    // Reset button state
-    submitBtn.classList.remove('loading');
-    submitBtn.innerHTML = '<span>🚀</span> Web Dizayn Buyurtmasi Berish';
-  }
-});
+          // Reset form
+          document.getElementById('webDesignForm').reset();
+          document.getElementById('priceDisplay').classList.remove('show');
+          document.querySelectorAll('.checkbox-item').forEach(item => {
+            item.classList.remove('selected');
+          });
+          document.querySelectorAll('.radio-item').forEach(item => {
+            item.classList.remove('selected');
+          });
+        } else {
+          throw new Error('Telegram bot xatosi: ' + JSON.stringify(telegramData));
+        }
+      } catch (error) {
+        console.error('❌ Xatolik:', error);
+        showMessage('❌ Xatolik yuz berdi! Xatolik: ' + error.message, 'error');
+      } finally {
+        // Reset button state
+        submitBtn.classList.remove('loading');
+        submitBtn.innerHTML = '<span>🚀</span> Web Dizayn Buyurtmasi Berish';
+      }
+    });
 
     // Helper function to show status messages
     function showMessage(message, type = 'success') {
@@ -1091,7 +1071,7 @@ https://ownerweb.netlify.app/admin/owner.html
       setTimeout(() => {
         messageDiv.style.display = 'none';
         messageDiv.classList.remove(type);
-      }, 5000);
+      }, 8000);
     }
 
     // Delete account functionality
@@ -1102,6 +1082,29 @@ https://ownerweb.netlify.app/admin/owner.html
         alert('Akkauntingiz muvaffaqiyatli o\'chirildi!');
         window.location.href = 'register.html';
       }
+    });
+
+    // Make functions global for HTML onclick events
+    window.showMessage = showMessage;
+  </script>
+
+  <script>
+    // Security functions
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', function(e) {
+      if (
+        (e.ctrlKey && ['u', 's', 'p', 'c'].includes(e.key.toLowerCase())) ||
+        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') ||
+        e.key === 'F12'
+      ) {
+        e.preventDefault();
+        alert("Bu amal bloklangan!");
+      }
+    });
+    document.addEventListener('selectstart', e => e.preventDefault());
+    document.addEventListener('copy', e => {
+      e.preventDefault();
+      alert("Nusxa olish mumkin emas!");
     });
   </script>
 </body>

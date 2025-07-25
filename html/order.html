@@ -700,12 +700,13 @@
   <script type="module">
     // Import Firebase functions
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-    import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    import { getDatabase, ref, push, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
     // Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyA_B0OC6Y91ontwJWM-o615jg7Dr5jUVvA",
       authDomain: "dizaynowner.firebaseapp.com",
+      databaseURL: "https://dizaynowner-default-rtdb.firebaseio.com/",
       projectId: "dizaynowner",
       storageBucket: "dizaynowner.firebasestorage.app",
       messagingSenderId: "976762018041",
@@ -715,7 +716,7 @@
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    const database = getDatabase(app);
 
     // Price mapping
     const priceMap = {
@@ -820,9 +821,12 @@
       submitBtn.innerHTML = '<span>⏳</span> Yuborilmoqda...';
 
       try {
-        // 1. Save to Firebase first
-        const docRef = await addDoc(collection(db, 'orders'), formData);
-        console.log('✅ Firebase\'ga saqlandi:', docRef.id);
+        console.log('🔥 Firebase Realtime Database ga saqlash boshlandi...');
+        
+        // 1. Save to Firebase Realtime Database
+        const ordersRef = ref(database, 'orders');
+        const newOrderRef = await push(ordersRef, formData);
+        console.log('✅ Firebase Realtime Database ga saqlandi:', newOrderRef.key);
 
         // 2. Send to Telegram Bot
         const price = priceMap[formData.designType];
@@ -844,9 +848,11 @@
 ${formData.comment}
 
 📅 *Sana:* ${new Date().toLocaleString('uz-UZ')}
+🔑 *Firebase ID:* ${newOrderRef.key}
 
-🔗 *Owner Panel:* https://ownerweb.netlify.app/admin/owner.html
-⚠️ *Diqqat:* Yangi buyurtma keldi! Iltimos owner panelga kirib tekshiring va mijoz bilan bog'laning.`;
+⚠️ *Diqqat:* Yangi buyurtma keldi! Mijoz bilan bog'laning.`;
+
+        console.log('📱 Telegram xabar yuborilmoqda...');
 
         const telegramResponse = await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendMessage`, {
           method: 'POST',
@@ -860,38 +866,13 @@ ${formData.comment}
           })
         });
 
+        console.log('📱 Telegram response status:', telegramResponse.status);
         const telegramData = await telegramResponse.json();
+        console.log('📱 Telegram response data:', telegramData);
         
         if (telegramData.ok) {
           console.log('✅ Telegram botga yuborildi');
-          
-          // 3. Send owner notification
-          const ownerNotification = `🚨 *OWNER OGOHLANTIRISHИ*
-
-📋 Yangi buyurtma qabul qilindi!
-👤 Mijoz: ${formData.user}
-🎯 Tur: Gaming Dizayn (${formData.designType})
-💰 Narx: ${price.toLocaleString()} so'm
-
-🔗 *Tekshirish uchun:*
-https://ownerweb.netlify.app/admin/owner.html
-
-⏰ *Vaqt:* ${new Date().toLocaleString('uz-UZ')}
-📞 *Amal:* Mijoz bilan bog'laning va buyurtmani tasdiqlang!`;
-
-          await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendMessage`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              chat_id: '7833115003',
-              text: ownerNotification,
-              parse_mode: 'Markdown'
-            })
-          });
-
-          showMessage('✅ Buyurtmangiz muvaffaqiyatli yuborildi! Firebase va Telegram botga saqlandi. Tez orada siz bilan bog\'lanamiz.', 'success');
+          showMessage('✅ Buyurtmangiz muvaffaqiyatli yuborildi! Firebase Realtime Database va Telegram botga saqlandi. Tez orada siz bilan bog\'lanamiz.', 'success');
           
           // Reset form
           document.getElementById('orderForm').reset();
@@ -904,7 +885,7 @@ https://ownerweb.netlify.app/admin/owner.html
         }
       } catch (error) {
         console.error('❌ Xatolik:', error);
-        showMessage('❌ Xatolik yuz berdi! Firebase yoki Telegram botda muammo. Iltimos, qayta urinib ko\'ring.', 'error');
+        showMessage('❌ Xatolik yuz berdi! Xatolik: ' + error.message, 'error');
       } finally {
         // Reset button state
         submitBtn.classList.remove('loading');
@@ -955,8 +936,11 @@ https://ownerweb.netlify.app/admin/owner.html
 
       setTimeout(() => {
         messageEl.style.display = 'none';
-      }, 5000);
+      }, 8000);
     }
+
+    // Make functions global for HTML onclick events
+    window.showMessage = showMessage;
   </script>
 
   <script>

@@ -428,12 +428,13 @@
   <script type="module">
     // Import Firebase functions
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-    import { getFirestore, collection, query, where, orderBy, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    import { getDatabase, ref, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
     // Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyA_B0OC6Y91ontwJWM-o615jg7Dr5jUVvA",
       authDomain: "dizaynowner.firebaseapp.com",
+      databaseURL: "https://dizaynowner-default-rtdb.firebaseio.com/",
       projectId: "dizaynowner",
       storageBucket: "dizaynowner.firebasestorage.app",
       messagingSenderId: "976762018041",
@@ -443,7 +444,7 @@
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    const database = getDatabase(app);
 
     // Check authentication
     const user = localStorage.getItem('user');
@@ -455,24 +456,46 @@
       loadUserOrders();
     }
 
-    // Load user orders
+    // Load user orders from Firebase Realtime Database
     function loadUserOrders() {
       const loadingState = document.getElementById('loadingState');
       const ordersGrid = document.getElementById('ordersGrid');
       const emptyState = document.getElementById('emptyState');
 
-      // Query orders for current user
-      const q = query(
-        collection(db, 'orders'),
-        where('user', '==', user),
-        orderBy('createdAt', 'desc')
-      );
+      console.log('🔥 Firebase dan foydalanuvchi buyurtmalari yuklanmoqda...', user);
 
-      // Listen for real-time updates
-      onSnapshot(q, (querySnapshot) => {
+      // Listen for real-time updates from Firebase for current user
+      const ordersRef = ref(database, 'orders');
+      onValue(ordersRef, (snapshot) => {
         loadingState.style.display = 'none';
         
-        if (querySnapshot.empty) {
+        const userOrders = [];
+        
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          
+          // Filter orders for current user
+          Object.keys(data).forEach(key => {
+            const order = data[key];
+            if (order.user === user) {
+              order.id = key; // Add Firebase key as ID
+              userOrders.push(order);
+            }
+          });
+
+          // Sort by creation date (newest first)
+          userOrders.sort((a, b) => {
+            const dateA = a.createdAt ? new Date(a.createdAt) : new Date(0);
+            const dateB = b.createdAt ? new Date(b.createdAt) : new Date(0);
+            return dateB - dateA;
+          });
+
+          console.log('✅ Foydalanuvchi buyurtmalari yuklandi:', userOrders.length, 'ta');
+        } else {
+          console.log('📦 Firebase da buyurtmalar yo\'q');
+        }
+        
+        if (userOrders.length === 0) {
           emptyState.style.display = 'block';
           ordersGrid.style.display = 'none';
         } else {
@@ -483,17 +506,17 @@
           ordersGrid.innerHTML = '';
           
           // Add each order
-          querySnapshot.forEach((doc) => {
-            const order = doc.data();
+          userOrders.forEach((order) => {
             const orderCard = createOrderCard(order);
             ordersGrid.appendChild(orderCard);
           });
         }
       }, (error) => {
-        console.error('Error loading orders:', error);
+        console.error('❌ Firebase xatosi:', error);
         loadingState.innerHTML = `
           <div style="color: var(--error);">
-            <p>❌ Xatolik yuz berdi!</p>
+            <p>❌ Firebase bilan bog'lanishda xatolik!</p>
+            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Xatolik: ${error.message}</p>
             <button onclick="location.reload()" class="btn btn-secondary" style="margin-top: 1rem;">
               🔄 Qayta yuklash
             </button>
@@ -507,9 +530,30 @@
       const card = document.createElement('div');
       card.className = 'order-card';
       
-      const statusClass = getStatusClass(order.status);
-      const statusText = getStatusText(order.status);
+      const statusClass = getStatusClass(order.status || 'pending');
+      const statusText = getStatusText(order.status || 'pending');
       const orderIcon = getOrderIcon(order.type);
+      
+      // Format date
+      let formattedDate = 'N/A';
+      if (order.createdAt) {
+        try {
+          const date = new Date(order.createdAt);
+          formattedDate = date.toLocaleString('uz-UZ');
+        } catch (e) {
+          formattedDate = 'N/A';
+        }
+      }
+
+      // Format price
+      let formattedPrice = 'N/A';
+      if (order.price) {
+        if (typeof order.price === 'number') {
+          formattedPrice = `💰 ${order.price.toLocaleString()} so'm`;
+        } else {
+          formattedPrice = `💰 ${order.price}`;
+        }
+      }
       
       card.innerHTML = `
         <div class="order-header">
@@ -544,22 +588,26 @@
           `}
           <div class="detail-item">
             <span class="detail-label">📧 Email:</span>
-            <span class="detail-value">${order.email}</span>
+            <span class="detail-value">${order.email || 'N/A'}</span>
           </div>
           <div class="detail-item">
             <span class="detail-label">📱 Telefon:</span>
-            <span class="detail-value">${order.phone}</span>
+            <span class="detail-value">${order.phone || 'N/A'}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">🔑 ID:</span>
+            <span class="detail-value" style="font-size: 0.8rem; font-family: monospace;">${order.id}</span>
           </div>
         </div>
         
         ${order.price ? `
           <div class="order-price">
-            💰 ${typeof order.price === 'number' ? order.price.toLocaleString() + ' so\'m' : order.price}
+            ${formattedPrice}
           </div>
         ` : ''}
         
         <div class="order-date">
-          📅 ${order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleString('uz-UZ') : 'N/A'}
+          📅 ${formattedDate}
         </div>
       `;
       

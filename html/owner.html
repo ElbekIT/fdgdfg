@@ -38,6 +38,125 @@
       min-height: 100vh;
     }
 
+    /* Login Screen */
+    .login-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 2rem;
+      padding: 3rem;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: var(--shadow-hover);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+      animation: slideUp 0.8s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      border: 4px solid var(--primary);
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+    }
+
+    .login-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .login-subtitle {
+      color: var(--gray);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .login-form {
+      margin-bottom: 2rem;
+    }
+
+    .login-input {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 1rem;
+      font-size: 1rem;
+      background: var(--white);
+      color: var(--dark);
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      margin-bottom: 1rem;
+    }
+
+    .login-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: var(--gradient);
+      color: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .login-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .login-error {
+      color: var(--error);
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      display: none;
+    }
+
     /* Header */
     .header {
       background: var(--white);
@@ -91,6 +210,24 @@
       color: var(--white);
       font-weight: 600;
       box-shadow: var(--shadow);
+    }
+
+    .logout-btn {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--error);
+      border: 2px solid rgba(239, 68, 68, 0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 0.75rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-left: 1rem;
+    }
+
+    .logout-btn:hover {
+      background: var(--error);
+      color: var(--white);
     }
 
     /* Main Content */
@@ -468,112 +605,160 @@
         margin: 1rem;
         width: calc(100% - 2rem);
       }
+
+      .login-container {
+        margin: 1rem;
+        width: calc(100% - 2rem);
+        padding: 2rem;
+      }
     }
 
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
+
+    /* Hidden class */
+    .hidden {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <div class="header-content">
-      <div class="logo-section">
-        <img src="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Logo" class="logo">
-        <div class="brand-name">Elbek Design Studio</div>
-      </div>
-      <div class="owner-badge">
-        <span>👑</span>
-        <span>Owner Panel</span>
-      </div>
-    </div>
-  </header>
-
-  <!-- Main Content -->
-  <main class="main">
-    <h1 class="page-title">👑 Owner Dashboard</h1>
-    <p class="page-subtitle">Barcha buyurtmalarni boshqaring va statuslarini yangilang</p>
-
-    <!-- Stats Grid -->
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-icon">📊</div>
-        <div class="stat-number" id="totalOrders">0</div>
-        <div class="stat-label">Jami buyurtmalar</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon">⏳</div>
-        <div class="stat-number" id="pendingOrders">0</div>
-        <div class="stat-label">Kutilayotgan</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon">✅</div>
-        <div class="stat-number" id="approvedOrders">0</div>
-        <div class="stat-label">Tasdiqlangan</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon">🎉</div>
-        <div class="stat-number" id="completedOrders">0</div>
-        <div class="stat-label">Tayyor</div>
+  <!-- Login Screen -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-container">
+      <img src="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Logo" class="login-logo">
+      <h1 class="login-title">
+        <span class="gradient-text">Owner Panel</span>
+      </h1>
+      <p class="login-subtitle">Tizimga kirish uchun parolni kiriting</p>
+      
+      <form class="login-form" id="loginForm">
+        <input 
+          type="password" 
+          id="passwordInput" 
+          class="login-input" 
+          placeholder="🔐 Owner paroli" 
+          required
+          autocomplete="current-password"
+        >
+        <button type="submit" class="login-btn">
+          🔓 Tizimga kirish
+        </button>
+      </form>
+      
+      <div class="login-error" id="loginError">
+        ❌ Noto'g'ri parol! Qayta urinib ko'ring.
       </div>
     </div>
+  </div>
 
-    <!-- Filters -->
-    <div class="filters">
-      <div class="filter-group">
-        <label>📋 Status:</label>
-        <select id="statusFilter" class="filter-select">
-          <option value="">Barchasi</option>
-          <option value="pending">Kutilayotgan</option>
-          <option value="approved">Tasdiqlangan</option>
-          <option value="completed">Tayyor</option>
-        </select>
+  <!-- Main Dashboard -->
+  <div id="dashboard" class="hidden">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <div class="logo-section">
+          <img src="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Logo" class="logo">
+          <div class="brand-name">Elbek Design Studio</div>
+        </div>
+        <div style="display: flex; align-items: center;">
+          <div class="owner-badge">
+            <span>👑</span>
+            <span>Owner Panel</span>
+          </div>
+          <button class="logout-btn" onclick="logout()">
+            🚪 Chiqish
+          </button>
+        </div>
       </div>
-      <div class="filter-group">
-        <label>🎯 Tur:</label>
-        <select id="typeFilter" class="filter-select">
-          <option value="">Barchasi</option>
-          <option value="gaming">Gaming Dizayn</option>
-          <option value="web">Web Dizayn</option>
-        </select>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+      <h1 class="page-title">👑 Owner Dashboard</h1>
+      <p class="page-subtitle">Barcha buyurtmalarni boshqaring va statuslarini yangilang</p>
+
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-number" id="totalOrders">0</div>
+          <div class="stat-label">Jami buyurtmalar</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⏳</div>
+          <div class="stat-number" id="pendingOrders">0</div>
+          <div class="stat-label">Kutilayotgan</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-number" id="approvedOrders">0</div>
+          <div class="stat-label">Tasdiqlangan</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🎉</div>
+          <div class="stat-number" id="completedOrders">0</div>
+          <div class="stat-label">Tayyor</div>
+        </div>
       </div>
-    </div>
 
-    <!-- Loading State -->
-    <div id="loadingState" class="loading">
-      <div class="loading-spinner"></div>
-      <p>Buyurtmalar yuklanmoqda...</p>
-    </div>
+      <!-- Filters -->
+      <div class="filters">
+        <div class="filter-group">
+          <label>📋 Status:</label>
+          <select id="statusFilter" class="filter-select">
+            <option value="">Barchasi</option>
+            <option value="pending">Kutilayotgan</option>
+            <option value="approved">Tasdiqlangan</option>
+            <option value="completed">Tayyor</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>🎯 Tur:</label>
+          <select id="typeFilter" class="filter-select">
+            <option value="">Barchasi</option>
+            <option value="gaming">Gaming Dizayn</option>
+            <option value="web">Web Dizayn</option>
+          </select>
+        </div>
+      </div>
 
-    <!-- Orders Container -->
-    <div id="ordersContainer" class="orders-container" style="display: none;">
-      <table class="orders-table">
-        <thead>
-          <tr>
-            <th>👤 Foydalanuvchi</th>
-            <th>📧 Email</th>
-            <th>📱 Telefon</th>
-            <th>🎯 Tur</th>
-            <th>💰 Narx</th>
-            <th>📅 Sana</th>
-            <th>📊 Status</th>
-            <th>⚙️ Amallar</th>
-          </tr>
-        </thead>
-        <tbody id="ordersTableBody">
-        </tbody>
-      </table>
-    </div>
+      <!-- Loading State -->
+      <div id="loadingState" class="loading">
+        <div class="loading-spinner"></div>
+        <p>Buyurtmalar yuklanmoqda...</p>
+      </div>
 
-    <!-- Empty State -->
-    <div id="emptyState" class="empty-state" style="display: none;">
-      <div class="empty-icon">📦</div>
-      <h3>Hali buyurtmalar yo'q</h3>
-      <p>Buyurtmalar kelganda bu yerda ko'rinadi</p>
-    </div>
-  </main>
+      <!-- Orders Container -->
+      <div id="ordersContainer" class="orders-container" style="display: none;">
+        <table class="orders-table">
+          <thead>
+            <tr>
+              <th>👤 Foydalanuvchi</th>
+              <th>📧 Email</th>
+              <th>📱 Telefon</th>
+              <th>🎯 Tur</th>
+              <th>💰 Narx</th>
+              <th>📅 Sana</th>
+              <th>📊 Status</th>
+              <th>⚙️ Amallar</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTableBody">
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="empty-state" style="display: none;">
+        <div class="empty-icon">📦</div>
+        <h3>Hali buyurtmalar yo'q</h3>
+        <p>Buyurtmalar kelganda bu yerda ko'rinadi</p>
+      </div>
+    </main>
+  </div>
 
   <!-- Order Details Modal -->
   <div class="modal-overlay" id="orderModal">
@@ -590,12 +775,13 @@
   <script type="module">
     // Import Firebase functions
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-    import { getFirestore, collection, onSnapshot, doc, updateDoc, deleteDoc, orderBy, query } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    import { getDatabase, ref, onValue, update, remove, orderByChild, query } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
     // Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyA_B0OC6Y91ontwJWM-o615jg7Dr5jUVvA",
       authDomain: "dizaynowner.firebaseapp.com",
+      databaseURL: "https://dizaynowner-default-rtdb.firebaseio.com/",
       projectId: "dizaynowner",
       storageBucket: "dizaynowner.firebasestorage.app",
       messagingSenderId: "976762018041",
@@ -605,28 +791,93 @@
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    const database = getDatabase(app);
+
+    // Owner password (in real app, this should be more secure)
+    const OWNER_PASSWORD = "elbek2025admin";
 
     let allOrders = [];
     let filteredOrders = [];
+    let isAuthenticated = false;
 
-    // Load all orders
+    // Check if already authenticated
+    if (sessionStorage.getItem('ownerAuth') === 'true') {
+      showDashboard();
+    }
+
+    // Login form handler
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const password = document.getElementById('passwordInput').value;
+      
+      if (password === OWNER_PASSWORD) {
+        sessionStorage.setItem('ownerAuth', 'true');
+        showDashboard();
+      } else {
+        document.getElementById('loginError').style.display = 'block';
+        document.getElementById('passwordInput').value = '';
+        
+        // Hide error after 3 seconds
+        setTimeout(() => {
+          document.getElementById('loginError').style.display = 'none';
+        }, 3000);
+      }
+    });
+
+    // Show dashboard
+    function showDashboard() {
+      isAuthenticated = true;
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('dashboard').classList.remove('hidden');
+      loadOrders();
+    }
+
+    // Logout function
+    window.logout = function() {
+      if (confirm('Haqiqatan ham tizimdan chiqishni xohlaysizmi?')) {
+        sessionStorage.removeItem('ownerAuth');
+        location.reload();
+      }
+    };
+
+    // Load all orders from Firebase Realtime Database
     function loadOrders() {
+      if (!isAuthenticated) return;
+
       const loadingState = document.getElementById('loadingState');
       const ordersContainer = document.getElementById('ordersContainer');
       const emptyState = document.getElementById('emptyState');
 
-      // Query all orders
-      const q = query(collection(db, 'orders'), orderBy('createdAt', 'desc'));
+      console.log('🔥 Firebase Realtime Database dan ma\'lumotlar yuklanmoqda...');
 
-      // Listen for real-time updates
-      onSnapshot(q, (querySnapshot) => {
+      // Listen for real-time updates from Firebase
+      const ordersRef = ref(database, 'orders');
+      onValue(ordersRef, (snapshot) => {
         loadingState.style.display = 'none';
         
         allOrders = [];
-        querySnapshot.forEach((doc) => {
-          allOrders.push({ id: doc.id, ...doc.data() });
-        });
+        
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          
+          // Convert Firebase object to array
+          Object.keys(data).forEach(key => {
+            const order = data[key];
+            order.id = key; // Add Firebase key as ID
+            allOrders.push(order);
+          });
+
+          // Sort by creation date (newest first)
+          allOrders.sort((a, b) => {
+            const dateA = a.createdAt ? new Date(a.createdAt) : new Date(0);
+            const dateB = b.createdAt ? new Date(b.createdAt) : new Date(0);
+            return dateB - dateA;
+          });
+
+          console.log('✅ Firebase dan yuklandi:', allOrders.length, 'ta buyurtma');
+        } else {
+          console.log('📦 Firebase da buyurtmalar yo\'q');
+        }
 
         updateStats();
         applyFilters();
@@ -639,11 +890,12 @@
           ordersContainer.style.display = 'block';
         }
       }, (error) => {
-        console.error('Error loading orders:', error);
+        console.error('❌ Firebase xatosi:', error);
         loadingState.innerHTML = `
           <div style="color: var(--error);">
-            <p>❌ Xatolik yuz berdi!</p>
-            <button onclick="location.reload()" class="btn-small" style="margin-top: 1rem;">
+            <p>❌ Firebase bilan bog'lanishda xatolik!</p>
+            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Xatolik: ${error.message}</p>
+            <button onclick="location.reload()" class="btn-small" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: var(--primary); color: white; border: none; border-radius: 0.5rem; cursor: pointer;">
               🔄 Qayta yuklash
             </button>
           </div>
@@ -685,24 +937,42 @@
 
       filteredOrders.forEach(order => {
         const row = document.createElement('tr');
+        
+        // Format date
+        let formattedDate = 'N/A';
+        if (order.createdAt) {
+          try {
+            const date = new Date(order.createdAt);
+            formattedDate = date.toLocaleDateString('uz-UZ');
+          } catch (e) {
+            formattedDate = 'N/A';
+          }
+        }
+
+        // Format price
+        let formattedPrice = 'N/A';
+        if (order.price) {
+          if (typeof order.price === 'number') {
+            formattedPrice = order.price.toLocaleString() + ' so\'m';
+          } else {
+            formattedPrice = order.price;
+          }
+        }
+
         row.innerHTML = `
-          <td class="order-user">${order.user}</td>
-          <td>${order.email}</td>
-          <td>${order.phone}</td>
+          <td class="order-user">${order.user || 'N/A'}</td>
+          <td>${order.email || 'N/A'}</td>
+          <td>${order.phone || 'N/A'}</td>
           <td>
             <span class="order-type-badge ${order.type === 'gaming' ? 'type-gaming' : 'type-web'}">
               ${order.type === 'gaming' ? '🎮 Gaming' : '🌐 Web'}
             </span>
           </td>
-          <td class="order-price">
-            ${order.price ? (typeof order.price === 'number' ? order.price.toLocaleString() + ' so\'m' : order.price) : 'N/A'}
-          </td>
-          <td class="order-date">
-            ${order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleDateString('uz-UZ') : 'N/A'}
-          </td>
+          <td class="order-price">${formattedPrice}</td>
+          <td class="order-date">${formattedDate}</td>
           <td>
-            <select class="status-select status-${order.status}" onchange="updateOrderStatus('${order.id}', this.value)">
-              <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>⏳ Kutilayotgan</option>
+            <select class="status-select status-${order.status || 'pending'}" onchange="updateOrderStatus('${order.id}', this.value)">
+              <option value="pending" ${(order.status || 'pending') === 'pending' ? 'selected' : ''}>⏳ Kutilayotgan</option>
               <option value="approved" ${order.status === 'approved' ? 'selected' : ''}>✅ Tasdiqlangan</option>
               <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>🎉 Tayyor</option>
             </select>
@@ -716,24 +986,31 @@
       });
     }
 
-    // Update order status
+    // Update order status in Firebase
     window.updateOrderStatus = async function(orderId, newStatus) {
+      if (!isAuthenticated) return;
+      
       try {
-        await updateDoc(doc(db, 'orders', orderId), {
+        console.log('🔄 Status yangilanmoqda:', orderId, '->', newStatus);
+        
+        const orderRef = ref(database, `orders/${orderId}`);
+        await update(orderRef, {
           status: newStatus,
-          updatedAt: new Date()
+          updatedAt: new Date().toISOString()
         });
         
-        // Show success message
+        console.log('✅ Status yangilandi');
         showNotification(`✅ Status yangilandi: ${getStatusText(newStatus)}`, 'success');
       } catch (error) {
-        console.error('Error updating status:', error);
-        showNotification('❌ Status yangilanmadi!', 'error');
+        console.error('❌ Status yangilanmadi:', error);
+        showNotification('❌ Status yangilanmadi! Xatolik: ' + error.message, 'error');
       }
     };
 
     // View order details
     window.viewOrder = function(orderId) {
+      if (!isAuthenticated) return;
+      
       const order = allOrders.find(o => o.id === orderId);
       if (!order) return;
 
@@ -741,9 +1018,9 @@
       modalContent.innerHTML = `
         <div class="modal-section">
           <h4>👤 Mijoz ma'lumotlari</h4>
-          <p><strong>Ism:</strong> ${order.user}</p>
-          <p><strong>Email:</strong> ${order.email}</p>
-          <p><strong>Telefon:</strong> ${order.phone}</p>
+          <p><strong>Ism:</strong> ${order.user || 'N/A'}</p>
+          <p><strong>Email:</strong> ${order.email || 'N/A'}</p>
+          <p><strong>Telefon:</strong> ${order.phone || 'N/A'}</p>
           <p><strong>Telegram:</strong> ${order.telegram || 'Berilmagan'}</p>
           ${order.gender ? `<p><strong>Jinsi:</strong> ${order.gender}</p>` : ''}
           ${order.age ? `<p><strong>Yosh:</strong> ${order.age}</p>` : ''}
@@ -762,7 +1039,7 @@
             <p><strong>Domen:</strong> ${order.domainName || 'Berilmagan'}</p>
           `}
           <p><strong>Narx:</strong> ${order.price ? (typeof order.price === 'number' ? order.price.toLocaleString() + ' so\'m' : order.price) : 'N/A'}</p>
-          <p><strong>Status:</strong> ${getStatusText(order.status)}</p>
+          <p><strong>Status:</strong> ${getStatusText(order.status || 'pending')}</p>
         </div>
 
         <div class="modal-section">
@@ -773,30 +1050,39 @@
           </p>
           ${order.colors ? `<p><strong>Ranglar:</strong> ${order.colors}</p>` : ''}
           ${order.designStyle ? `<p><strong>Dizayn uslubi:</strong> ${order.designStyle}</p>` : ''}
+          ${order.features && order.features.length > 0 ? `<p><strong>Funksiyalar:</strong> ${order.features.join(', ')}</p>` : ''}
         </div>
 
         <div class="modal-section">
           <h4>📅 Vaqt ma'lumotlari</h4>
-          <p><strong>Yaratilgan:</strong> ${order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleString('uz-UZ') : 'N/A'}</p>
-          <p><strong>Yangilangan:</strong> ${order.updatedAt ? new Date(order.updatedAt.seconds * 1000).toLocaleString('uz-UZ') : 'N/A'}</p>
+          <p><strong>Yaratilgan:</strong> ${order.createdAt ? new Date(order.createdAt).toLocaleString('uz-UZ') : 'N/A'}</p>
+          <p><strong>Yangilangan:</strong> ${order.updatedAt ? new Date(order.updatedAt).toLocaleString('uz-UZ') : 'N/A'}</p>
+          <p><strong>Firebase ID:</strong> ${order.id}</p>
         </div>
       `;
 
       document.getElementById('orderModal').style.display = 'flex';
     };
 
-    // Delete order
+    // Delete order from Firebase
     window.deleteOrder = async function(orderId) {
+      if (!isAuthenticated) return;
+      
       if (!confirm('❌ Haqiqatan ham bu buyurtmani o\'chirishni xohlaysizmi?')) {
         return;
       }
 
       try {
-        await deleteDoc(doc(db, 'orders', orderId));
+        console.log('🗑️ Buyurtma o\'chirilmoqda:', orderId);
+        
+        const orderRef = ref(database, `orders/${orderId}`);
+        await remove(orderRef);
+        
+        console.log('✅ Buyurtma o\'chirildi');
         showNotification('✅ Buyurtma o\'chirildi!', 'success');
       } catch (error) {
-        console.error('Error deleting order:', error);
-        showNotification('❌ Buyurtma o\'chirilmadi!', 'error');
+        console.error('❌ Buyurtma o\'chirilmadi:', error);
+        showNotification('❌ Buyurtma o\'chirilmadi! Xatolik: ' + error.message, 'error');
       }
     };
 
@@ -849,8 +1135,12 @@
       }
     });
 
-    // Initialize
-    loadOrders();
+    // Security: Clear auth on page unload
+    window.addEventListener('beforeunload', function() {
+      if (!confirm('Sahifani yopishni xohlaysizmi?')) {
+        sessionStorage.removeItem('ownerAuth');
+      }
+    });
   </script>
 
   <style>
