@@ -976,14 +976,15 @@
       submitBtn.innerHTML = '<span>⏳</span> Yuborilmoqda...';
 
       try {
-        // Save to Firebase
-        await addDoc(collection(db, 'orders'), formData);
+        // 1. Save to Firebase first
+        const docRef = await addDoc(collection(db, 'orders'), formData);
+        console.log('✅ Firebase\'ga saqlandi:', docRef.id);
 
-        // Send to Telegram
+        // 2. Send to Telegram Bot
         const price = websitePrices[formData.websiteType];
         const priceText = typeof price === 'number' ? `${price.toLocaleString()} so'm` : price;
         
-        const message = `🌐 *Yangi Web Dizayn Buyurtmasi*
+        const telegramMessage = `🌐 *YANGI WEB DIZAYN BUYURTMASI*
 
 👤 *Mijoz:* ${formData.user}
 📧 *Email:* ${formData.email}
@@ -1008,20 +1009,100 @@ ${selectedFeatures.length > 0 ? selectedFeatures.map(f => `• ${f}`).join('\n')
 ${formData.requirements}
 
 📅 *Sana:* ${new Date().toLocaleString('uz-UZ')}
-`;
 
-        await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendMessage`, {
+🔗 *Owner Panel:* https://ownerweb.netlify.app/admin/owner.html
+⚠️ *Diqqat:* Yangi web dizayn buyurtmasi keldi! Iltimos owner panelga kirib tekshiring.`;
+
+        const telegramResponse = await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendMessage`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             chat_id: '7833115003',
-            text: message,
+            text: telegramMessage,
             parse_mode: 'Markdown'
           })
         });
 
-        showMessage('✅ Web dizayn buyurtmangiz muvaffaqiyatli yuborildi! 24-48 soat ichida siz bilan bog\'lanamiz.', 'success');
-        document.getElementById('webDesignForm').reset();
-        document.getElementById('priceDisplay').classList.
+        const telegramData = await telegramResponse.json();
+        
+        if (telegramData.ok) {
+          console.log('✅ Telegram botga yuborildi');
+          
+          // 3. Send owner notification
+          const ownerNotification = `🚨 *OWNER OGOHLANTIRISHИ*
+
+📋 Yangi web dizayn buyurtmasi qabul qilindi!
+👤 Mijoz: ${formData.user}
+🏢 Kompaniya: ${formData.companyName}
+🎯 Tur: ${formData.websiteType}
+💰 Narx: ${priceText}
+
+🔗 *Tekshirish uchun:*
+https://ownerweb.netlify.app/admin/owner.html
+
+⏰ *Vaqt:* ${new Date().toLocaleString('uz-UZ')}
+📞 *Amal:* Mijoz bilan bog'laning va loyihani muhokama qiling!`;
+
+      await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendMessage`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          chat_id: '7833115003',
+          text: ownerNotification,
+          parse_mode: 'Markdown'
+        })
+      });
+
+      showMessage('✅ Web dizayn buyurtmangiz muvaffaqiyatli yuborildi! Firebase va Telegram botga saqlandi. 24-48 soat ichida siz bilan bog\'lanamiz.', 'success');
+      
+      // Reset form
+      document.getElementById('webDesignForm').reset();
+      document.getElementById('priceDisplay').classList.remove('show');
+      document.querySelectorAll('.checkbox-item').forEach(item => {
+        item.classList.remove('selected');
+      });
+      document.querySelectorAll('.radio-item').forEach(item => {
+        item.classList.remove('selected');
+      });
+    } else {
+      throw new Error('Telegram bot xatosi: ' + JSON.stringify(telegramData));
+    }
+  } catch (error) {
+    console.error('❌ Xatolik:', error);
+    showMessage('❌ Xatolik yuz berdi! Firebase yoki Telegram botda muammo. Iltimos, qayta urinib ko\'ring.', 'error');
+  } finally {
+    // Reset button state
+    submitBtn.classList.remove('loading');
+    submitBtn.innerHTML = '<span>🚀</span> Web Dizayn Buyurtmasi Berish';
+  }
+});
+
+    // Helper function to show status messages
+    function showMessage(message, type = 'success') {
+      const messageDiv = document.getElementById(type === 'success' ? 'successMessage' : 'errorMessage');
+      messageDiv.textContent = message;
+      messageDiv.classList.add(type);
+      messageDiv.style.display = 'block';
+
+      setTimeout(() => {
+        messageDiv.style.display = 'none';
+        messageDiv.classList.remove(type);
+      }, 5000);
+    }
+
+    // Delete account functionality
+    document.getElementById('deleteBtn').addEventListener('click', function() {
+      const confirmDelete = confirm('Haqiqatan ham akkauntingizni o\'chirmoqchimisiz?');
+      if (confirmDelete) {
+        localStorage.removeItem('user');
+        alert('Akkauntingiz muvaffaqiyatli o\'chirildi!');
+        window.location.href = 'register.html';
+      }
+    });
+  </script>
+</body>
+</html>

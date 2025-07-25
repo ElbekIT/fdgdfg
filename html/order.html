@@ -820,50 +820,93 @@
       submitBtn.innerHTML = '<span>⏳</span> Yuborilmoqda...';
 
       try {
-        // Save to Firebase
-        await addDoc(collection(db, 'orders'), formData);
+        // 1. Save to Firebase first
+        const docRef = await addDoc(collection(db, 'orders'), formData);
+        console.log('✅ Firebase\'ga saqlandi:', docRef.id);
 
-        // Send to Telegram
+        // 2. Send to Telegram Bot
         const price = priceMap[formData.designType];
-        const message = `🎨 *Yangi Professional Dizayn Buyurtmasi*
+        const telegramMessage = `🎨 *YANGI GAMING DIZAYN BUYURTMASI*
 
 👤 *Mijoz:* ${formData.user}
 📧 *Email:* ${formData.email}
 📱 *Telefon:* ${formData.phone}
 📲 *Telegram:* ${formData.telegram ? '@' + formData.telegram.replace('@', '') : 'Berilmagan'}
 🚻 *Jinsi:* ${formData.gender}
-🎂 *Tug\'ilgan sana:* ${formData.birthDate}
+🎂 *Tug'ilgan sana:* ${formData.birthDate}
 🔢 *Yosh:* ${formData.age}
-🎮 *O\'yin/Platforma:* ${formData.game}
+
+🎮 *O'yin/Platforma:* ${formData.game}
 🎨 *Dizayn turi:* ${formData.designType}
 💰 *Narx:* ${price.toLocaleString()} so'm
-📝 *Izoh:* ${formData.comment}
+
+📝 *Izoh va talablar:*
+${formData.comment}
 
 📅 *Sana:* ${new Date().toLocaleString('uz-UZ')}
-`;
 
-        await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendMessage`, {
+🔗 *Owner Panel:* https://ownerweb.netlify.app/admin/owner.html
+⚠️ *Diqqat:* Yangi buyurtma keldi! Iltimos owner panelga kirib tekshiring va mijoz bilan bog'laning.`;
+
+        const telegramResponse = await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendMessage`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             chat_id: '7833115003',
-            text: message,
+            text: telegramMessage,
             parse_mode: 'Markdown'
           })
         });
 
-        showMessage('✅ Buyurtmangiz muvaffaqiyatli yuborildi! Tez orada siz bilan bog\'lanamiz.', 'success');
-        document.getElementById('orderForm').reset();
-        document.getElementById('priceDisplay').classList.remove('show');
-        document.querySelectorAll('.radio-item').forEach(item => {
-          item.classList.remove('selected');
-        });
+        const telegramData = await telegramResponse.json();
+        
+        if (telegramData.ok) {
+          console.log('✅ Telegram botga yuborildi');
+          
+          // 3. Send owner notification
+          const ownerNotification = `🚨 *OWNER OGOHLANTIRISHИ*
+
+📋 Yangi buyurtma qabul qilindi!
+👤 Mijoz: ${formData.user}
+🎯 Tur: Gaming Dizayn (${formData.designType})
+💰 Narx: ${price.toLocaleString()} so'm
+
+🔗 *Tekshirish uchun:*
+https://ownerweb.netlify.app/admin/owner.html
+
+⏰ *Vaqt:* ${new Date().toLocaleString('uz-UZ')}
+📞 *Amal:* Mijoz bilan bog'laning va buyurtmani tasdiqlang!`;
+
+          await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendMessage`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              chat_id: '7833115003',
+              text: ownerNotification,
+              parse_mode: 'Markdown'
+            })
+          });
+
+          showMessage('✅ Buyurtmangiz muvaffaqiyatli yuborildi! Firebase va Telegram botga saqlandi. Tez orada siz bilan bog\'lanamiz.', 'success');
+          
+          // Reset form
+          document.getElementById('orderForm').reset();
+          document.getElementById('priceDisplay').classList.remove('show');
+          document.querySelectorAll('.radio-item').forEach(item => {
+            item.classList.remove('selected');
+          });
+        } else {
+          throw new Error('Telegram bot xatosi: ' + JSON.stringify(telegramData));
+        }
       } catch (error) {
-        console.error('Error:', error);
-        showMessage('❌ Xatolik yuz berdi! Iltimos, qayta urinib ko\'ring.', 'error');
+        console.error('❌ Xatolik:', error);
+        showMessage('❌ Xatolik yuz berdi! Firebase yoki Telegram botda muammo. Iltimos, qayta urinib ko\'ring.', 'error');
       } finally {
+        // Reset button state
         submitBtn.classList.remove('loading');
         submitBtn.innerHTML = '<span>🚀</span> Buyurtma berish';
       }
