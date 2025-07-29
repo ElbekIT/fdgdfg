@@ -1,736 +1,854 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Elbek Design Studio - Professional Gaming Design</title>
-  <link rel="icon" href="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Elbek Design Studio - Professional Gaming Design</title>
+<link rel="icon" href="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-    :root {
-      --primary: #6366f1;
-      --primary-dark: #4f46e5;
-      --secondary: #8b5cf6;
-      --accent: #06b6d4;
-      --dark: #0f172a;
-      --light: #f8fafc;
-      --gray: #64748b;
-      --white: #ffffff;
-      --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-      --shadow: 0 10px 40px rgba(99, 102, 241, 0.1);
-      --shadow-hover: 0 20px 60px rgba(99, 102, 241, 0.2);
-    }
+  :root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --secondary: #8b5cf6;
+    --accent: #06b6d4;
+    --dark: #0f172a;
+    --light: #f8fafc;
+    --gray: #64748b;
+    --white: #ffffff;
+    --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    --shadow: 0 10px 40px rgba(99, 102, 241, 0.1);
+    --shadow-hover: 0 20px 60px rgba(99, 102, 241, 0.2);
+  }
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--light);
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--light);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
 
-    /* Background Animation */
-    .bg-animation {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
-      background-size: 400% 400%;
-      animation: gradientShift 15s ease infinite;
-    }
+  /* Background Animation */
+  .bg-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+  }
 
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 
-    /* Floating particles */
-    .particles {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
+  /* Floating particles */
+  .particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
 
-    .particle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      animation: float 20s infinite linear;
-    }
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    animation: float 20s infinite linear;
+  }
 
-    @keyframes float {
-      0% {
-        transform: translateY(100vh) rotate(0deg);
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      90% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-100vh) rotate(360deg);
-        opacity: 0;
-      }
+  @keyframes float {
+    0% {
+      transform: translateY(100vh) rotate(0deg);
+      opacity: 0;
     }
-
-    /* Header */
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      z-index: 1000;
-      padding: 1rem 0;
-      transition: all 0.3s ease;
+    10% {
+      opacity: 1;
     }
-
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 2rem;
+    90% {
+      opacity: 1;
     }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--primary);
-      text-decoration: none;
+    100% {
+      transform: translateY(-100vh) rotate(360deg);
+      opacity: 0;
     }
+  }
 
-    .logo img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
+  /* Header */
+  header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 1000;
+    padding: 1rem 0;
+    transition: all 0.3s ease;
+  }
+
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  .logo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  .nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+  }
+
+  .nav-menu a {
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 500;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+
+  .nav-menu a:hover {
+    color: var(--primary);
+  }
+
+  .nav-menu a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background: var(--gradient);
+    transition: width 0.3s ease;
+  }
+
+  .nav-menu a:hover::after {
+    width: 100%;
+  }
+
+  /* Main Content */
+  main {
+    margin-top: 80px;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .hero-section {
+    max-width: 1200px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .hero-content {
+    animation: slideInLeft 1s ease-out;
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .hero-subtitle {
+    font-size: 1.3rem;
+    color: var(--gray);
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+
+  .gradient-text {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 2rem;
+    padding: 3rem;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: slideInRight 1s ease-out;
+    transition: all 0.3s ease;
+  }
+
+  .hero-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: rgba(34, 197, 94, 0.1);
+    border-radius: 1rem;
+    border-left: 4px solid #22c55e;
+  }
+
+  .status-dot {
+    width: 12px;
+    height: 12px;
+    background: #22c55e;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+
+  .time-info {
+    margin-bottom: 2rem;
+  }
+
+  .time-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+    color: var(--gray);
+  }
+
+  .time-item .icon {
+    font-size: 1.3rem;
+  }
+
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary {
+    background: var(--gradient);
+    color: var(--white);
+    box-shadow: var(--shadow);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+
+  .btn-secondary:hover {
+    background: var(--primary);
+    color: var(--white);
+    transform: translateY(-3px);
+  }
+
+  /* Registration Required Modal */
+  .registration-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .registration-modal-content {
+    background: var(--white);
+    border-radius: 2rem;
+    padding: 3rem;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    animation: modalSlide 0.5s ease;
+    box-shadow: var(--shadow-hover);
+  }
+
+  @keyframes modalSlide {
+    from {
+      opacity: 0;
+      transform: translateY(-50px) scale(0.9);
     }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
 
+  .modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--gray);
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .modal-close:hover {
+    color: var(--primary);
+  }
+
+  .modal-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+
+  .modal-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 1rem;
+  }
+
+  .modal-subtitle {
+    color: var(--gray);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .btn-telegram {
+    background: linear-gradient(135deg, #0088cc 0%, #0088cc 100%);
+    color: var(--white);
+    box-shadow: 0 10px 40px rgba(0, 136, 204, 0.2);
+  }
+
+  .btn-telegram:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 60px rgba(0, 136, 204, 0.3);
+  }
+
+  /* Help Button */
+  .help-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 60px;
+    height: 60px;
+    background: var(--gradient);
+    border: none;
+    border-radius: 50%;
+    color: var(--white);
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    animation: float-btn 3s ease-in-out infinite;
+  }
+
+  .help-btn:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-hover);
+  }
+
+  @keyframes float-btn {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .modal {
+    background: var(--white);
+    border-radius: 2rem;
+    padding: 2rem;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    animation: modalSlide 0.5s ease;
+    box-shadow: var(--shadow-hover);
+  }
+
+  .modal img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    border: 4px solid var(--primary);
+  }
+
+  .modal h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--dark);
+  }
+
+  .modal p {
+    color: var(--gray);
+    margin-bottom: 0.5rem;
+  }
+
+  /* Animations */
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
     .nav-menu {
-      display: flex;
-      list-style: none;
-      gap: 2rem;
-    }
-
-    .nav-menu a {
-      text-decoration: none;
-      color: var(--dark);
-      font-weight: 500;
-      transition: color 0.3s ease;
-      position: relative;
-    }
-
-    .nav-menu a:hover {
-      color: var(--primary);
-    }
-
-    .nav-menu a::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: -5px;
-      left: 0;
-      background: var(--gradient);
-      transition: width 0.3s ease;
-    }
-
-    .nav-menu a:hover::after {
-      width: 100%;
-    }
-
-    /* Main Content */
-    main {
-      margin-top: 80px;
-      min-height: calc(100vh - 80px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
+      display: none;
     }
 
     .hero-section {
-      max-width: 1200px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-
-    .hero-content {
-      animation: slideInLeft 1s ease-out;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      text-align: center;
     }
 
     .hero-title {
-      font-size: 3.5rem;
-      font-weight: 700;
-      color: var(--dark);
-      margin-bottom: 1rem;
-      line-height: 1.2;
+      font-size: 2.5rem;
     }
 
     .hero-subtitle {
-      font-size: 1.3rem;
-      color: var(--gray);
-      margin-bottom: 2rem;
-      font-weight: 300;
-    }
-
-    .gradient-text {
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-size: 1.1rem;
     }
 
     .hero-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
-      border-radius: 2rem;
-      padding: 3rem;
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      animation: slideInRight 1s ease-out;
-      transition: all 0.3s ease;
-    }
-
-    .hero-card:hover {
-      transform: translateY(-10px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .status-indicator {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-      padding: 1rem;
-      background: rgba(34, 197, 94, 0.1);
-      border-radius: 1rem;
-      border-left: 4px solid #22c55e;
-    }
-
-    .status-dot {
-      width: 12px;
-      height: 12px;
-      background: #22c55e;
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.5; }
-      100% { opacity: 1; }
-    }
-
-    .time-info {
-      margin-bottom: 2rem;
-    }
-
-    .time-item {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
-      font-size: 1.1rem;
-      color: var(--gray);
-    }
-
-    .time-item .icon {
-      font-size: 1.3rem;
-    }
-
-    .btn-group {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      padding: 1rem 2rem;
-      border: none;
-      border-radius: 1rem;
-      font-size: 1.1rem;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn-primary {
-      background: var(--gradient);
-      color: var(--white);
-      box-shadow: var(--shadow);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.8);
-      color: var(--primary);
-      border: 2px solid var(--primary);
-    }
-
-    .btn-secondary:hover {
-      background: var(--primary);
-      color: var(--white);
-      transform: translateY(-3px);
-    }
-
-    /* Help Button */
-    .help-btn {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 60px;
-      height: 60px;
-      background: var(--gradient);
-      border: none;
-      border-radius: 50%;
-      color: var(--white);
-      font-size: 1.5rem;
-      cursor: pointer;
-      box-shadow: var(--shadow);
-      z-index: 1000;
-      transition: all 0.3s ease;
-      animation: float-btn 3s ease-in-out infinite;
-    }
-
-    .help-btn:hover {
-      transform: scale(1.1);
-      box-shadow: var(--shadow-hover);
-    }
-
-    @keyframes float-btn {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
-
-    /* Modal */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(10px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .modal {
-      background: var(--white);
-      border-radius: 2rem;
       padding: 2rem;
-      max-width: 400px;
-      width: 90%;
-      text-align: center;
-      position: relative;
-      animation: modalSlide 0.5s ease;
-      box-shadow: var(--shadow-hover);
     }
 
-    @keyframes modalSlide {
-      from {
-        opacity: 0;
-        transform: translateY(-50px) scale(0.9);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 1rem;
+    .help-btn {
+      bottom: 1rem;
       right: 1rem;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      color: var(--gray);
-      cursor: pointer;
-      transition: color 0.3s ease;
+      width: 50px;
+      height: 50px;
+      font-size: 1.2rem;
     }
 
-    .modal-close:hover {
-      color: var(--primary);
+    .registration-modal-content {
+      padding: 2rem;
+      margin: 1rem;
     }
+  }
 
-    .modal img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      margin-bottom: 1rem;
-      border: 4px solid var(--primary);
-    }
-
-    .modal h3 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: var(--dark);
-    }
-
-    .modal p {
-      color: var(--gray);
-      margin-bottom: 0.5rem;
-    }
-
-    /* Animations */
-    @keyframes slideInLeft {
-      from {
-        opacity: 0;
-        transform: translateX(-50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    @keyframes slideInRight {
-      from {
-        opacity: 0;
-        transform: translateX(50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .nav-menu {
-        display: none;
-      }
-
-      .hero-section {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        text-align: center;
-      }
-
-      .hero-title {
-        font-size: 2.5rem;
-      }
-
-      .hero-subtitle {
-        font-size: 1.1rem;
-      }
-
-      .hero-card {
-        padding: 2rem;
-      }
-
-      .help-btn {
-        bottom: 1rem;
-        right: 1rem;
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-      }
-    }
-
-    /* Security styles */
-    body {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-  </style>
+  /* Security styles */
+  body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+</style>
 </head>
 <body>
-  <!-- Background Animation -->
-  <div class="bg-animation"></div>
-  
-  <!-- Floating Particles -->
-  <div class="particles" id="particles"></div>
+<!-- Background Animation -->
+<div class="bg-animation"></div>
 
-  <!-- Header -->
-  <header>
-    <div class="nav-container">
-      <a href="#" class="logo">
-        <img src="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Logo" />
-        <span>Elbek Design</span>
-      </a>
-      <nav>
-        <ul class="nav-menu">
-          <li><a href="#home">Bosh sahifa</a></li>
-          <li><a href="/html/byqan.html">Xizmatlar</a></li>
-          <li><a href="#contact">Bog'lanish</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+<!-- Floating Particles -->
+<div class="particles" id="particles"></div>
 
-  <!-- Main Content -->
-  <main>
-    <section class="hero-section">
-      <div class="hero-content">
-        <h1 class="hero-title">
-          <span class="gradient-text">Professional</span><br>
-          Gaming Design Studio
-        </h1>
-        <p class="hero-subtitle">
-          Sizning o'yin brendingiz uchun professional dizayn yechimlar. 
-          PUBG, Free Fire, CS:GO va boshqa o'yinlar uchun sifatli banner, logo va avatarlar.
-        </p>
-      </div>
+<!-- Header -->
+<header>
+  <div class="nav-container">
+    <a href="#" class="logo">
+      <img src="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Logo" />
+      <span>Elbek Design</span>
+    </a>
+    <nav>
+      <ul class="nav-menu">
+        <li><a href="#home">Bosh sahifa</a></li>
+        <li><a href="/html/byqan.html">Xizmatlar</a></li>
+        <li><a href="#contact">Bog'lanish</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-      <div class="hero-card">
-        <div class="status-indicator">
-          <div class="status-dot"></div>
-          <span><strong>Online</strong> - Hozir faolmiz</span>
-        </div>
-
-        <div class="time-info">
-          <div class="time-item">
-            <span class="icon">📅</span>
-            <span id="currentDate"></span>
-          </div>
-          <div class="time-item">
-            <span class="icon">🕐</span>
-            <span id="currentTime"></span>
-          </div>
-          <div class="time-item">
-            <span class="icon">💼</span>
-            <span>Ish vaqti: 07:00 - 01:00</span>
-          </div>
-        </div>
-
-        <div class="btn-group">
-          <button class="btn btn-primary" onclick="checkOrderTime()">
-            <span>🚀</span> Buyurtma berish
-          </button>
-          <a href="/html/byqan.html" class="btn btn-secondary">
-            <span>📖</span> Qanday buyurtma beriladi?
-          </a>
-        </div>
-        <!-- Services Section -->
-        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(99, 102, 241, 0.1);">
-          <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--primary); font-size: 1.3rem; font-weight: 600;">
-            🎯 Bizning xizmatlarimiz
-          </h3>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-            <div style="background: rgba(99, 102, 241, 0.05); padding: 1rem; border-radius: 1rem; border: 2px solid rgba(99, 102, 241, 0.1); text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(99, 102, 241, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-              <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎮</div>
-              <h4 style="color: var(--primary); font-size: 1rem; margin-bottom: 0.5rem;">Gaming Dizayn</h4>
-              <p style="font-size: 0.85rem; color: var(--gray); margin: 0;">PUBG, Free Fire, CS:GO uchun professional banner, logo, avatarlar</p>
-            </div>
-            <div style="background: rgba(139, 92, 246, 0.05); padding: 1rem; border-radius: 1rem; border: 2px solid rgba(139, 92, 246, 0.1); text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(139, 92, 246, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-              <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌐</div>
-              <h4 style="color: var(--secondary); font-size: 1rem; margin-bottom: 0.5rem;">Web Dizayn</h4>
-              <p style="font-size: 0.85rem; color: var(--gray); margin: 0;">Portfolio, e-commerce, korporativ saytlar yaratish</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Help Button -->
-  <button class="help-btn" onclick="openHelp()">
-    💬
-  </button>
-
-  <!-- Help Modal -->
-  <div class="modal-overlay" id="helpModal">
-    <div class="modal">
-      <button class="modal-close" onclick="closeHelp()">×</button>
-      <img src="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Elbek Qoriyev" />
-      <h3>Elbek Qoriyev</h3>
-      <p><strong>📞 +998 90 406 30 90</strong></p>
-      <p style="color: #ef4444; font-size: 0.9rem; margin-top: 1rem;">
-        ⚠️ Diqqat: Bu raqam faqat ish vaqtida (07:00 – 01:00) faol!
+<!-- Main Content -->
+<main>
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        <span class="gradient-text">Professional</span><br>
+        Gaming Design Studio
+      </h1>
+      <p class="hero-subtitle">
+        Sizning o'yin brendingiz uchun professional dizayn yechimlar. 
+        PUBG, Free Fire, CS:GO va boshqa o'yinlar uchun sifatli banner, logo va avatarlar.
       </p>
     </div>
-  </div>
 
-  <script>
-    // Particles Animation
-    function createParticles() {
-      const particlesContainer = document.getElementById('particles');
-      for (let i = 0; i < 50; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 20 + 's';
-        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-        particlesContainer.appendChild(particle);
-      }
-    }
+    <div class="hero-card">
+      <div class="status-indicator">
+        <div class="status-dot"></div>
+        <span><strong>Online</strong> - Hozir faolmiz</span>
+      </div>
 
-    // Time Update
-    function updateTime() {
-      const now = new Date();
-      const options = { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-      };
-      
-      document.getElementById('currentDate').textContent = 
-        now.toLocaleDateString('uz-UZ', options);
-      
-      document.getElementById('currentTime').textContent = 
-        now.toLocaleTimeString('uz-UZ');
+      <div class="time-info">
+        <div class="time-item">
+          <span class="icon">📅</span>
+          <span id="currentDate"></span>
+        </div>
+        <div class="time-item">
+          <span class="icon">🕐</span>
+          <span id="currentTime"></span>
+        </div>
+        <div class="time-item">
+          <span class="icon">💼</span>
+          <span>Ish vaqti: 07:00 - 01:00</span>
+        </div>
+      </div>
 
-      // Update status
-      const hour = now.getHours();
-      const minute = now.getMinutes();
-      const currentMinutes = hour * 60 + minute;
-      const startWork = 7 * 60; // 07:00
-      const endWork = 1 * 60;   // 01:00
-
-      const isWorkTime = currentMinutes >= startWork || currentMinutes < endWork;
-      const statusIndicator = document.querySelector('.status-indicator');
-      const statusDot = document.querySelector('.status-dot');
-      
-      if (isWorkTime) {
-        statusIndicator.style.background = 'rgba(34, 197, 94, 0.1)';
-        statusIndicator.style.borderLeftColor = '#22c55e';
-        statusDot.style.background = '#22c55e';
-        statusIndicator.innerHTML = `
-          <div class="status-dot"></div>
-          <span><strong>Online</strong> - Hozir faolmiz</span>
-        `;
-      } else {
-        statusIndicator.style.background = 'rgba(239, 68, 68, 0.1)';
-        statusIndicator.style.borderLeftColor = '#ef4444';
-        statusDot.style.background = '#ef4444';
-        statusIndicator.innerHTML = `
-          <div class="status-dot"></div>
-          <span><strong>Offline</strong> - Ish vaqti tugadi</span>
-        `;
-      }
-    }
-
-    // Check Order Time
-    function checkOrderTime() {
-      const now = new Date();
-      const hour = now.getHours();
-      const minute = now.getMinutes();
-      const currentMinutes = hour * 60 + minute;
-      const startWork = 7 * 60;
-      const endWork = 1 * 60;
-
-      if (currentMinutes >= startWork || currentMinutes < endWork) {
-        // Show service selection modal
-        const modal = document.createElement('div');
-        modal.style.cssText = `
-          position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-          background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
-          display: flex; justify-content: center; align-items: center;
-          z-index: 3000; animation: fadeIn 0.3s ease;
-        `;
-        
-        modal.innerHTML = `
-          <div style="background: white; border-radius: 2rem; padding: 2rem; max-width: 400px; width: 90%; text-align: center; animation: modalSlide 0.5s ease;">
-            <h3 style="color: var(--primary); margin-bottom: 1.5rem; font-size: 1.5rem;">🎯 Xizmat turini tanlang</h3>
-            <div style="display: flex; flex-direction: column; gap: 1rem;">
-              <button onclick="window.location.href='/html/order.html'" style="padding: 1rem; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; border: none; border-radius: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                🎮 Gaming Dizayn Buyurtmasi
-              </button>
-              <button onclick="window.location.href='/html/webdizayn.html'" style="padding: 1rem; background: linear-gradient(135deg, #8b5cf6, #06b6d4); color: white; border: none; border-radius: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                🌐 Web Dizayn Buyurtmasi
-              </button>
-              <button onclick="this.closest('div').remove()" style="padding: 0.75rem; background: #f3f4f6; color: #6b7280; border: none; border-radius: 1rem; cursor: pointer;">
-                ❌ Bekor qilish
-              </button>
-            </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="checkOrderTime()">
+          <span>🚀</span> Buyurtma berish
+        </button>
+        <a href="/html/byqan.html" class="btn btn-secondary">
+          <span>📖</span> Qanday buyurtma beriladi?
+        </a>
+      </div>
+      <!-- Services Section -->
+      <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(99, 102, 241, 0.1);">
+        <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--primary); font-size: 1.3rem; font-weight: 600;">
+          🎯 Bizning xizmatlarimiz
+        </h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div style="background: rgba(99, 102, 241, 0.05); padding: 1rem; border-radius: 1rem; border: 2px solid rgba(99, 102, 241, 0.1); text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(99, 102, 241, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎮</div>
+            <h4 style="color: var(--primary); font-size: 1rem; margin-bottom: 0.5rem;">Gaming Dizayn</h4>
+            <p style="font-size: 0.85rem; color: var(--gray); margin: 0;">PUBG, Free Fire, CS:GO uchun professional banner, logo, avatarlar</p>
           </div>
-        `;
-        
-        document.body.appendChild(modal);
-        modal.addEventListener('click', (e) => {
-          if (e.target === modal) modal.remove();
-        });
-      } else {
-        alert('⚠️ Hozir ish vaqti emas. Buyurtma berish uchun 07:00 dan 01:00 gacha kutib turing.');
-      }
+          <div style="background: rgba(139, 92, 246, 0.05); padding: 1rem; border-radius: 1rem; border: 2px solid rgba(139, 92, 246, 0.1); text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(139, 92, 246, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌐</div>
+            <h4 style="color: var(--secondary); font-size: 1rem; margin-bottom: 0.5rem;">Web Dizayn</h4>
+            <p style="font-size: 0.85rem; color: var(--gray); margin: 0;">Portfolio, e-commerce, korporativ saytlar yaratish</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Registration Required Modal -->
+<div class="registration-modal" id="registrationModal">
+  <div class="registration-modal-content">
+    <button class="modal-close" onclick="closeRegistrationModal()">×</button>
+    <div class="modal-icon">⚠️</div>
+    <h2 class="modal-title">Ro'yxatdan o'tish kerak!</h2>
+    <p class="modal-subtitle">
+      Buyurtma berish uchun avval Telegram ID orqali ro'yxatdan o'tishingiz kerak. 
+      Bu jarayon juda oson va tez!
+    </p>
+    <div class="modal-buttons">
+      <a href="/html/telegram-register.html" class="btn btn-telegram">
+        <span>📱</span> Telegram orqali ro'yxatdan o'tish
+      </a>
+      <button class="btn btn-secondary" onclick="closeRegistrationModal()">
+        <span>❌</span> Bekor qilish
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Help Button -->
+<button class="help-btn" onclick="openHelp()">
+  💬
+</button>
+
+<!-- Help Modal -->
+<div class="modal-overlay" id="helpModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeHelp()">×</button>
+    <img src="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Elbek Qoriyev" />
+    <h3>Elbek Qoriyev</h3>
+    <p><strong>📞 +998 90 406 30 90</strong></p>
+    <p style="color: #ef4444; font-size: 0.9rem; margin-top: 1rem;">
+      ⚠️ Diqqat: Bu raqam faqat ish vaqtida (07:00 – 01:00) faol!
+    </p>
+  </div>
+</div>
+
+<script>
+  // Particles Animation
+  function createParticles() {
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 50; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 20 + 's';
+      particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+      particlesContainer.appendChild(particle);
+    }
+  }
+
+  // Time Update
+  function updateTime() {
+    const now = new Date();
+    const options = { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    };
+    
+    document.getElementById('currentDate').textContent = 
+      now.toLocaleDateString('uz-UZ', options);
+    
+    document.getElementById('currentTime').textContent = 
+      now.toLocaleTimeString('uz-UZ');
+
+    // Update status
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    const currentMinutes = hour * 60 + minute;
+    const startWork = 7 * 60; // 07:00
+    const endWork = 1 * 60;   // 01:00
+
+    const isWorkTime = currentMinutes >= startWork || currentMinutes < endWork;
+    const statusIndicator = document.querySelector('.status-indicator');
+    const statusDot = document.querySelector('.status-dot');
+    
+    if (isWorkTime) {
+      statusIndicator.style.background = 'rgba(34, 197, 94, 0.1)';
+      statusIndicator.style.borderLeftColor = '#22c55e';
+      statusDot.style.background = '#22c55e';
+      statusIndicator.innerHTML = `
+        <div class="status-dot"></div>
+        <span><strong>Online</strong> - Hozir faolmiz</span>
+      `;
+    } else {
+      statusIndicator.style.background = 'rgba(239, 68, 68, 0.1)';
+      statusIndicator.style.borderLeftColor = '#ef4444';
+      statusDot.style.background = '#ef4444';
+      statusIndicator.innerHTML = `
+        <div class="status-dot"></div>
+        <span><strong>Offline</strong> - Ish vaqti tugadi</span>
+      `;
+    }
+  }
+
+  // Check if user is registered
+  function isUserRegistered() {
+    const user = localStorage.getItem('user');
+    const registrationMethod = localStorage.getItem('registrationMethod');
+    const telegramId = localStorage.getItem('userTelegramId');
+    
+    console.log('🔍 Registration check:', { user, registrationMethod, telegramId });
+    
+    return user && registrationMethod === 'telegram' && telegramId;
+  }
+
+  // Check Order Time and Registration
+  function checkOrderTime() {
+    // First check if user is registered
+    if (!isUserRegistered()) {
+      document.getElementById('registrationModal').style.display = 'flex';
+      return;
     }
 
-    // Modal Functions
-    function openHelp() {
-      document.getElementById('helpModal').style.display = 'flex';
-    }
+    const now = new Date();
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    const currentMinutes = hour * 60 + minute;
+    const startWork = 7 * 60;
+    const endWork = 1 * 60;
 
-    function closeHelp() {
-      document.getElementById('helpModal').style.display = 'none';
+    if (currentMinutes >= startWork || currentMinutes < endWork) {
+      // Show service selection modal
+      const modal = document.createElement('div');
+      modal.style.cssText = `
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+        display: flex; justify-content: center; align-items: center;
+        z-index: 3000; animation: fadeIn 0.3s ease;
+      `;
+      
+      modal.innerHTML = `
+        <div style="background: white; border-radius: 2rem; padding: 2rem; max-width: 400px; width: 90%; text-align: center; animation: modalSlide 0.5s ease;">
+          <h3 style="color: var(--primary); margin-bottom: 1.5rem; font-size: 1.5rem;">🎯 Xizmat turini tanlang</h3>
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <button onclick="window.location.href='/html/order.html'" style="padding: 1rem; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; border: none; border-radius: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+              🎮 Gaming Dizayn Buyurtmasi
+            </button>
+            <button onclick="window.location.href='/html/webdizayn.html'" style="padding: 1rem; background: linear-gradient(135deg, #8b5cf6, #06b6d4); color: white; border: none; border-radius: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+              🌐 Web Dizayn Buyurtmasi
+            </button>
+            <button onclick="this.closest('div').remove()" style="padding: 0.75rem; background: #f3f4f6; color: #6b7280; border: none; border-radius: 1rem; cursor: pointer;">
+              ❌ Bekor qilish
+            </button>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.remove();
+      });
+    } else {
+      alert('⚠️ Hozir ish vaqti emas. Buyurtma berish uchun 07:00 dan 01:00 gacha kutib turing.');
     }
+  }
 
-    // Security Functions
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('keydown', function(e) {
-      if (
-        (e.ctrlKey && ['u', 's', 'p', 'c'].includes(e.key.toLowerCase())) ||
-        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') ||
-        e.key === 'F12'
-      ) {
-        e.preventDefault();
-        alert('Bu amal bloklangan!');
-      }
-    });
-    document.addEventListener('selectstart', e => e.preventDefault());
-    document.addEventListener('copy', e => {
+  // Close registration modal
+  function closeRegistrationModal() {
+    document.getElementById('registrationModal').style.display = 'none';
+  }
+
+  // Modal Functions
+  function openHelp() {
+    document.getElementById('helpModal').style.display = 'flex';
+  }
+
+  function closeHelp() {
+    document.getElementById('helpModal').style.display = 'none';
+  }
+
+  // Security Functions
+  document.addEventListener('contextmenu', e => e.preventDefault());
+  document.addEventListener('keydown', function(e) {
+    if (
+      (e.ctrlKey && ['u', 's', 'p', 'c'].includes(e.key.toLowerCase())) ||
+      (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') ||
+      e.key === 'F12'
+    ) {
       e.preventDefault();
-      alert('Nusxa olish mumkin emas!');
-    });
+      alert('Bu amal bloklangan!');
+    }
+  });
+  document.addEventListener('selectstart', e => e.preventDefault());
+  document.addEventListener('copy', e => {
+    e.preventDefault();
+    alert('Nusxa olish mumkin emas!');
+  });
 
-    // Initialize
-    createParticles();
-    updateTime();
-    setInterval(updateTime, 1000);
+  // Initialize
+  createParticles();
+  updateTime();
+  setInterval(updateTime, 1000);
 
-    // Close modal on outside click
-    document.getElementById('helpModal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closeHelp();
-      }
-    });
-  </script>
+  // Close modal on outside click
+  document.getElementById('helpModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeHelp();
+    }
+  });
+
+  // Close registration modal on outside click
+  document.getElementById('registrationModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeRegistrationModal();
+    }
+  });
+</script>
 </body>
 </html>

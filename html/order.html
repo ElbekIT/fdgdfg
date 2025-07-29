@@ -42,6 +42,120 @@
       user-select: none;
     }
 
+    /* Registration Check */
+    .registration-check {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .registration-message {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 2rem;
+      padding: 3rem;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: var(--shadow-hover);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+      animation: slideUp 0.8s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .registration-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .registration-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+
+    .registration-subtitle {
+      color: var(--gray);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .registration-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .btn-telegram {
+      background: linear-gradient(135deg, #0088cc 0%, #0088cc 100%);
+      color: var(--white);
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: 0 10px 40px rgba(0, 136, 204, 0.2);
+    }
+
+    .btn-telegram:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 60px rgba(0, 136, 204, 0.3);
+    }
+
+    .btn-back {
+      background: var(--white);
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      padding: 1rem 2rem;
+      border-radius: 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-back:hover {
+      background: var(--primary);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    /* Hidden class */
+    .hidden {
+      display: none !important;
+    }
+
     /* Header */
     .header {
       background: var(--white);
@@ -178,6 +292,7 @@
       padding: 2rem;
       max-width: 800px;
       margin: 0 auto;
+      margin-top: 100px;
     }
 
     .form-container {
@@ -187,17 +302,6 @@
       box-shadow: var(--shadow);
       border: 1px solid rgba(255, 255, 255, 0.2);
       animation: slideUp 0.8s ease-out;
-    }
-
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     .form-title {
@@ -532,208 +636,235 @@
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <div class="header-content">
-      <div class="logo-section">
-        <img src="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Logo" class="logo">
-        <div class="brand-name">Elbek Design Studio</div>
-      </div>
-      <div class="user-info">
-        <span>👤</span>
-        <span id="userDisplay"></span>
+  <!-- Registration Check Screen -->
+  <div class="registration-check" id="registrationCheck">
+    <div class="registration-message">
+      <div class="registration-icon">🔒</div>
+      <h1 class="registration-title">Ro'yxatdan o'tish kerak!</h1>
+      <p class="registration-subtitle">
+        Buyurtma berish uchun avval Telegram chat ID orqali ro'yxatdan o'tishingiz kerak. 
+        Bu jarayon juda oson va faqat bir marta amalga oshiriladi.
+      </p>
+      <div class="registration-buttons">
+        <a href="/html/telegram-register.html" class="btn-telegram">
+          <span>📱</span> Telegram orqali ro'yxatdan o'tish
+        </a>
+        <a href="/index.html" class="btn-back">
+          <span>←</span> Bosh sahifaga qaytish
+        </a>
       </div>
     </div>
-  </header>
+  </div>
 
-  <!-- Theme Toggle -->
-  <button class="theme-toggle" id="themeToggle">
-    <span id="themeIcon">🌙</span>
-  </button>
+  <!-- Main Order Form (hidden until registered) -->
+  <div id="mainContent" class="hidden">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <div class="logo-section">
+          <img src="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Logo" class="logo">
+          <div class="brand-name">Elbek Design Studio</div>
+        </div>
+        <div class="user-info">
+          <span>🆔</span>
+          <span id="userDisplay"></span>
+        </div>
+      </div>
+    </header>
 
-  <!-- My Orders Button -->
-  <a href="/html/menby.html" class="my-orders-btn">
-    <span>📋</span> Mening buyurtmalarim
-  </a>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle">
+      <span id="themeIcon">🌙</span>
+    </button>
 
-  <!-- Navigation Tabs -->
-  <nav class="nav-tabs">
-    <a href="/html/order.html" class="nav-tab active">🎮 Gaming Dizayn</a>
-    <a href="/html/webdizayn.html" class="nav-tab">🌐 Web Dizayn</a>
-  </nav>
+    <!-- My Orders Button -->
+    <a href="/html/menby.html" class="my-orders-btn">
+      <span>📋</span> Mening buyurtmalarim
+    </a>
 
-  <!-- Main Content -->
-  <main class="main">
-    <div class="form-container">
-      <h1 class="form-title">🎨 Professional Dizayn Buyurtmasi</h1>
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <a href="/html/order.html" class="nav-tab active">🎮 Gaming Dizayn</a>
+      <a href="/html/webdizayn.html" class="nav-tab">🌐 Web Dizayn</a>
+    </nav>
 
-      <!-- Status Messages -->
-      <div id="successMessage" class="status-message success"></div>
-      <div id="errorMessage" class="status-message error"></div>
+    <!-- Main Content -->
+    <main class="main">
+      <div class="form-container">
+        <h1 class="form-title">🎨 Professional Dizayn Buyurtmasi</h1>
 
-      <form id="orderForm">
-        <!-- Contact Information -->
-        <div class="form-section">
-          <h3 class="section-title">
-            <span>📞</span> Aloqa ma'lumotlari
-          </h3>
-          
-          <div class="form-group">
-            <label class="form-label">📧 Elektron pochta</label>
-            <input type="email" id="email" class="form-input" placeholder="example@gmail.com" required>
+        <!-- Status Messages -->
+        <div id="successMessage" class="status-message success"></div>
+        <div id="errorMessage" class="status-message error"></div>
+
+        <form id="orderForm">
+          <!-- Contact Information -->
+          <div class="form-section">
+            <h3 class="section-title">
+              <span>📞</span> Aloqa ma'lumotlari
+            </h3>
+            
+            <div class="form-group">
+              <label class="form-label">📧 Elektron pochta</label>
+              <input type="email" id="email" class="form-input" placeholder="example@gmail.com" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">📞 Telefon raqami</label>
+              <input type="tel" id="phone" class="form-input" placeholder="+998901234567" required>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label class="form-label">📱 Telegram Username</label>
-            <input type="text" id="telegram" class="form-input" placeholder="@username">
-          </div>
+          <!-- Design Information -->
+          <div class="form-section">
+            <h3 class="section-title">
+              <span>🎮</span> Dizayn ma'lumotlari
+            </h3>
 
-          <div class="form-group">
-            <label class="form-label">📞 Telefon raqami</label>
-            <div class="input-group">
-              <select id="country" class="form-select" required>
-                <option value="+998">🇺🇿 +998</option>
-                <option value="+7">🇷🇺 +7</option>
+            <div class="form-group">
+              <label class="form-label">🎯 O'yin yoki platforma</label>
+              <select id="game" class="form-select" required>
+                <option value="">-- Tanlang --</option>
+                <option value="PUBG">🎮 PUBG</option>
+                <option value="Telegram">📢 Telegram</option>
+                <option value="CSGO 2">💣 CS:GO 2</option>
+                <option value="DOTA 2">💎 DOTA 2</option>
+                <option value="Free Fire">🔥 Free Fire</option>
+                <option value="Call of Duty">⚔️ Call of Duty</option>
+                <option value="Minecraft">⛏ Minecraft</option>
+                <option value="Valorant">🎯 Valorant</option>
               </select>
-              <input type="tel" id="phone" class="form-input" placeholder="901234567" required>
             </div>
-          </div>
-        </div>
 
-        <!-- Personal Information -->
-        <div class="form-section">
-          <h3 class="section-title">
-            <span>👤</span> Shaxsiy ma'lumotlar
-          </h3>
+            <div class="form-group">
+              <label class="form-label">🎨 Dizayn turi</label>
+              <select id="designType" class="form-select" required>
+                <option value="">-- Tanlang --</option>
+                <option value="Prevyou">📺 Prevyou - 25,000 so'm</option>
+                <option value="Banner">🖼 Banner - 15,000 so'm</option>
+                <option value="Avatarka">👤 Avatarka - 10,000 so'm</option>
+                <option value="Logo">🎨 Logo - 15,000 so'm</option>
+              </select>
+            </div>
 
-          <div class="form-group">
-            <label class="form-label">🚻 Jinsingiz</label>
-            <div class="radio-group">
-              <div class="radio-item">
-                <input type="radio" id="male" name="gender" value="Erkak" required>
-                <label for="male">👨 Erkak</label>
-              </div>
-              <div class="radio-item">
-                <input type="radio" id="female" name="gender" value="Ayol" required>
-                <label for="female">👩 Ayol</label>
-              </div>
+            <div class="form-group">
+              <label class="form-label">📝 Qo'shimcha izoh va talablar</label>
+              <textarea id="comment" class="form-textarea" placeholder="Masalan: O'yinchi nomi, kerakli ranglar, maxsus yozuvlar, o'lcham talablari va boshqa muhim tafsilotlar..." required></textarea>
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="form-label">🎂 Tug'ilgan sana</label>
-            <div class="input-group">
-              <input type="number" id="dobDay" class="form-input" placeholder="Kun" min="1" max="31" required>
-              <input type="number" id="dobMonth" class="form-input" placeholder="Oy" min="1" max="12" required>
-              <input type="number" id="dobYear" class="form-input" placeholder="Yil" min="1950" max="2010" required>
-            </div>
-          </div>
+          <!-- Action Buttons -->
+          <button type="submit" class="btn btn-primary" id="submitBtn">
+            <span>🚀</span> Buyurtma berish
+          </button>
+        </form>
+      </div>
+    </main>
+  </div>
 
-          <div class="form-group">
-            <label class="form-label">🔢 Yoshingiz</label>
-            <input type="number" id="age" class="form-input" placeholder="Yoshingizni kiriting" min="10" max="80" required>
-          </div>
-        </div>
-
-        <!-- Design Information -->
-        <div class="form-section">
-          <h3 class="section-title">
-            <span>🎮</span> Dizayn ma'lumotlari
-          </h3>
-
-          <div class="form-group">
-            <label class="form-label">🎯 O'yin yoki platforma</label>
-            <select id="game" class="form-select" required>
-              <option value="">-- Tanlang --</option>
-              <option value="PUBG">🎮 PUBG</option>
-              <option value="Telegram">📢 Telegram</option>
-              <option value="CSGO 2">💣 CS:GO 2</option>
-              <option value="DOTA 2">💎 DOTA 2</option>
-              <option value="Free Fire">🔥 Free Fire</option>
-              <option value="Call of Duty">⚔️ Call of Duty</option>
-              <option value="Minecraft">⛏ Minecraft</option>
-              <option value="Valorant">🎯 Valorant</option>
-              <option value="Resident Evil">🧟‍♂️ Resident Evil</option>
-              <option value="Silent Hill">🌫 Silent Hill</option>
-              <option value="Amnesia">😱 Amnesia</option>
-              <option value="Outlast">💀 Outlast</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">🎨 Dizayn turi</label>
-            <select id="designType" class="form-select" required>
-              <option value="">-- Tanlang --</option>
-              <option value="Prevyou">📺 Prevyou</option>
-              <option value="Banner">🖼 Banner</option>
-              <option value="Avatarka">👤 Avatarka</option>
-              <option value="Logo">🎨 Logo</option>
-            </select>
-          </div>
-
-          <div id="priceDisplay" class="price-display">
-            <div class="price-amount" id="priceAmount"></div>
-            <div style="font-size: 0.9rem; color: var(--gray); margin-top: 0.5rem;">
-              💡 Professional sifat kafolati bilan
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">📝 Qo'shimcha izoh va talablar</label>
-            <textarea id="comment" class="form-textarea" placeholder="Masalan: O'yinchi nomi, kerakli ranglar, maxsus yozuvlar, o'lcham talablari va boshqa muhim tafsilotlar..." required></textarea>
-          </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <button type="submit" class="btn btn-primary" id="submitBtn">
-          <span>🚀</span> Buyurtma berish
-        </button>
-        
-        <button type="button" class="btn btn-danger" id="deleteBtn">
-          <span>🗑️</span> Akkauntni o'chirish
-        </button>
-      </form>
-    </div>
-  </main>
-
-  <!-- Firebase SDK -->
-  <script type="module">
-    // Import Firebase functions
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-    import { getDatabase, ref, push, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
-
-    // Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyA_B0OC6Y91ontwJWM-o615jg7Dr5jUVvA",
-      authDomain: "dizaynowner.firebaseapp.com",
-      databaseURL: "https://dizaynowner-default-rtdb.firebaseio.com/",
-      projectId: "dizaynowner",
-      storageBucket: "dizaynowner.firebasestorage.app",
-      messagingSenderId: "976762018041",
-      appId: "1:976762018041:web:e43227005165059158ea28",
-      measurementId: "G-0S6KV8DFKJ"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const database = getDatabase(app);
-
-    // Price mapping
-    const priceMap = {
-      "Prevyou": 25000,
-      "Banner": 15000,
-      "Avatarka": 10000,
-      "Logo": 15000
-    };
-
-    // Check authentication
-    const user = localStorage.getItem('user');
-    if (!user) {
-      alert("Iltimos, avval ro'yxatdan o'ting!");
-      window.location.href = "register.html";
-    } else {
-      document.getElementById("userDisplay").textContent = user;
+  <script>
+    // Check if user is registered with Telegram
+    function checkRegistration() {
+      const user = localStorage.getItem('user');
+      const registrationMethod = localStorage.getItem('registrationMethod');
+      const telegramId = localStorage.getItem('userTelegramId');
+      
+      console.log('🔍 Registration check:', { user, registrationMethod, telegramId });
+      
+      if (user && registrationMethod === 'telegram' && telegramId) {
+        // User is registered, show main content
+        document.getElementById('registrationCheck').classList.add('hidden');
+        document.getElementById('mainContent').classList.remove('hidden');
+        document.getElementById('userDisplay').textContent = user;
+        console.log('✅ User is registered, showing order form');
+      } else {
+        // User is not registered, show registration screen
+        console.log('❌ User not registered, showing registration screen');
+      }
     }
+
+    // Form submission
+    document.getElementById('orderForm')?.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById('submitBtn');
+      const formData = {
+        user: localStorage.getItem('user'),
+        telegramId: localStorage.getItem('userTelegramId'),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        game: document.getElementById('game').value,
+        designType: document.getElementById('designType').value,
+        comment: document.getElementById('comment').value.trim(),
+        type: 'gaming',
+        status: 'pending',
+        createdAt: new Date().toISOString()
+      };
+
+      // Validation
+      if (!formData.designType) {
+        showMessage('❌ Iltimos, dizayn turini tanlang!', 'error');
+        return;
+      }
+
+      // Show loading
+      submitBtn.innerHTML = '<span>⏳</span> Yuborilmoqda...';
+      submitBtn.disabled = true;
+
+      try {
+        // Send to Telegram Bot
+        const telegramMessage = `🎨 *YANGI GAMING DIZAYN BUYURTMASI*
+
+👤 *Mijoz:* ${formData.user}
+🆔 *Telegram ID:* ${formData.telegramId}
+📧 *Email:* ${formData.email}
+📞 *Telefon:* ${formData.phone}
+
+🎮 *O'yin/Platforma:* ${formData.game}
+🎨 *Dizayn turi:* ${formData.designType}
+
+📝 *Izoh va talablar:*
+${formData.comment}
+
+📅 *Sana:* ${new Date().toLocaleString('uz-UZ')}
+
+⚠️ *Diqqat:* Yangi buyurtma keldi! Mijoz bilan bog'laning.`;
+
+        const telegramResponse = await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendMessage`, {
+          method: 'POST',
+          headers:
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              chat_id: '7833115003',
+              text: telegramMessage,
+              parse_mode: 'Markdown'
+            })
+          }
+        );
+
+        const telegramData = await telegramResponse.json();
+        
+        if (telegramData.ok) {
+          showMessage('✅ Buyurtmangiz muvaffaqiyatli yuborildi! Tez orada siz bilan bog\'lanamiz.', 'success');
+          
+          // Reset form
+          document.getElementById('orderForm').reset();
+        } else {
+          throw new Error('Telegram bot xatosi');
+        }
+      } catch (error) {
+        console.error('❌ Xatolik:', error);
+        showMessage('❌ Xatolik yuz berdi! Qayta urinib ko\'ring.', 'error');
+      } finally {
+        // Reset button state
+        submitBtn.innerHTML = '<span>🚀</span> Buyurtma berish';
+        submitBtn.disabled = false;
+      }
+    });
 
     // Theme toggle functionality
     const themeToggle = document.getElementById('themeToggle');
@@ -762,172 +893,6 @@
       });
     });
 
-    // Price display
-    document.getElementById('designType').addEventListener('change', function() {
-      const designType = this.value;
-      const priceDisplay = document.getElementById('priceDisplay');
-      const priceAmount = document.getElementById('priceAmount');
-
-      if (designType && priceMap[designType]) {
-        const price = priceMap[designType];
-        priceAmount.textContent = `💰 ${price.toLocaleString()} so'm`;
-        priceDisplay.classList.add('show');
-      } else {
-        priceDisplay.classList.remove('show');
-      }
-    });
-
-    // Phone number update based on country
-    document.getElementById('country').addEventListener('change', function() {
-      const phoneInput = document.getElementById('phone');
-      phoneInput.placeholder = this.value === '+7' ? '701234567' : '901234567';
-    });
-
-    // Form submission
-    document.getElementById('orderForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      const submitBtn = document.getElementById('submitBtn');
-      const formData = {
-        user: user,
-        email: document.getElementById('email').value.trim(),
-        telegram: document.getElementById('telegram').value.trim(),
-        phone: document.getElementById('country').value + ' ' + document.getElementById('phone').value.trim(),
-        gender: document.querySelector('input[name="gender"]:checked')?.value,
-        birthDate: `${document.getElementById('dobDay').value}-${document.getElementById('dobMonth').value}-${document.getElementById('dobYear').value}`,
-        age: document.getElementById('age').value.trim(),
-        game: document.getElementById('game').value,
-        designType: document.getElementById('designType').value,
-        comment: document.getElementById('comment').value.trim(),
-        type: 'gaming',
-        status: 'pending',
-        price: priceMap[document.getElementById('designType').value],
-        createdAt: serverTimestamp()
-      };
-
-      // Validation
-      if (!formData.gender) {
-        showMessage('❌ Iltimos, jinsingizni tanlang!', 'error');
-        return;
-      }
-
-      if (!formData.designType) {
-        showMessage('❌ Iltimos, dizayn turini tanlang!', 'error');
-        return;
-      }
-
-      // Show loading
-      submitBtn.classList.add('loading');
-      submitBtn.innerHTML = '<span>⏳</span> Yuborilmoqda...';
-
-      try {
-        console.log('🔥 Firebase Realtime Database ga saqlash boshlandi...');
-        
-        // 1. Save to Firebase Realtime Database
-        const ordersRef = ref(database, 'orders');
-        const newOrderRef = await push(ordersRef, formData);
-        console.log('✅ Firebase Realtime Database ga saqlandi:', newOrderRef.key);
-
-        // 2. Send to Telegram Bot
-        const price = priceMap[formData.designType];
-        const telegramMessage = `🎨 *YANGI GAMING DIZAYN BUYURTMASI*
-
-👤 *Mijoz:* ${formData.user}
-📧 *Email:* ${formData.email}
-📱 *Telefon:* ${formData.phone}
-📲 *Telegram:* ${formData.telegram ? '@' + formData.telegram.replace('@', '') : 'Berilmagan'}
-🚻 *Jinsi:* ${formData.gender}
-🎂 *Tug'ilgan sana:* ${formData.birthDate}
-🔢 *Yosh:* ${formData.age}
-
-🎮 *O'yin/Platforma:* ${formData.game}
-🎨 *Dizayn turi:* ${formData.designType}
-💰 *Narx:* ${price.toLocaleString()} so'm
-
-📝 *Izoh va talablar:*
-${formData.comment}
-
-📅 *Sana:* ${new Date().toLocaleString('uz-UZ')}
-🔑 *Firebase ID:* ${newOrderRef.key}
-
-⚠️ *Diqqat:* Yangi buyurtma keldi! Mijoz bilan bog'laning.`;
-
-        console.log('📱 Telegram xabar yuborilmoqda...');
-
-        const telegramResponse = await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendMessage`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            chat_id: '7833115003',
-            text: telegramMessage,
-            parse_mode: 'Markdown'
-          })
-        });
-
-        console.log('📱 Telegram response status:', telegramResponse.status);
-        const telegramData = await telegramResponse.json();
-        console.log('📱 Telegram response data:', telegramData);
-        
-        if (telegramData.ok) {
-          console.log('✅ Telegram botga yuborildi');
-          showMessage('✅ Buyurtmangiz muvaffaqiyatli yuborildi! Firebase Realtime Database va Telegram botga saqlandi. Tez orada siz bilan bog\'lanamiz.', 'success');
-          
-          // Reset form
-          document.getElementById('orderForm').reset();
-          document.getElementById('priceDisplay').classList.remove('show');
-          document.querySelectorAll('.radio-item').forEach(item => {
-            item.classList.remove('selected');
-          });
-        } else {
-          throw new Error('Telegram bot xatosi: ' + JSON.stringify(telegramData));
-        }
-      } catch (error) {
-        console.error('❌ Xatolik:', error);
-        showMessage('❌ Xatolik yuz berdi! Xatolik: ' + error.message, 'error');
-      } finally {
-        // Reset button state
-        submitBtn.classList.remove('loading');
-        submitBtn.innerHTML = '<span>🚀</span> Buyurtma berish';
-      }
-    });
-
-    // Delete account
-    document.getElementById('deleteBtn').addEventListener('click', async function() {
-      if (!confirm('❌ Haqiqatan ham akkauntingizni o\'chirishni xohlaysizmi? Bu amal qaytarib bo\'lmaydi!')) {
-        return;
-      }
-
-      try {
-        const message = `🗑️ *Akkaunt o'chirildi*
-
-👤 *Foydalanuvchi:* ${user}
-📅 *Sana:* ${new Date().toLocaleString('uz-UZ')}
-❌ *Status:* Akkaunt o'chirildi
-`;
-
-        await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendMessage`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            chat_id: '7833115003',
-            text: message,
-            parse_mode: 'Markdown'
-          })
-        });
-
-        localStorage.removeItem('user');
-        localStorage.removeItem('theme');
-        alert('✅ Akkauntingiz muvaffaqiyatli o\'chirildi!');
-        window.location.href = '/index.html';
-      } catch (error) {
-        alert('❌ Xatolik yuz berdi!');
-      }
-    });
-
     // Show message function
     function showMessage(text, type) {
       const messageEl = document.getElementById(type === 'success' ? 'successMessage' : 'errorMessage');
@@ -936,14 +901,12 @@ ${formData.comment}
 
       setTimeout(() => {
         messageEl.style.display = 'none';
-      }, 8000);
+      }, 5000);
     }
 
-    // Make functions global for HTML onclick events
-    window.showMessage = showMessage;
-  </script>
+    // Run registration check on page load
+    checkRegistration();
 
-  <script>
     // Security functions
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('keydown', function(e) {
