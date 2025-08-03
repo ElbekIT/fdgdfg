@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To'lov - Elbek Design Studio</title>
+  <link rel="icon" href="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #8b5cf6;
+      --accent: #06b6d4;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --gray: #64748b;
+      --white: #ffffff;
+      --success: #22c55e;
+      --error: #ef4444;
+      --warning: #f59e0b;
+      --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      --shadow: 0 10px 40px rgba(99, 102, 241, 0.1);
+      --shadow-hover: 0 20px 60px rgba(99, 102, 241, 0.2);
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--light);
+      line-height: 1.6;
+      color: var(--dark);
+      min-height: 100vh;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    /* Header */
+    .header {
+      background: var(--white);
+      box-shadow: var(--shadow);
+      padding: 1rem 0;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      backdrop-filter: blur(20px);
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 3px solid var(--primary);
+    }
+
+    .brand-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--gradient);
+      border-radius: 2rem;
+      color: var(--white);
+      font-weight: 600;
+      box-shadow: var(--shadow);
+    }
+
+    /* Back Button */
+    .back-btn {
+      position: fixed;
+      top: 100px;
+      left: 2rem;
+      width: 50px;
+      height: 50px;
+      background: var(--white);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+      z-index: 1000;
+    }
+
+    .back-btn:hover {
+      background: var(--primary);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* Main Content */
+    .main {
+      margin-top: 100px;
+      padding: 2rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .payment-container {
+      background: var(--white);
+      border-radius: 2rem;
+      padding: 3rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: slideUp 0.8s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .payment-title {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .payment-subtitle {
+      text-align: center;
+      color: var(--gray);
+      font-size: 1.1rem;
+      margin-bottom: 3rem;
+      font-weight: 300;
+    }
+
+    /* Order Summary */
+    .order-summary {
+      background: rgba(99, 102, 241, 0.05);
+      border: 2px solid rgba(99, 102, 241, 0.1);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .summary-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--success);
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 2px solid rgba(99, 102, 241, 0.2);
+    }
+
+    /* Card Info */
+    .card-section {
+      margin-bottom: 2rem;
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-display {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      border-radius: 1rem;
+      padding: 2rem;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-display::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+    }
+
+    .card-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.2rem;
+      margin-bottom: 1rem;
+      font-family: 'Courier New', monospace;
+    }
+
+    .card-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-holder {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .card-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: var(--white);
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Payment Confirmation */
+    .payment-confirmation {
+      margin-bottom: 2rem;
+    }
+
+    .confirmation-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      background: rgba(34, 197, 94, 0.05);
+      border: 2px solid rgba(34, 197, 94, 0.1);
+      border-radius: 1rem;
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .checkbox-container:hover {
+      background: rgba(34, 197, 94, 0.1);
+      border-color: rgba(34, 197, 94, 0.2);
+    }
+
+    .checkbox-container.checked {
+      background: rgba(34, 197, 94, 0.1);
+      border-color: var(--success);
+    }
+
+    .checkbox {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--success);
+    }
+
+    .checkbox-label {
+      font-weight: 600;
+      color: var(--success);
+      font-size: 1.1rem;
+    }
+
+    /* Receipt Upload */
+    .receipt-upload {
+      margin-bottom: 2rem;
+    }
+
+    .upload-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .upload-area {
+      border: 3px dashed #e5e7eb;
+      border-radius: 1rem;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: var(--white);
+    }
+
+    .upload-area:hover {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, 0.02);
+    }
+
+    .upload-area.dragover {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, 0.05);
+    }
+
+    .upload-icon {
+      font-size: 3rem;
+      color: var(--gray);
+      margin-bottom: 1rem;
+    }
+
+    .upload-text {
+      color: var(--gray);
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .upload-hint {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    .uploaded-file {
+      display: none;
+      background: rgba(34, 197, 94, 0.1);
+      border: 2px solid rgba(34, 197, 94, 0.2);
+      border-radius: 1rem;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .uploaded-file.show {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .file-icon {
+      font-size: 2rem;
+      color: var(--success);
+    }
+
+    .file-info {
+      flex: 1;
+    }
+
+    .file-name {
+      font-weight: 600;
+      color: var(--success);
+      margin-bottom: 0.25rem;
+    }
+
+    .file-size {
+      color: var(--gray);
+      font-size: 0.85rem;
+    }
+
+    .remove-file {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--error);
+      border: none;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .remove-file:hover {
+      background: var(--error);
+      color: var(--white);
+    }
+
+    /* Submit Button */
+    .submit-btn {
+      width: 100%;
+      padding: 1.5rem 2rem;
+      border: none;
+      border-radius: 1rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: var(--gradient);
+      color: var(--white);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .submit-btn.enabled {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .submit-btn.enabled:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .submit-btn.loading {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .submit-btn.loading::after {
+      content: '';
+      width: 20px;
+      height: 20px;
+      border: 2px solid transparent;
+      border-top: 2px solid var(--white);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Status Messages */
+    .status-message {
+      padding: 1rem;
+      border-radius: 1rem;
+      margin: 1rem 0;
+      font-weight: 500;
+      text-align: center;
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .status-message.success {
+      background: rgba(34, 197, 94, 0.1);
+      color: var(--success);
+      border: 2px solid rgba(34, 197, 94, 0.2);
+    }
+
+    .status-message.error {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--error);
+      border: 2px solid rgba(239, 68, 68, 0.2);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-content {
+        padding: 0 1rem;
+      }
+
+      .main {
+        padding: 1rem;
+      }
+
+      .payment-container {
+        padding: 2rem;
+      }
+
+      .payment-title {
+        font-size: 2rem;
+      }
+
+      .back-btn {
+        left: 1rem;
+        width: 40px;
+        height: 40px;
+      }
+
+      .card-number {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo-section">
+        <img src="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Logo" class="logo">
+        <div class="brand-name">Elbek Design Studio</div>
+      </div>
+      <div class="user-info">
+        <span>👤</span>
+        <span id="userDisplay"></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Back Button -->
+  <button class="back-btn" onclick="goBack()">
+    ←
+  </button>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="payment-container">
+      <h1 class="payment-title">💳 To'lov</h1>
+      <p class="payment-subtitle">Buyurtmangiz uchun to'lovni amalga oshiring</p>
+
+      <!-- Status Messages -->
+      <div id="successMessage" class="status-message success"></div>
+      <div id="errorMessage" class="status-message error"></div>
+
+      <!-- Order Summary -->
+      <div class="order-summary">
+        <h3 class="summary-title">
+          <span>📋</span> Buyurtma xulosasi
+        </h3>
+        <div class="summary-item">
+          <span>Xizmat turi:</span>
+          <span id="serviceType">-</span>
+        </div>
+        <div class="summary-item">
+          <span>Tanlangan variant:</span>
+          <span id="selectedVariant">-</span>
+        </div>
+        <div class="summary-item">
+          <span>💰 Jami summa:</span>
+          <span id="totalAmount">0 so'm</span>
+        </div>
+      </div>
+
+      <!-- Card Information -->
+      <div class="card-section">
+        <h3 class="card-title">
+          <span>💳</span> To'lov kartasi ma'lumotlari
+        </h3>
+        <div class="card-display">
+          <div class="card-number" id="cardNumber">4073 4200 8456 9577</div>
+          <div class="card-info">
+            <div class="card-holder">ELBEK QORIYEV</div>
+            <div class="card-logo">VISA</div>
+          </div>
+          <button class="copy-btn" onclick="copyCardNumber()">
+            📋 Nusxa olish
+          </button>
+        </div>
+        <p style="color: var(--gray); font-size: 0.9rem; text-align: center;">
+          ⚠️ Ushbu karta raqamiga to'lovni amalga oshiring va chekni yuklang
+        </p>
+      </div>
+
+      <!-- Payment Confirmation -->
+      <div class="payment-confirmation">
+        <h3 class="confirmation-title">
+          <span>✅</span> To'lov tasdiqlash
+        </h3>
+        <div class="checkbox-container" onclick="togglePaymentConfirmation()">
+          <input type="checkbox" id="paymentConfirmed" class="checkbox">
+          <label for="paymentConfirmed" class="checkbox-label">
+            💰 To'lovni amalga oshirdim
+          </label>
+        </div>
+      </div>
+
+      <!-- Receipt Upload -->
+      <div class="receipt-upload">
+        <h3 class="upload-title">
+          <span>📄</span> Chek yuklash
+        </h3>
+        <div class="upload-area" onclick="document.getElementById('receiptFile').click()">
+          <div class="upload-icon">📁</div>
+          <div class="upload-text">Chekni yuklash uchun bosing yoki shu yerga tashlang</div>
+          <div class="upload-hint">PDF yoki rasm formatida (maksimal 10MB)</div>
+        </div>
+        <input type="file" id="receiptFile" class="file-input" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileUpload(event)">
+        
+        <div class="uploaded-file" id="uploadedFile">
+          <div class="file-icon">📄</div>
+          <div class="file-info">
+            <div class="file-name" id="fileName"></div>
+            <div class="file-size" id="fileSize"></div>
+          </div>
+          <button class="remove-file" onclick="removeFile()">🗑️</button>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button class="submit-btn" id="submitBtn" onclick="submitPayment()">
+        <span>🚀</span> To'lovni tasdiqlash va jo'natish
+      </button>
+    </div>
+  </main>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Import Firebase functions
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getDatabase, ref, update } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+    import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js';
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyA_B0OC6Y91ontwJWM-o615jg7Dr5jUVvA",
+      authDomain: "dizaynowner.firebaseapp.com",
+      databaseURL: "https://dizaynowner-default-rtdb.firebaseio.com/",
+      projectId: "dizaynowner",
+      storageBucket: "dizaynowner.firebasestorage.app",
+      messagingSenderId: "976762018041",
+      appId: "1:976762018041:web:e43227005165059158ea28",
+      measurementId: "G-0S6KV8DFKJ"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const storage = getStorage(app);
+
+    let uploadedFile = null;
+    let orderData = null;
+
+    // Check authentication and get order data
+    const user = localStorage.getItem('user');
+    if (!user) {
+      alert("Iltimos, avval ro'yxatdan o'ting!");
+      window.location.href = "register.html";
+    } else {
+      document.getElementById("userDisplay").textContent = user;
+      loadOrderData();
+    }
+
+    // Load order data from localStorage
+    function loadOrderData() {
+      const pendingOrder = localStorage.getItem('pendingOrder');
+      if (!pendingOrder) {
+        alert("Buyurtma ma'lumotlari topilmadi!");
+        window.location.href = "/index.html";
+        return;
+      }
+
+      try {
+        orderData = JSON.parse(pendingOrder);
+        displayOrderSummary();
+      } catch (error) {
+        console.error('Order data parse error:', error);
+        alert("Buyurtma ma'lumotlarida xatolik!");
+        window.location.href = "/index.html";
+      }
+    }
+
+    // Display order summary
+    function displayOrderSummary() {
+      if (!orderData) return;
+
+      document.getElementById('serviceType').textContent = 
+        orderData.type === 'gaming' ? '🎮 Gaming Dizayn' : '🌐 Web Dizayn';
+      
+      if (orderData.type === 'gaming') {
+        document.getElementById('selectedVariant').textContent = 
+          `${orderData.game} - ${orderData.designType}`;
+      } else {
+        document.getElementById('selectedVariant').textContent = 
+          `${orderData.companyName} - ${orderData.websiteType}`;
+      }
+
+      const price = orderData.price;
+      const priceText = typeof price === 'number' ? 
+        `${price.toLocaleString()} so'm` : price;
+      document.getElementById('totalAmount').textContent = priceText;
+    }
+
+    // Copy card number
+    window.copyCardNumber = function() {
+      const cardNumber = document.getElementById('cardNumber').textContent;
+      navigator.clipboard.writeText(cardNumber.replace(/\s/g, '')).then(() => {
+        showMessage('✅ Karta raqami nusxa olindi!', 'success');
+      }).catch(() => {
+        showMessage('❌ Nusxa olishda xatolik!', 'error');
+      });
+    };
+
+    // Toggle payment confirmation
+    window.togglePaymentConfirmation = function() {
+      const checkbox = document.getElementById('paymentConfirmed');
+      const container = checkbox.closest('.checkbox-container');
+      
+      checkbox.checked = !checkbox.checked;
+      
+      if (checkbox.checked) {
+        container.classList.add('checked');
+      } else {
+        container.classList.remove('checked');
+      }
+      
+      checkFormValidity();
+    };
+
+    // Handle file upload
+    window.handleFileUpload = function(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      // Check file size (10MB limit)
+      if (file.size > 10 * 1024 * 1024) {
+        showMessage('❌ Fayl hajmi 10MB dan oshmasligi kerak!', 'error');
+        return;
+      }
+
+      // Check file type
+      const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+      if (!allowedTypes.includes(file.type)) {
+        showMessage('❌ Faqat PDF, JPG, PNG formatdagi fayllar qabul qilinadi!', 'error');
+        return;
+      }
+
+      uploadedFile = file;
+      displayUploadedFile(file);
+      checkFormValidity();
+    };
+
+    // Display uploaded file
+    function displayUploadedFile(file) {
+      const uploadedFileDiv = document.getElementById('uploadedFile');
+      const fileName = document.getElementById('fileName');
+      const fileSize = document.getElementById('fileSize');
+      const fileIcon = uploadedFileDiv.querySelector('.file-icon');
+
+      fileName.textContent = file.name;
+      fileSize.textContent = formatFileSize(file.size);
+      
+      // Set appropriate icon
+      if (file.type === 'application/pdf') {
+        fileIcon.textContent = '📄';
+      } else {
+        fileIcon.textContent = '🖼️';
+      }
+
+      uploadedFileDiv.classList.add('show');
+    }
+
+    // Remove uploaded file
+    window.removeFile = function() {
+      uploadedFile = null;
+      document.getElementById('uploadedFile').classList.remove('show');
+      document.getElementById('receiptFile').value = '';
+      checkFormValidity();
+    };
+
+    // Format file size
+    function formatFileSize(bytes) {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    // Check form validity
+    function checkFormValidity() {
+      const paymentConfirmed = document.getElementById('paymentConfirmed').checked;
+      const hasFile = uploadedFile !== null;
+      const submitBtn = document.getElementById('submitBtn');
+
+      if (paymentConfirmed && hasFile) {
+        submitBtn.classList.add('enabled');
+      } else {
+        submitBtn.classList.remove('enabled');
+      }
+    }
+
+    // Submit payment
+    window.submitPayment = async function() {
+      if (!document.getElementById('submitBtn').classList.contains('enabled')) {
+        return;
+      }
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.classList.add('loading');
+      submitBtn.innerHTML = '<span>⏳</span> Yuborilmoqda...';
+
+      try {
+        // Upload file to Firebase Storage
+        const fileName = `receipts/${user}/${Date.now()}_${uploadedFile.name}`;
+        const fileRef = storageRef(storage, fileName);
+        
+        console.log('📤 Fayl yuklanmoqda...');
+        const snapshot = await uploadBytes(fileRef, uploadedFile);
+        const downloadURL = await getDownloadURL(snapshot.ref);
+        console.log('✅ Fayl yuklandi:', downloadURL);
+
+        // Update order with payment info
+        const updatedOrderData = {
+          ...orderData,
+          status: 'payment_pending', // Yangi status
+          paymentInfo: {
+            confirmed: true,
+            receiptURL: downloadURL,
+            receiptFileName: uploadedFile.name,
+            receiptFileType: uploadedFile.type,
+            paymentDate: new Date().toISOString()
+          }
+        };
+
+        // Save to Firebase Database
+        const ordersRef = ref(database, 'orders');
+        const newOrderRef = await push(ordersRef, updatedOrderData);
+        console.log('✅ Buyurtma saqlandi:', newOrderRef.key);
+
+        // Send to Telegram Bot with receipt
+        await sendToTelegram(updatedOrderData, downloadURL);
+
+        // Clear pending order
+        localStorage.removeItem('pendingOrder');
+
+        showMessage('✅ To\'lov ma\'lumotlari muvaffaqiyatli yuborildi! Tez orada tekshirib, tasdiqlaymiz.', 'success');
+
+        setTimeout(() => {
+          window.location.href = '/html/menby.html';
+        }, 3000);
+
+      } catch (error) {
+        console.error('❌ Xatolik:', error);
+        showMessage('❌ Xatolik yuz berdi: ' + error.message, 'error');
+      } finally {
+        submitBtn.classList.remove('loading');
+        submitBtn.innerHTML = '<span>🚀</span> To\'lovni tasdiqlash va jo\'natish';
+      }
+    };
+
+    // Send to Telegram
+    async function sendToTelegram(orderData, receiptURL) {
+      try {
+        const price = orderData.price;
+        const priceText = typeof price === 'number' ? `${price.toLocaleString()} so'm` : price;
+        
+        const message = `💳 *YANGI TO'LOV TASDIQLASH*
+
+👤 *Mijoz:* ${orderData.user}
+📧 *Email:* ${orderData.email}
+📱 *Telefon:* ${orderData.phone}
+
+🎯 *Buyurtma:*
+• Tur: ${orderData.type === 'gaming' ? '🎮 Gaming Dizayn' : '🌐 Web Dizayn'}
+${orderData.type === 'gaming' ? 
+  `• O'yin: ${orderData.game}\n• Dizayn: ${orderData.designType}` : 
+  `• Kompaniya: ${orderData.companyName}\n• Sayt turi: ${orderData.websiteType}`
+}
+
+💰 *To'lov:*
+• Summa: ${priceText}
+• Karta: 4073 4200 8456 9577
+• Sana: ${new Date().toLocaleString('uz-UZ')}
+
+📄 *Chek:* Quyida yuklangan
+
+⚠️ *Diqqat:* To'lov chekini tekshiring va tasdiqlaing!`;
+
+        // Send text message
+        const textResponse = await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: '7833115003',
+            text: message,
+            parse_mode: 'Markdown'
+          })
+        });
+
+        // Send receipt file
+        if (orderData.paymentInfo.receiptFileType === 'application/pdf') {
+          // Send as document for PDF
+          await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendDocument`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: '7833115003',
+              document: receiptURL,
+              caption: `📄 To'lov cheki: ${orderData.paymentInfo.receiptFileName}`
+            })
+          });
+        } else {
+          // Send as photo for images
+          await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendPhoto`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: '7833115003',
+              photo: receiptURL,
+              caption: `🖼️ To'lov cheki: ${orderData.paymentInfo.receiptFileName}`
+            })
+          });
+        }
+
+        console.log('✅ Telegram ga yuborildi');
+      } catch (error) {
+        console.error('❌ Telegram xabar yuborishda xatolik:', error);
+      }
+    }
+
+    // Show message function
+    function showMessage(text, type) {
+      const messageEl = document.getElementById(type === 'success' ? 'successMessage' : 'errorMessage');
+      messageEl.textContent = text;
+      messageEl.style.display = 'block';
+
+      setTimeout(() => {
+        messageEl.style.display = 'none';
+      }, 8000);
+    }
+
+    // Back button
+    window.goBack = function() {
+      if (confirm('To\'lov sahifasidan chiqishni xohlaysizmi? Ma\'lumotlar saqlanmaydi.')) {
+        window.location.href = '/index.html';
+      }
+    };
+
+    // Drag and drop functionality
+    const uploadArea = document.querySelector('.upload-area');
+    
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+      uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+      
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        document.getElementById('receiptFile').files = files;
+        handleFileUpload({ target: { files: files } });
+      }
+    });
+
+    // Make functions global
+    window.showMessage = showMessage;
+  </script>
+
+  <script>
+    // Security functions
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', function(e) {
+      if (
+        (e.ctrlKey && ['u', 's', 'p', 'c'].includes(e.key.toLowerCase())) ||
+        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') ||
+        e.key === 'F12'
+      ) {
+        e.preventDefault();
+        alert("Bu amal bloklangan!");
+      }
+    });
+    document.addEventListener('selectstart', e => e.preventDefault());
+    document.addEventListener('copy', e => {
+      e.preventDefault();
+      alert("Nusxa olish mumkin emas!");
+    });
+  </script>
+</body>
+</html>

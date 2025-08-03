@@ -377,6 +377,12 @@
         height: 40px;
       }
     }
+
+    .status-warning {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--warning);
+      border: 2px solid rgba(245, 158, 11, 0.2);
+    }
   </style>
 </head>
 <body>
@@ -618,6 +624,7 @@
     function getStatusClass(status) {
       switch (status) {
         case 'pending': return 'status-pending';
+        case 'payment_pending': return 'status-warning'; // Yangi status
         case 'approved': return 'status-approved';
         case 'completed': return 'status-completed';
         default: return 'status-pending';
@@ -628,6 +635,7 @@
     function getStatusText(status) {
       switch (status) {
         case 'pending': return '⏳ Tasdiqlanmoqda';
+        case 'payment_pending': return '🔍 Tekshirilmoqda'; // Yangi status
         case 'approved': return '✅ Tasdiqlandi';
         case 'completed': return '🎉 Tayyor';
         default: return '⏳ Tasdiqlanmoqda';

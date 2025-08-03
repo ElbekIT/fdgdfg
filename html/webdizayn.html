@@ -977,80 +977,28 @@
       submitBtn.innerHTML = '<span>⏳</span> Yuborilmoqda...';
 
       try {
-        console.log('🔥 Firebase Realtime Database ga saqlash boshlandi...');
-        
-        // 1. Save to Firebase Realtime Database
-        const ordersRef = ref(database, 'orders');
-        const newOrderRef = await push(ordersRef, formData);
-        console.log('✅ Firebase Realtime Database ga saqlandi:', newOrderRef.key);
+        // Submit button textini o'zgartirish
+        submitBtn.innerHTML = '<span>💳</span> To\'lovga o\'tish';
 
-        // 2. Send to Telegram Bot
-        const price = websitePrices[formData.websiteType];
-        const priceText = typeof price === 'number' ? `${price.toLocaleString()} so'm` : price;
-        
-        const telegramMessage = `🌐 *YANGI WEB DIZAYN BUYURTMASI*
+        // Form submission qismida (try blokida, Firebase ga saqlashdan oldin):
+        // 1. Save order data to localStorage for payment
+        const orderForPayment = {
+          ...formData,
+          createdAt: new Date().toISOString() // Convert serverTimestamp to regular timestamp
+        };
+        localStorage.setItem('pendingOrder', JSON.stringify(orderForPayment));
 
-👤 *Mijoz:* ${formData.user}
-📧 *Email:* ${formData.email}
-📱 *Telefon:* ${formData.phone}
-📲 *Telegram:* ${formData.telegram ? '@' + formData.telegram.replace('@', '') : 'Berilmagan'}
+        // 2. Redirect to payment page instead of saving to Firebase
+        console.log('💳 To\'lov sahifasiga yo\'naltirilmoqda...');
+        showMessage('💳 To\'lov sahifasiga yo\'naltirilmoqda...', 'success');
 
-🏢 *Biznes ma'lumotlari:*
-• Kompaniya: ${formData.companyName}
-• Biznes turi: ${formData.businessType}
-• Domen: ${formData.domainName || 'Berilmagan'}
+        setTimeout(() => {
+          window.location.href = '/html/payment.html';
+        }, 2000);
 
-🎨 *Web sayt ma'lumotlari:*
-• Sayt turi: ${formData.websiteType}
-• Narx: ${priceText}
-• Dizayn uslubi: ${formData.designStyle || 'Berilmagan'}
-• Ranglar: ${formData.colors || 'Berilmagan'}
+        // Remove the Firebase saving code and Telegram sending code from here
+        // (comment out or remove the Firebase push and Telegram fetch parts)
 
-⚙️ *Qo'shimcha funksiyalar:*
-${selectedFeatures.length > 0 ? selectedFeatures.map(f => `• ${f}`).join('\n') : '• Yo\'q'}
-
-📝 *Talablar:*
-${formData.requirements}
-
-📅 *Sana:* ${new Date().toLocaleString('uz-UZ')}
-🔑 *Firebase ID:* ${newOrderRef.key}
-
-⚠️ *Diqqat:* Yangi web dizayn buyurtmasi keldi! Mijoz bilan bog'laning.`;
-
-        console.log('📱 Telegram xabar yuborilmoqda...');
-
-        const telegramResponse = await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendMessage`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            chat_id: '7833115003',
-            text: telegramMessage,
-            parse_mode: 'Markdown'
-          })
-        });
-
-        console.log('📱 Telegram response status:', telegramResponse.status);
-        const telegramData = await telegramResponse.json();
-        console.log('📱 Telegram response data:', telegramData);
-        
-        if (telegramData.ok) {
-          console.log('✅ Telegram botga yuborildi');
-          showMessage('✅ Web dizayn buyurtmangiz muvaffaqiyatli yuborildi! Firebase Realtime Database va Telegram botga saqlandi. 24-48 soat ichida siz bilan bog\'lanamiz.', 'success');
-          
-          // Reset form
-          document.getElementById('webDesignForm').reset();
-          document.getElementById('priceDisplay').classList.remove('show');
-          document.querySelectorAll('.checkbox-item').forEach(item => {
-            item.classList.remove('selected');
-          });
-          document.querySelectorAll('.radio-item').forEach(item => {
-            item.classList.remove('selected');
-          });
-        } else {
-          throw new Error('Telegram bot xatosi: ' + JSON.stringify(telegramData));
-        }
       } catch (error) {
         console.error('❌ Xatolik:', error);
         showMessage('❌ Xatolik yuz berdi! Xatolik: ' + error.message, 'error');
