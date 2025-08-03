@@ -479,6 +479,17 @@
       -ms-user-select: none;
       user-select: none;
     }
+
+    .notification-badge {
+      background: #ef4444;
+      color: white;
+      border-radius: 50%;
+      padding: 0.2rem 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-left: 0.5rem;
+      animation: pulse 2s infinite;
+    }
   </style>
 </head>
 <body>
@@ -499,6 +510,9 @@
         <ul class="nav-menu">
           <li><a href="#home">Bosh sahifa</a></li>
           <li><a href="/html/byqan.html">Xizmatlar</a></li>
+          <li><a href="/html/habarnoma.html" id="notificationLink">
+            Habarnoma <span id="notificationBadge" class="notification-badge" style="display: none;">0</span>
+          </a></li>
           <li><a href="#contact">Bog'lanish</a></li>
         </ul>
       </nav>
@@ -601,6 +615,55 @@
         particlesContainer.appendChild(particle);
       }
     }
+
+    // Check notifications
+    function checkNotifications() {
+      const user = localStorage.getItem('user');
+      if (!user) return;
+
+      // Import Firebase functions
+      import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js').then(({ initializeApp }) => {
+        import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js').then(({ getDatabase, ref, onValue, query, orderByChild, equalTo }) => {
+          const firebaseConfig = {
+            apiKey: "AIzaSyA_B0OC6Y91ontwJWM-o615jg7Dr5jUVvA",
+            authDomain: "dizaynowner.firebaseapp.com",
+            databaseURL: "https://dizaynowner-default-rtdb.firebaseio.com/",
+            projectId: "dizaynowner",
+            storageBucket: "dizaynowner.firebasestorage.app",
+            messagingSenderId: "976762018041",
+            appId: "1:976762018041:web:e43227005165059158ea28"
+          };
+
+          const app = initializeApp(firebaseConfig);
+          const database = getDatabase(app);
+
+          const notificationsRef = ref(database, `notifications/${user}`);
+          onValue(notificationsRef, (snapshot) => {
+            let unreadCount = 0;
+            if (snapshot.exists()) {
+              const notifications = snapshot.val();
+              Object.values(notifications).forEach(notification => {
+                if (!notification.read) {
+                  unreadCount++;
+                }
+              });
+            }
+
+            const badge = document.getElementById('notificationBadge');
+            if (unreadCount > 0) {
+              badge.textContent = unreadCount;
+              badge.style.display = 'inline';
+            } else {
+              badge.style.display = 'none';
+            }
+          });
+        });
+      });
+    }
+
+    // Initialize notifications
+    checkNotifications();
+    setInterval(checkNotifications, 30000); // Check every 30 seconds
 
     // Time Update
     function updateTime() {
@@ -722,6 +785,8 @@
 
     // Initialize
     createParticles();
+    
+
     updateTime();
     setInterval(updateTime, 1000);
 
