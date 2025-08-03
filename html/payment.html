@@ -666,7 +666,7 @@
   <script type="module">
     // Import Firebase functions
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-    import { getDatabase, ref, update } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+    import { getDatabase, ref, update, push } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
     import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js';
 
     // Firebase configuration
@@ -872,6 +872,7 @@
         };
 
         // Save to Firebase Database
+        console.log('🔥 Firebase ga saqlash boshlandi...');
         const ordersRef = ref(database, 'orders');
         const newOrderRef = await push(ordersRef, updatedOrderData);
         console.log('✅ Buyurtma saqlandi:', newOrderRef.key);
