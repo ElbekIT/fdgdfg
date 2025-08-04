@@ -664,10 +664,12 @@
 
   <!-- Firebase SDK -->
   <script type="module">
+    // Import Firebase functions
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-    import { getDatabase, ref, update, push } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+    import { getDatabase, ref, update } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+    import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js';
 
-    // Firebase config
+    // Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyA_B0OC6Y91ontwJWM-o615jg7Dr5jUVvA",
       authDomain: "dizaynowner.firebaseapp.com",
@@ -679,8 +681,10 @@
       measurementId: "G-0S6KV8DFKJ"
     };
 
+    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
+    const storage = getStorage(app);
 
     let uploadedFile = null;
     let orderData = null;
@@ -695,6 +699,7 @@
       loadOrderData();
     }
 
+    // Load order data from localStorage
     function loadOrderData() {
       const pendingOrder = localStorage.getItem('pendingOrder');
       if (!pendingOrder) {
@@ -702,6 +707,7 @@
         window.location.href = "/index.html";
         return;
       }
+
       try {
         orderData = JSON.parse(pendingOrder);
         displayOrderSummary();
@@ -712,10 +718,13 @@
       }
     }
 
+    // Display order summary
     function displayOrderSummary() {
       if (!orderData) return;
+
       document.getElementById('serviceType').textContent = 
         orderData.type === 'gaming' ? '🎮 Gaming Dizayn' : '🌐 Web Dizayn';
+      
       if (orderData.type === 'gaming') {
         document.getElementById('selectedVariant').textContent = 
           `${orderData.game} - ${orderData.designType}`;
@@ -723,12 +732,14 @@
         document.getElementById('selectedVariant').textContent = 
           `${orderData.companyName} - ${orderData.websiteType}`;
       }
+
       const price = orderData.price;
       const priceText = typeof price === 'number' ? 
         `${price.toLocaleString()} so'm` : price;
       document.getElementById('totalAmount').textContent = priceText;
     }
 
+    // Copy card number
     window.copyCardNumber = function() {
       const cardNumber = document.getElementById('cardNumber').textContent;
       navigator.clipboard.writeText(cardNumber.replace(/\s/g, '')).then(() => {
@@ -738,50 +749,66 @@
       });
     };
 
+    // Toggle payment confirmation
     window.togglePaymentConfirmation = function() {
       const checkbox = document.getElementById('paymentConfirmed');
       const container = checkbox.closest('.checkbox-container');
+      
       checkbox.checked = !checkbox.checked;
+      
       if (checkbox.checked) {
         container.classList.add('checked');
       } else {
         container.classList.remove('checked');
       }
+      
       checkFormValidity();
     };
 
+    // Handle file upload
     window.handleFileUpload = function(event) {
       const file = event.target.files[0];
       if (!file) return;
+
+      // Check file size (10MB limit)
       if (file.size > 10 * 1024 * 1024) {
         showMessage('❌ Fayl hajmi 10MB dan oshmasligi kerak!', 'error');
         return;
       }
+
+      // Check file type
       const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
       if (!allowedTypes.includes(file.type)) {
         showMessage('❌ Faqat PDF, JPG, PNG formatdagi fayllar qabul qilinadi!', 'error');
         return;
       }
+
       uploadedFile = file;
       displayUploadedFile(file);
       checkFormValidity();
     };
 
+    // Display uploaded file
     function displayUploadedFile(file) {
       const uploadedFileDiv = document.getElementById('uploadedFile');
       const fileName = document.getElementById('fileName');
       const fileSize = document.getElementById('fileSize');
       const fileIcon = uploadedFileDiv.querySelector('.file-icon');
+
       fileName.textContent = file.name;
       fileSize.textContent = formatFileSize(file.size);
+      
+      // Set appropriate icon
       if (file.type === 'application/pdf') {
         fileIcon.textContent = '📄';
       } else {
         fileIcon.textContent = '🖼️';
       }
+
       uploadedFileDiv.classList.add('show');
     }
 
+    // Remove uploaded file
     window.removeFile = function() {
       uploadedFile = null;
       document.getElementById('uploadedFile').classList.remove('show');
@@ -789,6 +816,7 @@
       checkFormValidity();
     };
 
+    // Format file size
     function formatFileSize(bytes) {
       if (bytes === 0) return '0 Bytes';
       const k = 1024;
@@ -797,10 +825,12 @@
       return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 
+    // Check form validity
     function checkFormValidity() {
       const paymentConfirmed = document.getElementById('paymentConfirmed').checked;
       const hasFile = uploadedFile !== null;
       const submitBtn = document.getElementById('submitBtn');
+
       if (paymentConfirmed && hasFile) {
         submitBtn.classList.add('enabled');
       } else {
@@ -808,46 +838,52 @@
       }
     }
 
+    // Submit payment
     window.submitPayment = async function() {
       if (!document.getElementById('submitBtn').classList.contains('enabled')) {
         return;
       }
+
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.classList.add('loading');
       submitBtn.innerHTML = '<span>⏳</span> Yuborilmoqda...';
 
       try {
-        // 1. Rasmni Telegram botga yuborish (faqat rasm, PDF emas)
-        let telegramSent = false;
-        if (uploadedFile && uploadedFile.type.startsWith('image/')) {
-          const formData = new FormData();
-          formData.append('chat_id', '7833115003');
-          formData.append('photo', uploadedFile, uploadedFile.name);
-          formData.append('caption', `🖼️ To'lov cheki: ${uploadedFile.name}`);
-          await fetch('https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendPhoto', {
-            method: 'POST',
-            body: formData
-          });
-          telegramSent = true;
-        }
+        // Upload file to Firebase Storage
+        const fileName = `receipts/${user}/${Date.now()}_${uploadedFile.name}`;
+        const fileRef = storageRef(storage, fileName);
+        
+        console.log('📤 Fayl yuklanmoqda...');
+        const snapshot = await uploadBytes(fileRef, uploadedFile);
+        const downloadURL = await getDownloadURL(snapshot.ref);
+        console.log('✅ Fayl yuklandi:', downloadURL);
 
-        // 2. Qolgan barcha ma'lumotlarni Firebase Database ga yozish
+        // Update order with payment info
         const updatedOrderData = {
           ...orderData,
-          status: 'payment_pending',
+          status: 'payment_pending', // Yangi status
           paymentInfo: {
             confirmed: true,
+            receiptURL: downloadURL,
             receiptFileName: uploadedFile.name,
             receiptFileType: uploadedFile.type,
             paymentDate: new Date().toISOString()
           }
         };
-        const ordersRef = ref(database, 'orders');
-        await push(ordersRef, updatedOrderData);
 
-        // 3. LocalStorage tozalash va xabar
+        // Save to Firebase Database
+        const ordersRef = ref(database, 'orders');
+        const newOrderRef = await push(ordersRef, updatedOrderData);
+        console.log('✅ Buyurtma saqlandi:', newOrderRef.key);
+
+        // Send to Telegram Bot with receipt
+        await sendToTelegram(updatedOrderData, downloadURL);
+
+        // Clear pending order
         localStorage.removeItem('pendingOrder');
+
         showMessage('✅ To\'lov ma\'lumotlari muvaffaqiyatli yuborildi! Tez orada tekshirib, tasdiqlaymiz.', 'success');
+
         setTimeout(() => {
           window.location.href = '/html/menby.html';
         }, 3000);
@@ -861,15 +897,88 @@
       }
     };
 
+    // Send to Telegram
+    async function sendToTelegram(orderData, receiptURL) {
+      try {
+        const price = orderData.price;
+        const priceText = typeof price === 'number' ? `${price.toLocaleString()} so'm` : price;
+        
+        const message = `💳 *YANGI TO'LOV TASDIQLASH*
+
+👤 *Mijoz:* ${orderData.user}
+📧 *Email:* ${orderData.email}
+📱 *Telefon:* ${orderData.phone}
+
+🎯 *Buyurtma:*
+• Tur: ${orderData.type === 'gaming' ? '🎮 Gaming Dizayn' : '🌐 Web Dizayn'}
+${orderData.type === 'gaming' ? 
+  `• O'yin: ${orderData.game}\n• Dizayn: ${orderData.designType}` : 
+  `• Kompaniya: ${orderData.companyName}\n• Sayt turi: ${orderData.websiteType}`
+}
+
+💰 *To'lov:*
+• Summa: ${priceText}
+• Karta: 4073 4200 8456 9577
+• Sana: ${new Date().toLocaleString('uz-UZ')}
+
+📄 *Chek:* Quyida yuklangan
+
+⚠️ *Diqqat:* To'lov chekini tekshiring va tasdiqlaing!`;
+
+        // Send text message
+        const textResponse = await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: '7833115003',
+            text: message,
+            parse_mode: 'Markdown'
+          })
+        });
+
+        // Send receipt file
+        if (orderData.paymentInfo.receiptFileType === 'application/pdf') {
+          // Send as document for PDF
+          await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendDocument`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: '7833115003',
+              document: receiptURL,
+              caption: `📄 To'lov cheki: ${orderData.paymentInfo.receiptFileName}`
+            })
+          });
+        } else {
+          // Send as photo for images
+          await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendPhoto`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: '7833115003',
+              photo: receiptURL,
+              caption: `🖼️ To'lov cheki: ${orderData.paymentInfo.receiptFileName}`
+            })
+          });
+        }
+
+        console.log('✅ Telegram ga yuborildi');
+      } catch (error) {
+        console.error('❌ Telegram xabar yuborishda xatolik:', error);
+      }
+    }
+
+    // Show message function
     function showMessage(text, type) {
       const messageEl = document.getElementById(type === 'success' ? 'successMessage' : 'errorMessage');
       messageEl.textContent = text;
       messageEl.style.display = 'block';
+
       setTimeout(() => {
         messageEl.style.display = 'none';
       }, 8000);
     }
 
+    // Back button
     window.goBack = function() {
       if (confirm('To\'lov sahifasidan chiqishni xohlaysizmi? Ma\'lumotlar saqlanmaydi.')) {
         window.location.href = '/index.html';
@@ -878,16 +987,20 @@
 
     // Drag and drop functionality
     const uploadArea = document.querySelector('.upload-area');
+    
     uploadArea.addEventListener('dragover', (e) => {
       e.preventDefault();
       uploadArea.classList.add('dragover');
     });
+
     uploadArea.addEventListener('dragleave', () => {
       uploadArea.classList.remove('dragover');
     });
+
     uploadArea.addEventListener('drop', (e) => {
       e.preventDefault();
       uploadArea.classList.remove('dragover');
+      
       const files = e.dataTransfer.files;
       if (files.length > 0) {
         document.getElementById('receiptFile').files = files;
@@ -895,10 +1008,12 @@
       }
     });
 
+    // Make functions global
     window.showMessage = showMessage;
   </script>
 
   <script>
+    // Security functions
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('keydown', function(e) {
       if (
