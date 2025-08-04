@@ -600,41 +600,6 @@
           </div>
         </div>
 
-        <!-- Personal Information -->
-        <div class="form-section">
-          <h3 class="section-title">
-            <span>👤</span> Shaxsiy ma'lumotlar
-          </h3>
-
-          <div class="form-group">
-            <label class="form-label">🚻 Jinsingiz</label>
-            <div class="radio-group">
-              <div class="radio-item">
-                <input type="radio" id="male" name="gender" value="Erkak" required>
-                <label for="male">👨 Erkak</label>
-              </div>
-              <div class="radio-item">
-                <input type="radio" id="female" name="gender" value="Ayol" required>
-                <label for="female">👩 Ayol</label>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">🎂 Tug'ilgan sana</label>
-            <div class="input-group">
-              <input type="number" id="dobDay" class="form-input" placeholder="Kun" min="1" max="31" required>
-              <input type="number" id="dobMonth" class="form-input" placeholder="Oy" min="1" max="12" required>
-              <input type="number" id="dobYear" class="form-input" placeholder="Yil" min="1950" max="2010" required>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">🔢 Yoshingiz</label>
-            <input type="number" id="age" class="form-input" placeholder="Yoshingizni kiriting" min="10" max="80" required>
-          </div>
-        </div>
-
         <!-- Design Information -->
         <div class="form-section">
           <h3 class="section-title">
@@ -752,16 +717,6 @@
       setTheme(isDark);
     });
 
-    // Radio button styling
-    document.querySelectorAll('input[name="gender"]').forEach(radio => {
-      radio.addEventListener('change', function() {
-        document.querySelectorAll('.radio-item').forEach(item => {
-          item.classList.remove('selected');
-        });
-        this.closest('.radio-item').classList.add('selected');
-      });
-    });
-
     // Price display
     document.getElementById('designType').addEventListener('change', function() {
       const designType = this.value;
@@ -793,9 +748,6 @@
         email: document.getElementById('email').value.trim(),
         telegram: document.getElementById('telegram').value.trim(),
         phone: document.getElementById('country').value + ' ' + document.getElementById('phone').value.trim(),
-        gender: document.querySelector('input[name="gender"]:checked')?.value,
-        birthDate: `${document.getElementById('dobDay').value}-${document.getElementById('dobMonth').value}-${document.getElementById('dobYear').value}`,
-        age: document.getElementById('age').value.trim(),
         game: document.getElementById('game').value,
         designType: document.getElementById('designType').value,
         comment: document.getElementById('comment').value.trim(),
@@ -806,11 +758,6 @@
       };
 
       // Validation
-      if (!formData.gender) {
-        showMessage('❌ Iltimos, jinsingizni tanlang!', 'error');
-        return;
-      }
-
       if (!formData.designType) {
         showMessage('❌ Iltimos, dizayn turini tanlang!', 'error');
         return;
@@ -837,79 +784,12 @@
           window.location.href = '/html/payment.html';
         }, 2000);
 
-        // Remove the Firebase saving code and Telegram sending code from here
-        // (comment out or remove the Firebase push and Telegram fetch parts)
-        /*
-        console.log('🔥 Firebase Realtime Database ga saqlash boshlandi...');
-        
-        // 1. Save to Firebase Realtime Database
-        const ordersRef = ref(database, 'orders');
-        const newOrderRef = await push(ordersRef, formData);
-        console.log('✅ Firebase Realtime Database ga saqlandi:', newOrderRef.key);
-
-        // 2. Send to Telegram Bot
-        const price = priceMap[formData.designType];
-        const telegramMessage = `🎨 *YANGI GAMING DIZAYN BUYURTMASI*
-
-👤 *Mijoz:* ${formData.user}
-📧 *Email:* ${formData.email}
-📱 *Telefon:* ${formData.phone}
-📲 *Telegram:* ${formData.telegram ? '@' + formData.telegram.replace('@', '') : 'Berilmagan'}
-🚻 *Jinsi:* ${formData.gender}
-🎂 *Tug'ilgan sana:* ${formData.birthDate}
-🔢 *Yosh:* ${formData.age}
-
-🎮 *O'yin/Platforma:* ${formData.game}
-🎨 *Dizayn turi:* ${formData.designType}
-💰 *Narx:* ${price.toLocaleString()} so'm
-
-📝 *Izoh va talablar:*
-${formData.comment}
-
-📅 *Sana:* ${new Date().toLocaleString('uz-UZ')}
-🔑 *Firebase ID:* ${newOrderRef.key}
-
-⚠️ *Diqqat:* Yangi buyurtma keldi! Mijoz bilan bog'laning.`;
-
-        console.log('📱 Telegram xabar yuborilmoqda...');
-
-        const telegramResponse = await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendMessage`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            chat_id: '7833115003',
-            text: telegramMessage,
-            parse_mode: 'Markdown'
-          })
-        });
-
-        console.log('📱 Telegram response status:', telegramResponse.status);
-        const telegramData = await telegramResponse.json();
-        console.log('📱 Telegram response data:', telegramData);
-        
-        if (telegramData.ok) {
-          console.log('✅ Telegram botga yuborildi');
-          showMessage('✅ Buyurtmangiz muvaffaqiyatli yuborildi! Firebase Realtime Database va Telegram botga saqlandi. Tez orada siz bilan bog\'lanamiz.', 'success');
-          
-          // Reset form
-          document.getElementById('orderForm').reset();
-          document.getElementById('priceDisplay').classList.remove('show');
-          document.querySelectorAll('.radio-item').forEach(item => {
-            item.classList.remove('selected');
-          });
-        } else {
-          throw new Error('Telegram bot xatosi: ' + JSON.stringify(telegramData));
-        }
-        */
       } catch (error) {
         console.error('❌ Xatolik:', error);
         showMessage('❌ Xatolik yuz berdi! Xatolik: ' + error.message, 'error');
       } finally {
         // Reset button state
         submitBtn.classList.remove('loading');
-        // Submit button textini o'zgartirish
         submitBtn.innerHTML = '<span>💳</span> To\'lovga o\'tish';
       }
     });

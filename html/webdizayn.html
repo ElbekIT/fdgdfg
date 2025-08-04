@@ -977,10 +977,6 @@
       submitBtn.innerHTML = '<span>⏳</span> Yuborilmoqda...';
 
       try {
-        // Submit button textini o'zgartirish
-        submitBtn.innerHTML = '<span>💳</span> To\'lovga o\'tish';
-
-        // Form submission qismida (try blokida, Firebase ga saqlashdan oldin):
         // 1. Save order data to localStorage for payment
         const orderForPayment = {
           ...formData,
@@ -995,9 +991,6 @@
         setTimeout(() => {
           window.location.href = '/html/payment.html';
         }, 2000);
-
-        // Remove the Firebase saving code and Telegram sending code from here
-        // (comment out or remove the Firebase push and Telegram fetch parts)
 
       } catch (error) {
         console.error('❌ Xatolik:', error);

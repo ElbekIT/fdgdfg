@@ -1747,12 +1747,22 @@ ${scanResults.qrData ? `• QR ma'lumot: ${scanResults.qrData.substring(0, 100)}
 👤 *Mijoz:* ${orderData.user}
 📧 *Email:* ${orderData.email}
 📱 *Telefon:* ${orderData.phone}
+📲 *Telegram:* ${orderData.telegram ? '@' + orderData.telegram.replace('@', '') : 'Berilmagan'}
 
 🎯 *Buyurtma:*
 • Tur: ${orderData.type === 'gaming' ? '🎮 Gaming Dizayn' : '🌐 Web Dizayn'}
 ${orderData.type === 'gaming' ? 
-  `• O'yin: ${orderData.game}\n• Dizayn: ${orderData.designType}` : 
-  `• Kompaniya: ${orderData.companyName}\n• Sayt turi: ${orderData.websiteType}`
+  `• O'yin: ${orderData.game}
+• Dizayn: ${orderData.designType}
+• Izoh: ${orderData.comment || 'Berilmagan'}` : 
+  `• Kompaniya: ${orderData.companyName}
+• Sayt turi: ${orderData.websiteType}
+• Biznes turi: ${orderData.businessType}
+• Domen: ${orderData.domainName || 'Berilmagan'}
+• Ranglar: ${orderData.colors || 'Berilmagan'}
+• Dizayn uslubi: ${orderData.designStyle || 'Berilmagan'}
+• Funksiyalar: ${orderData.features && orderData.features.length > 0 ? orderData.features.join(', ') : 'Berilmagan'}
+• Talablar: ${orderData.requirements || 'Berilmagan'}`
 }
 
 💰 *To'lov:*
