@@ -550,7 +550,7 @@
           </div>
           <div class="time-item">
             <span class="icon">💼</span>
-            <span>Ish vaqti: 00:00 - 00:10</span>
+            <span>Ish vaqti: 01:00 - 00:00</span>
           </div>
         </div>
 
@@ -597,7 +597,7 @@
       <h3>Elbek Qoriyev</h3>
       <p><strong>📞 +998 90 406 30 90</strong></p>
       <p style="color: #ef4444; font-size: 0.9rem; margin-top: 1rem;">
-        ⚠️ Diqqat: Bu raqam faqat ish vaqtida (00:00 – 00:10) faol!
+        ⚠️ Diqqat: Bu raqam faqat ish vaqtida (01:00 – 00:00) faol!
       </p>
     </div>
   </div>
@@ -685,9 +685,10 @@
       const hour = now.getHours();
       const minute = now.getMinutes();
       const currentMinutes = hour * 60 + minute;
-      const startWork = 0 * 60; // 00:00
-      const endWork = 0 * 60 + 10;   // 00:10
+      const startWork = 1 * 60; // 01:00
+      const endWork = 24 * 60;  // 00:00 (midnight, next day)
 
+      // Ish vaqti: 01:00 dan 00:00 gacha (ya'ni 01:00 dan kech soat 24:00 gacha)
       const isWorkTime = currentMinutes >= startWork && currentMinutes < endWork;
       const statusIndicator = document.querySelector('.status-indicator');
       const statusDot = document.querySelector('.status-dot');
@@ -717,8 +718,8 @@
       const hour = now.getHours();
       const minute = now.getMinutes();
       const currentMinutes = hour * 60 + minute;
-      const startWork = 0 * 60; // 00:00
-      const endWork = 0 * 60 + 10; // 00:10
+      const startWork = 1 * 60; // 01:00
+      const endWork = 24 * 60; // 00:00 (midnight, next day)
 
       if (currentMinutes >= startWork && currentMinutes < endWork) {
         // Show service selection modal
@@ -752,7 +753,7 @@
           if (e.target === modal) modal.remove();
         });
       } else {
-        alert('⚠️ Hozir ish vaqti emas. Buyurtma berish uchun 00:00 dan 00:10 gacha kutib turing.');
+        alert('⚠️ Hozir ish vaqti emas. Buyurtma berish uchun 01:00 dan 00:00 gacha kutib turing.');
       }
     }
 
