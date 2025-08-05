@@ -493,309 +493,319 @@
   </style>
 </head>
 <body>
-  <!-- Background Animation -->
-  <div class="bg-animation"></div>
-  
-  <!-- Floating Particles -->
-  <div class="particles" id="particles"></div>
 
-  <!-- Header -->
-  <header>
-    <div class="nav-container">
-      <a href="#" class="logo">
-        <img src="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Logo" />
-        <span>Elbek Design</span>
-      </a>
-      <nav>
-        <ul class="nav-menu">
-          <li><a href="#home">Bosh sahifa</a></li>
-          <li><a href="/html/byqan.html">Xizmatlar</a></li>
-          <li><a href="/html/habarnoma.html" id="notificationLink">
-            Habarnoma <span id="notificationBadge" class="notification-badge" style="display: none;">0</span>
-          </a></li>
-          <li><a href="#contact">Bog'lanish</a></li>
-        </ul>
-      </nav>
+
+<!-- Background Animation -->
+<div class="bg-animation"></div>
+
+<!-- Floating Particles -->
+<div class="particles" id="particles"></div>
+
+<!-- Header -->
+<header>
+  <div class="nav-container">
+  <a href="#" class="logo">
+    <img src="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Logo" />
+    <span>Elbek Design</span>
+  </a>
+  <nav>
+    <ul class="nav-menu">
+    <li><a href="#home">Bosh sahifa</a></li>
+    <li><a href="/html/byqan.html">Xizmatlar</a></li>
+    <li><a href="/html/habarnoma.html" id="notificationLink">
+      Habarnoma <span id="notificationBadge" class="notification-badge" style="display: none;">0</span>
+    </a></li>
+    <li><a href="#contact">Bog'lanish</a></li>
+    </ul>
+  </nav>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main>
+  <section class="hero-section">
+  <div class="hero-content">
+    <h1 class="hero-title">
+    <span class="gradient-text">Professional</span><br>
+    Gaming Design Studio
+    </h1>
+    <p class="hero-subtitle"></p>
+    Sizning o'yin brendingiz uchun professional dizayn yechimlar. 
+    PUBG, Free Fire, CS:GO va boshqa o'yinlar uchun sifatli banner, logo va avatarlar.
+    </p>
+  </div>
+
+  <div class="hero-card">
+  <div class="status-indicator">
+    <div class="status-dot"></div>
+    <span><strong>Online</strong> - Hozir faolmiz</span>
+  </div>
+
+  <div class="time-info">
+    <div class="time-item">
+    <span class="icon">📅</span>
+    <span id="currentDate"></span>
     </div>
-  </header>
+    <div class="time-item">
+    <span class="icon">🕐</span>
+    <span id="currentTime"></span>
+    </div>
+    <div class="time-item">
+    <span class="icon">💼</span>
+    <span>Ish vaqti: 07:00 - 01:00</span>
+    </div>
+  </div>
 
-  <!-- Main Content -->
-  <main>
-    <section class="hero-section">
-      <div class="hero-content">
-        <h1 class="hero-title">
-          <span class="gradient-text">Professional</span><br>
-          Gaming Design Studio
-        </h1>
-        <p class="hero-subtitle">
-          Sizning o'yin brendingiz uchun professional dizayn yechimlar. 
-          PUBG, Free Fire, CS:GO va boshqa o'yinlar uchun sifatli banner, logo va avatarlar.
-        </p>
-      </div>
-
-      <div class="hero-card">
-        <div class="status-indicator">
-          <div class="status-dot"></div>
-          <span><strong>Online</strong> - Hozir faolmiz</span>
-        </div>
-
-        <div class="time-info">
-          <div class="time-item">
-            <span class="icon">📅</span>
-            <span id="currentDate"></span>
-          </div>
-          <div class="time-item">
-            <span class="icon">🕐</span>
-            <span id="currentTime"></span>
-          </div>
-          <div class="time-item">
-            <span class="icon">💼</span>
-            <span>Ish vaqti: 07:00 - 01:00</span>
-          </div>
-        </div>
-
-        <div class="btn-group">
-          <button class="btn btn-primary" onclick="checkOrderTime()">
-            <span>🚀</span> Buyurtma berish
-          </button>
-          <a href="/html/byqan.html" class="btn btn-secondary">
-            <span>📖</span> Qanday buyurtma beriladi?
-          </a>
-        </div>
-        <!-- Services Section -->
-        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(99, 102, 241, 0.1);">
-          <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--primary); font-size: 1.3rem; font-weight: 600;">
-            🎯 Bizning xizmatlarimiz
-          </h3>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-            <div style="background: rgba(99, 102, 241, 0.05); padding: 1rem; border-radius: 1rem; border: 2px solid rgba(99, 102, 241, 0.1); text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(99, 102, 241, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-              <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎮</div>
-              <h4 style="color: var(--primary); font-size: 1rem; margin-bottom: 0.5rem;">Gaming Dizayn</h4>
-              <p style="font-size: 0.85rem; color: var(--gray); margin: 0;">PUBG, Free Fire, CS:GO uchun professional banner, logo, avatarlar</p>
-            </div>
-            <div style="background: rgba(139, 92, 246, 0.05); padding: 1rem; border-radius: 1rem; border: 2px solid rgba(139, 92, 246, 0.1); text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(139, 92, 246, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-              <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌐</div>
-              <h4 style="color: var(--secondary); font-size: 1rem; margin-bottom: 0.5rem;">Web Dizayn</h4>
-              <p style="font-size: 0.85rem; color: var(--gray); margin: 0;">Portfolio, e-commerce, korporativ saytlar yaratish</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="checkOrderTime()">
+    <span>🚀</span> Buyurtma berish
+    </button>
+    <a href="/html/byqan.html" class="btn btn-secondary">
+    <span>📖</span> Qanday buyurtma beriladi?
+    </a>
+  </div>
+  <!-- Services Section -->
+  <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(99, 102, 241, 0.1);">
+    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--primary); font-size: 1.3rem; font-weight: 600;">
+    🎯 Bizning xizmatlarimiz
+    </h3>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+    <div style="background: rgba(99, 102, 241, 0.05); padding: 1rem; border-radius: 1rem; border: 2px solid rgba(99, 102, 241, 0.1); text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(99, 102, 241, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎮</div>
+      <h4 style="color: var(--primary); font-size: 1rem; margin-bottom: 0.5rem;">Gaming Dizayn</h4>
+      <p style="font-size: 0.85rem; color: var(--gray); margin: 0;">PUBG, Free Fire, CS:GO uchun professional banner, logo, avatarlar</p>
+    </div>
+    <div style="background: rgba(139, 92, 246, 0.05); padding: 1rem; border-radius: 1rem; border: 2px solid rgba(139, 92, 246, 0.1); text-align: center; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 10px 30px rgba(139, 92, 246, 0.15)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+      <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌐</div>
+      <h4 style="color: var(--secondary); font-size: 1rem; margin-bottom: 0.5rem;">Web Dizayn</h4>
+      <p style="font-size: 0.85rem; color: var(--gray); margin: 0;">Portfolio, e-commerce, korporativ saytlar yaratish</p>
+    </div>
+    </div>
+  </div>
+  </div>
+</section>
   </main>
 
   <!-- Help Button -->
   <button class="help-btn" onclick="openHelp()">
-    💬
+💬
   </button>
 
   <!-- Help Modal -->
   <div class="modal-overlay" id="helpModal">
-    <div class="modal">
-      <button class="modal-close" onclick="closeHelp()">×</button>
-      <img src="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Elbek Qoriyev" />
-      <h3>Elbek Qoriyev</h3>
-      <p><strong>📞 +998 90 406 30 90</strong></p>
-      <p style="color: #ef4444; font-size: 0.9rem; margin-top: 1rem;">
-        ⚠️ Diqqat: Bu raqam faqat ish vaqtida (07:00 – 01:00) faol!
-      </p>
-    </div>
+<div class="modal">
+  <button class="modal-close" onclick="closeHelp()">×</button>
+  <img src="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Elbek Qoriyev" />
+  <h3>Elbek Qoriyev</h3>
+  <p><strong>📞 +998 90 406 30 90</strong></p>
+  <p style="color: #ef4444; font-size: 0.9rem; margin-top: 1rem;">
+  ⚠️ Diqqat: Bu raqam faqat ish vaqtida (07:00 – 01:00) faol!
+  </p>
+</div>
   </div>
 
   <script>
-    // Particles Animation
-    function createParticles() {
-      const particlesContainer = document.getElementById('particles');
-      for (let i = 0; i < 50; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 20 + 's';
-        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-        particlesContainer.appendChild(particle);
+// Particles Animation
+function createParticles() {
+  const particlesContainer = document.getElementById('particles');
+  for (let i = 0; i < 50; i++) {
+  const particle = document.createElement('div');
+  particle.className = 'particle';
+  particle.style.left = Math.random() * 100 + '%';
+  particle.style.animationDelay = Math.random() * 20 + 's';
+  particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+  particlesContainer.appendChild(particle);
+  }
+}
+
+// Check notifications
+function checkNotifications() {
+  const user = localStorage.getItem('user');
+  if (!user) return;
+
+  // Import Firebase functions
+  import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js').then(({ initializeApp }) => {
+  import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js').then(({ getDatabase, ref, onValue, query, orderByChild, equalTo }) => {
+    const firebaseConfig = {
+    apiKey: "AIzaSyA_B0OC6Y91ontwJWM-o615jg7Dr5jUVvA",
+    authDomain: "dizaynowner.firebaseapp.com",
+    databaseURL: "https://dizaynowner-default-rtdb.firebaseio.com/",
+    projectId: "dizaynowner",
+    storageBucket: "dizaynowner.firebasestorage.app",
+    messagingSenderId: "976762018041",
+    appId: "1:976762018041:web:e43227005165059158ea28"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    const notificationsRef = ref(database, `notifications/${user}`);
+    onValue(notificationsRef, (snapshot) => {
+    let unreadCount = 0;
+    if (snapshot.exists()) {
+      const notifications = snapshot.val();
+      Object.values(notifications).forEach(notification => {
+      if (!notification.read) {
+        unreadCount++;
       }
-    }
-
-    // Check notifications
-    function checkNotifications() {
-      const user = localStorage.getItem('user');
-      if (!user) return;
-
-      // Import Firebase functions
-      import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js').then(({ initializeApp }) => {
-        import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js').then(({ getDatabase, ref, onValue, query, orderByChild, equalTo }) => {
-          const firebaseConfig = {
-            apiKey: "AIzaSyA_B0OC6Y91ontwJWM-o615jg7Dr5jUVvA",
-            authDomain: "dizaynowner.firebaseapp.com",
-            databaseURL: "https://dizaynowner-default-rtdb.firebaseio.com/",
-            projectId: "dizaynowner",
-            storageBucket: "dizaynowner.firebasestorage.app",
-            messagingSenderId: "976762018041",
-            appId: "1:976762018041:web:e43227005165059158ea28"
-          };
-
-          const app = initializeApp(firebaseConfig);
-          const database = getDatabase(app);
-
-          const notificationsRef = ref(database, `notifications/${user}`);
-          onValue(notificationsRef, (snapshot) => {
-            let unreadCount = 0;
-            if (snapshot.exists()) {
-              const notifications = snapshot.val();
-              Object.values(notifications).forEach(notification => {
-                if (!notification.read) {
-                  unreadCount++;
-                }
-              });
-            }
-
-            const badge = document.getElementById('notificationBadge');
-            if (unreadCount > 0) {
-              badge.textContent = unreadCount;
-              badge.style.display = 'inline';
-            } else {
-              badge.style.display = 'none';
-            }
-          });
-        });
       });
     }
 
-    // Initialize notifications
-    checkNotifications();
-    setInterval(checkNotifications, 30000); // Check every 30 seconds
-
-    // Time Update
-    function updateTime() {
-      const now = new Date();
-      const options = { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-      };
-      
-      document.getElementById('currentDate').textContent = 
-        now.toLocaleDateString('uz-UZ', options);
-      
-      document.getElementById('currentTime').textContent = 
-        now.toLocaleTimeString('uz-UZ');
-
-      // Update status
-      const hour = now.getHours();
-      const minute = now.getMinutes();
-      const currentMinutes = hour * 60 + minute;
-      const startWork = 7 * 60; // 07:00
-      const endWork = 1 * 60;   // 01:00
-
-      const isWorkTime = currentMinutes >= startWork || currentMinutes < endWork;
-      const statusIndicator = document.querySelector('.status-indicator');
-      const statusDot = document.querySelector('.status-dot');
-      
-      if (isWorkTime) {
-        statusIndicator.style.background = 'rgba(34, 197, 94, 0.1)';
-        statusIndicator.style.borderLeftColor = '#22c55e';
-        statusDot.style.background = '#22c55e';
-        statusIndicator.innerHTML = `
-          <div class="status-dot"></div>
-          <span><strong>Online</strong> - Hozir faolmiz</span>
-        `;
-      } else {
-        statusIndicator.style.background = 'rgba(239, 68, 68, 0.1)';
-        statusIndicator.style.borderLeftColor = '#ef4444';
-        statusDot.style.background = '#ef4444';
-        statusIndicator.innerHTML = `
-          <div class="status-dot"></div>
-          <span><strong>Offline</strong> - Ish vaqti tugadi</span>
-        `;
-      }
+    const badge = document.getElementById('notificationBadge');
+    if (unreadCount > 0) {
+      badge.textContent = unreadCount;
+      badge.style.display = 'inline';
+    } else {
+      badge.style.display = 'none';
     }
-
-    // Check Order Time
-    function checkOrderTime() {
-      const now = new Date();
-      const hour = now.getHours();
-      const minute = now.getMinutes();
-      const currentMinutes = hour * 60 + minute;
-      const startWork = 7 * 60;
-      const endWork = 1 * 60;
-
-      if (currentMinutes >= startWork || currentMinutes < endWork) {
-        // Show service selection modal
-        const modal = document.createElement('div');
-        modal.style.cssText = `
-          position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-          background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
-          display: flex; justify-content: center; align-items: center;
-          z-index: 3000; animation: fadeIn 0.3s ease;
-        `;
-        
-        modal.innerHTML = `
-          <div style="background: white; border-radius: 2rem; padding: 2rem; max-width: 400px; width: 90%; text-align: center; animation: modalSlide 0.5s ease;">
-            <h3 style="color: var(--primary); margin-bottom: 1.5rem; font-size: 1.5rem;">🎯 Xizmat turini tanlang</h3>
-            <div style="display: flex; flex-direction: column; gap: 1rem;">
-              <button onclick="window.location.href='/html/order.html'" style="padding: 1rem; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; border: none; border-radius: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                🎮 Gaming Dizayn Buyurtmasi
-              </button>
-              <button onclick="window.location.href='/html/webdizayn.html'" style="padding: 1rem; background: linear-gradient(135deg, #8b5cf6, #06b6d4); color: white; border: none; border-radius: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                🌐 Web Dizayn Buyurtmasi
-              </button>
-              <button onclick="this.closest('div').remove()" style="padding: 0.75rem; background: #f3f4f6; color: #6b7280; border: none; border-radius: 1rem; cursor: pointer;">
-                ❌ Bekor qilish
-              </button>
-            </div>
-          </div>
-        `;
-        
-        document.body.appendChild(modal);
-        modal.addEventListener('click', (e) => {
-          if (e.target === modal) modal.remove();
-        });
-      } else {
-        alert('⚠️ Hozir ish vaqti emas. Buyurtma berish uchun 07:00 dan 01:00 gacha kutib turing.');
-      }
-    }
-
-    // Modal Functions
-    function openHelp() {
-      document.getElementById('helpModal').style.display = 'flex';
-    }
-
-    function closeHelp() {
-      document.getElementById('helpModal').style.display = 'none';
-    }
-
-    // Security Functions
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('keydown', function(e) {
-      if (
-        (e.ctrlKey && ['u', 's', 'p', 'c'].includes(e.key.toLowerCase())) ||
-        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') ||
-        e.key === 'F12'
-      ) {
-        e.preventDefault();
-        alert('Bu amal bloklangan!');
-      }
     });
-    document.addEventListener('selectstart', e => e.preventDefault());
-    document.addEventListener('copy', e => {
-      e.preventDefault();
-      alert('Nusxa olish mumkin emas!');
-    });
+  });
+  });
+}
 
-    // Initialize
-    createParticles();
-    
+// Initialize notifications
+checkNotifications();
+setInterval(checkNotifications, 30000); // Check every 30 seconds
 
-    updateTime();
-    setInterval(updateTime, 1000);
+// Time Update
+function updateTime() {
+  const now = new Date();
+  const options = { 
+  weekday: 'long', 
+  year: 'numeric', 
+  month: 'long', 
+  day: 'numeric' 
+  };
+  
+  document.getElementById('currentDate').textContent = 
+  now.toLocaleDateString('uz-UZ', options);
+  
+  document.getElementById('currentTime').textContent = 
+  now.toLocaleTimeString('uz-UZ');
 
-    // Close modal on outside click
-    document.getElementById('helpModal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closeHelp();
-      }
-    });
+  // Update status
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  const currentMinutes = hour * 60 + minute;
+  const startWork = 7 * 60; // 07:00
+  const endWork = 1 * 60;   // 01:00
+
+  const isWorkTime = currentMinutes >= startWork || currentMinutes < endWork;
+  const statusIndicator = document.querySelector('.status-indicator');
+  const statusDot = document.querySelector('.status-dot');
+  
+  if (isWorkTime) {
+  statusIndicator.style.background = 'rgba(34, 197, 94, 0.1)';
+  statusIndicator.style.borderLeftColor = '#22c55e';
+  statusDot.style.background = '#22c55e';
+  statusIndicator.innerHTML = `
+    <div class="status-dot"></div>
+    <span><strong>Online</strong> - Hozir faolmiz</span>
+  `;
+  } else {
+  statusIndicator.style.background = 'rgba(239, 68, 68, 0.1)';
+  statusIndicator.style.borderLeftColor = '#ef4444';
+  statusDot.style.background = '#ef4444';
+  statusIndicator.innerHTML = `
+    <div class="status-dot"></div>
+    <span><strong>Offline</strong> - Ish vaqti tugadi</span>
+  `;
+  }
+}
+
+// Check Order Time
+function checkOrderTime() {
+  const now = new Date();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  const currentMinutes = hour * 60 + minute;
+  const startWork = 7 * 60;
+  const endWork = 1 * 60;
+
+  if (currentMinutes >= startWork || currentMinutes < endWork) {
+  // Show service selection modal
+  const modal = document.createElement('div');
+  modal.className = 'order-modal-overlay';
+  modal.style.cssText = `
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 3000; animation: fadeIn 0.3s ease;
+  `;
+  
+  modal.innerHTML = `
+    <div style="background: white; border-radius: 2rem; padding: 2rem; max-width: 400px; width: 90%; text-align: center; animation: modalSlide 0.5s ease;">
+    <h3 style="color: var(--primary); margin-bottom: 1.5rem; font-size: 1.5rem;">🎯 Xizmat turini tanlang</h3>
+    <div style="display: flex; flex-direction: column; gap: 1rem;">
+      <button onclick="window.location.href='/html/order.html'" style="padding: 1rem; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white; border: none; border-radius: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+      🎮 Gaming Dizayn Buyurtmasi
+      </button>
+      <button onclick="window.location.href='/html/webdizayn.html'" style="padding: 1rem; background: linear-gradient(135deg, #8b5cf6, #06b6d4); color: white; border: none; border-radius: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+      🌐 Web Dizayn Buyurtmasi
+      </button>
+      <button class="order-cancel-btn" style="padding: 0.75rem; background: #f3f4f6; color: #6b7280; border: none; border-radius: 1rem; cursor: pointer;">
+      ❌ Bekor qilish
+      </button>
+    </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+
+  // Close modal when clicking outside modal content
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.remove();
+  });
+
+  // Close modal when clicking "Bekor qilish"
+  modal.querySelector('.order-cancel-btn').addEventListener('click', function() {
+    modal.remove();
+  });
+  } else {
+  alert('⚠️ Hozir ish vaqti emas. Buyurtma berish uchun 07:00 dan 01:00 gacha kutib turing.');
+  }
+}
+
+// Modal Functions
+function openHelp() {
+  document.getElementById('helpModal').style.display = 'flex';
+}
+
+function closeHelp() {
+  document.getElementById('helpModal').style.display = 'none';
+}
+
+// Security Functions
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', function(e) {
+  if (
+  (e.ctrlKey && ['u', 's', 'p', 'c'].includes(e.key.toLowerCase())) ||
+  (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') ||
+  e.key === 'F12'
+  ) {
+  e.preventDefault();
+  alert('Bu amal bloklangan!');
+  }
+});
+document.addEventListener('selectstart', e => e.preventDefault());
+document.addEventListener('copy', e => {
+  e.preventDefault();
+  alert('Nusxa olish mumkin emas!');
+});
+
+// Initialize
+createParticles();
+
+
+updateTime();
+setInterval(updateTime, 1000);
+
+// Close modal on outside click
+document.getElementById('helpModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+  closeHelp();
+  }
+});
   </script>
 </body>
 </html>
