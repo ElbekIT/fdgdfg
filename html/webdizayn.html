@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Web Dizayn Buyurtmasi - Elbek Design Studio</title>
   <link rel="icon" href="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -36,10 +36,6 @@
       line-height: 1.6;
       color: var(--dark);
       min-height: 100vh;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
     }
 
     /* Header */
@@ -85,123 +81,46 @@
       background-clip: text;
     }
 
-    .user-info {
+    .nav-links {
       display: flex;
+      gap: 2rem;
       align-items: center;
-      gap: 1rem;
-      padding: 0.75rem 1.5rem;
-      background: var(--gradient);
-      border-radius: 2rem;
-      color: var(--white);
-      font-weight: 600;
-      box-shadow: var(--shadow);
     }
 
-    /* Navigation */
-    .nav-tabs {
-      display: flex;
-      gap: 1rem;
-      margin-top: 100px;
-      padding: 1rem 2rem;
-      background: var(--white);
-      box-shadow: var(--shadow);
-      justify-content: center;
+    .nav-link {
+      text-decoration: none;
+      color: var(--gray);
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 0.75rem;
     }
 
-    .nav-tab {
-      padding: 0.75rem 1.5rem;
-      border: 2px solid var(--primary);
-      border-radius: 1rem;
-      background: var(--white);
+    .nav-link:hover {
       color: var(--primary);
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
+      background: rgba(99, 102, 241, 0.1);
     }
 
-    .nav-tab:hover, .nav-tab.active {
-      background: var(--primary);
-      color: var(--white);
-      transform: translateY(-2px);
-    }
-
-    /* Theme Toggle */
-    .theme-toggle {
-      position: fixed;
-      top: 100px;
-      right: 2rem;
-      width: 50px;
-      height: 50px;
-      background: var(--white);
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 1.5rem;
-      box-shadow: var(--shadow);
-      transition: all 0.3s ease;
-      z-index: 1000;
-    }
-
-    .theme-toggle:hover {
-      transform: scale(1.1);
-      box-shadow: var(--shadow-hover);
-    }
-
-    /* My Orders Button */
-    .my-orders-btn {
-      position: fixed;
-      top: 100px;
-      left: 2rem;
-      padding: 0.75rem 1.5rem;
-      background: var(--gradient);
-      color: var(--white);
-      border: none;
-      border-radius: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: var(--shadow);
-      z-index: 1000;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .my-orders-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-hover);
+    .nav-link.active {
+      color: var(--primary);
+      background: rgba(99, 102, 241, 0.1);
     }
 
     /* Main Content */
     .main {
+      margin-top: 100px;
       padding: 2rem;
-      max-width: 900px;
-      margin: 0 auto;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    .form-container {
-      background: var(--white);
-      border-radius: 2rem;
-      padding: 3rem;
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      animation: slideUp 0.8s ease-out;
-    }
-
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .form-title {
+    .page-header {
       text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .page-title {
       font-size: 2.5rem;
       font-weight: 700;
       margin-bottom: 1rem;
@@ -211,29 +130,40 @@
       background-clip: text;
     }
 
-    .form-subtitle {
-      text-align: center;
+    .page-subtitle {
       color: var(--gray);
       font-size: 1.1rem;
-      margin-bottom: 3rem;
       font-weight: 300;
     }
 
-    /* Form Sections */
+    /* Form Styles */
+    .order-form {
+      background: var(--white);
+      border-radius: 2rem;
+      padding: 3rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+
     .form-section {
       margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .form-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
     }
 
     .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
       font-size: 1.3rem;
       font-weight: 600;
       color: var(--primary);
       margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid rgba(99, 102, 241, 0.1);
     }
 
     .form-group {
@@ -248,19 +178,23 @@
       font-size: 1rem;
     }
 
-    .form-input, .form-select, .form-textarea {
+    .form-input,
+    .form-select,
+    .form-textarea {
       width: 100%;
       padding: 1rem 1.5rem;
-      border: 2px solid #e5e7eb;
+      border: 2px solid #e2e8f0;
       border-radius: 1rem;
       font-size: 1rem;
-      font-family: 'Poppins', sans-serif;
       background: var(--white);
       color: var(--dark);
       transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
     }
 
-    .form-input:focus, .form-select:focus, .form-textarea:focus {
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
       outline: none;
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
@@ -272,18 +206,6 @@
       min-height: 120px;
     }
 
-    /* Special Input Groups */
-    .input-group {
-      display: flex;
-      gap: 0.75rem;
-    }
-
-    .input-group .form-input,
-    .input-group .form-select {
-      flex: 1;
-    }
-
-    /* Checkbox Group */
     .checkbox-group {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -296,168 +218,94 @@
       align-items: center;
       gap: 0.75rem;
       padding: 1rem;
-      border: 2px solid #e5e7eb;
+      background: var(--light);
       border-radius: 1rem;
-      cursor: pointer;
       transition: all 0.3s ease;
-      background: var(--white);
+      cursor: pointer;
     }
 
     .checkbox-item:hover {
-      border-color: var(--primary);
       background: rgba(99, 102, 241, 0.05);
+      transform: translateY(-2px);
     }
 
     .checkbox-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
       accent-color: var(--primary);
-      width: 18px;
-      height: 18px;
     }
 
-    .checkbox-item.selected {
-      border-color: var(--primary);
-      background: rgba(99, 102, 241, 0.1);
-      color: var(--primary);
-      font-weight: 600;
-    }
-
-    /* Radio Group */
-    .radio-group {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-      margin-top: 0.5rem;
-    }
-
-    .radio-item {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+    .checkbox-item label {
+      font-weight: 500;
       cursor: pointer;
-      padding: 1rem;
-      border: 2px solid #e5e7eb;
-      border-radius: 1rem;
-      transition: all 0.3s ease;
-      background: var(--white);
-    }
-
-    .radio-item:hover {
-      border-color: var(--primary);
-      background: rgba(99, 102, 241, 0.05);
-    }
-
-    .radio-item input[type="radio"] {
-      accent-color: var(--primary);
-      width: 18px;
-      height: 18px;
-    }
-
-    .radio-item.selected {
-      border-color: var(--primary);
-      background: rgba(99, 102, 241, 0.1);
-      color: var(--primary);
-      font-weight: 600;
+      margin: 0;
     }
 
     /* Price Display */
     .price-display {
-      background: rgba(34, 197, 94, 0.1);
-      border: 2px solid rgba(34, 197, 94, 0.2);
-      border-radius: 1rem;
+      background: linear-gradient(135deg, var(--success) 0%, #16a34a 100%);
+      color: var(--white);
       padding: 1.5rem;
-      margin-top: 1rem;
+      border-radius: 1.5rem;
       text-align: center;
-      display: none;
+      margin: 2rem 0;
+      box-shadow: var(--shadow);
     }
 
-    .price-display.show {
-      display: block;
-      animation: slideDown 0.5s ease;
-    }
-
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .price-amount {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--success);
+    .price-label {
+      font-size: 1rem;
+      opacity: 0.9;
       margin-bottom: 0.5rem;
     }
 
-    .price-note {
-      font-size: 0.9rem;
-      color: var(--gray);
+    .price-amount {
+      font-size: 2rem;
+      font-weight: 700;
     }
 
-    /* Buttons */
-    .btn {
-      padding: 1rem 2rem;
+    /* Submit Button */
+    .submit-btn {
+      width: 100%;
+      padding: 1.25rem 2rem;
       border: none;
-      border-radius: 1rem;
+      border-radius: 1.5rem;
       font-size: 1.1rem;
       font-weight: 600;
       font-family: 'Poppins', sans-serif;
       cursor: pointer;
       transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-
-    .btn-primary {
       background: var(--gradient);
       color: var(--white);
       box-shadow: var(--shadow);
-      width: 100%;
       margin-top: 2rem;
     }
 
-    .btn-primary:hover {
+    .submit-btn:hover {
       transform: translateY(-3px);
       box-shadow: var(--shadow-hover);
     }
 
-    .btn-danger {
-      background: linear-gradient(135deg, var(--error) 0%, #dc2626 100%);
-      color: var(--white);
-      width: 100%;
-      margin-top: 1rem;
-      box-shadow: 0 10px 40px rgba(239, 68, 68, 0.1);
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
     }
 
-    .btn-danger:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 20px 60px rgba(239, 68, 68, 0.2);
+    /* Loading Animation */
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 2rem;
     }
 
-    /* Loading State */
-    .btn.loading {
-      pointer-events: none;
-      opacity: 0.7;
-    }
-
-    .btn.loading::after {
-      content: '';
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      border: 2px solid transparent;
-      border-top: 2px solid var(--white);
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid #e5e7eb;
+      border-top: 4px solid var(--primary);
       border-radius: 50%;
-      right: 1rem;
       animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
     }
 
     @keyframes spin {
@@ -465,124 +313,47 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* Status Messages */
-    .status-message {
-      padding: 1rem;
-      border-radius: 1rem;
-      margin: 1rem 0;
-      font-weight: 500;
-      text-align: center;
+    /* Success Message */
+    .success-message {
       display: none;
-      animation: fadeIn 0.5s ease;
+      background: var(--success);
+      color: var(--white);
+      padding: 2rem;
+      border-radius: 1.5rem;
+      text-align: center;
+      margin-top: 2rem;
+      box-shadow: var(--shadow);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    .success-message h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
     }
 
-    .status-message.success {
-      background: rgba(34, 197, 94, 0.1);
-      color: var(--success);
-      border: 2px solid rgba(34, 197, 94, 0.2);
-    }
-
-    .status-message.error {
-      background: rgba(239, 68, 68, 0.1);
-      color: var(--error);
-      border: 2px solid rgba(239, 68, 68, 0.2);
-    }
-
-    /* Dark Theme */
-    body.dark {
-      background: var(--dark);
-      color: var(--light);
-    }
-
-    body.dark .header,
-    body.dark .nav-tabs {
-      background: #1e293b;
-    }
-
-    body.dark .form-container {
-      background: #1e293b;
-      border-color: #334155;
-    }
-
-    body.dark .form-input,
-    body.dark .form-select,
-    body.dark .form-textarea {
-      background: #0f172a;
-      border-color: #334155;
-      color: var(--light);
-    }
-
-    body.dark .checkbox-item,
-    body.dark .radio-item {
-      background: #0f172a;
-      border-color: #334155;
-      color: var(--light);
-    }
-
-    body.dark .theme-toggle {
-      background: #1e293b;
-      color: var(--light);
-    }
-
-    /* Responsive Design */
+    /* Responsive */
     @media (max-width: 768px) {
       .header-content {
         padding: 0 1rem;
       }
 
-      .brand-name {
-        font-size: 1.2rem;
-      }
-
-      .user-info {
-        font-size: 0.9rem;
-        padding: 0.5rem 1rem;
-      }
-
-      .nav-tabs {
-        flex-wrap: wrap;
-        padding: 1rem;
-      }
-
-      .theme-toggle {
-        top: 90px;
-        right: 1rem;
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
-      }
-
-      .my-orders-btn {
-        top: 90px;
-        left: 1rem;
-        padding: 0.5rem 1rem;
-        font-size: 0.9rem;
+      .nav-links {
+        display: none;
       }
 
       .main {
         padding: 1rem;
       }
 
-      .form-container {
-        padding: 2rem;
-      }
-
-      .form-title {
+      .page-title {
         font-size: 2rem;
       }
 
-      .checkbox-group,
-      .radio-group {
-        grid-template-columns: 1fr;
+      .order-form {
+        padding: 2rem;
       }
 
-      .input-group {
-        flex-direction: column;
+      .checkbox-group {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -595,240 +366,212 @@
         <img src="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Logo" class="logo">
         <div class="brand-name">Elbek Design Studio</div>
       </div>
-      <div class="user-info">
-        <span>👤</span>
-        <span id="userDisplay"></span>
-      </div>
+      <nav class="nav-links">
+        <a href="/index.html" class="nav-link">🏠 Bosh sahifa</a>
+        <a href="/html/order.html" class="nav-link">🎮 Gaming Dizayn</a>
+        <a href="/html/webdizayn.html" class="nav-link active">🌐 Web Dizayn</a>
+      </nav>
     </div>
   </header>
 
-  <!-- Navigation Tabs -->
-  <nav class="nav-tabs">
-    <a href="/html/order.html" class="nav-tab">🎮 Gaming Dizayn</a>
-    <a href="/html/webdizayn.html" class="nav-tab active">🌐 Web Dizayn</a>
-  </nav>
-
-  <!-- Theme Toggle -->
-  <button class="theme-toggle" id="themeToggle">
-    <span id="themeIcon">🌙</span>
-  </button>
-
-  <!-- My Orders Button -->
-  <a href="/html/menby.html" class="my-orders-btn">
-    <span>📋</span> Mening buyurtmalarim
-  </a>
-
   <!-- Main Content -->
   <main class="main">
-    <div class="form-container">
-      <h1 class="form-title">🌐 Professional Web Dizayn</h1>
-      <p class="form-subtitle">
-        Zamonaviy va professional web saytlar yaratish uchun buyurtma bering
-      </p>
+    <div class="page-header">
+      <h1 class="page-title">🌐 Web Dizayn Buyurtmasi</h1>
+      <p class="page-subtitle">Professional web dizayn va dasturlash xizmatlari</p>
+    </div>
 
-      <!-- Status Messages -->
-      <div id="successMessage" class="status-message success"></div>
-      <div id="errorMessage" class="status-message error"></div>
+    <!-- Order Form -->
+    <form class="order-form" id="orderForm">
+      <!-- Contact Information -->
+      <div class="form-section">
+        <h3 class="section-title">
+          <span>📞</span> Aloqa ma'lumotlari
+        </h3>
 
-      <form id="webDesignForm">
-        <!-- Contact Information -->
-        <div class="form-section">
-          <h3 class="section-title">
-            <span>📞</span> Aloqa ma'lumotlari
-          </h3>
-          
-          <div class="form-group">
-            <label class="form-label">📧 Elektron pochta</label>
-            <input type="email" id="email" class="form-input" placeholder="example@gmail.com" required>
-          </div>
+        <div class="form-group">
+          <label class="form-label">📧 Email manzil</label>
+          <input type="email" id="email" class="form-input" placeholder="example@gmail.com" required>
+        </div>
 
-          <div class="form-group">
-            <label class="form-label">📱 Telegram Username</label>
-            <input type="text" id="telegram" class="form-input" placeholder="@username">
-          </div>
+        <div class="form-group">
+          <label class="form-label">📱 Telefon raqam</label>
+          <input type="tel" id="phone" class="form-input" placeholder="+998 90 123 45 67" required>
+        </div>
 
-          <div class="form-group">
-            <label class="form-label">📞 Telefon raqami</label>
-            <div class="input-group">
-              <select id="country" class="form-select" required>
-                <option value="+998">🇺🇿 +998</option>
-                <option value="+7">🇷🇺 +7</option>
-              </select>
-              <input type="tel" id="phone" class="form-input" placeholder="901234567" required>
+        <div class="form-group">
+          <label class="form-label">💬 Telegram username (ixtiyoriy)</label>
+          <input type="text" id="telegram" class="form-input" placeholder="@username">
+        </div>
+      </div>
+
+      <!-- Business Information -->
+      <div class="form-section">
+        <h3 class="section-title">
+          <span>🏢</span> Biznes ma'lumotlari
+        </h3>
+
+        <div class="form-group">
+          <label class="form-label">🏪 Kompaniya/Biznes nomi</label>
+          <input type="text" id="companyName" class="form-input" placeholder="Kompaniya nomini kiriting" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">💼 Biznes turi</label>
+          <select id="businessType" class="form-select" required>
+            <option value="">Biznes turini tanlang</option>
+            <option value="ecommerce">🛒 Elektron savdo</option>
+            <option value="restaurant">🍕 Restoran/Kafe</option>
+            <option value="education">📚 Ta'lim</option>
+            <option value="healthcare">🏥 Tibbiyot</option>
+            <option value="technology">💻 Texnologiya</option>
+            <option value="finance">💰 Moliya</option>
+            <option value="real-estate">🏠 Ko'chmas mulk</option>
+            <option value="travel">✈️ Sayohat</option>
+            <option value="fashion">👗 Moda</option>
+            <option value="sports">⚽ Sport</option>
+            <option value="entertainment">🎬 Ko'ngilochar</option>
+            <option value="other">🔧 Boshqa</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">🌐 Sayt turi</label>
+          <select id="websiteType" class="form-select" required>
+            <option value="">Sayt turini tanlang</option>
+            <option value="landing">📄 Landing Page</option>
+            <option value="corporate">🏢 Korporativ sayt</option>
+            <option value="ecommerce">🛍️ Onlayn do'kon</option>
+            <option value="blog">📝 Blog/Yangiliklar</option>
+            <option value="portfolio">🎨 Portfolio</option>
+            <option value="booking">📅 Bron qilish tizimi</option>
+            <option value="learning">🎓 Ta'lim platformasi</option>
+            <option value="social">👥 Ijtimoiy tarmoq</option>
+            <option value="custom">⚙️ Maxsus loyiha</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">🔗 Domen nomi (agar bor bo'lsa)</label>
+          <input type="text" id="domainName" class="form-input" placeholder="example.com">
+        </div>
+      </div>
+
+      <!-- Design Preferences -->
+      <div class="form-section">
+        <h3 class="section-title">
+          <span>🎨</span> Dizayn talablari
+        </h3>
+
+        <div class="form-group">
+          <label class="form-label">🌈 Afzal ko'rgan ranglar</label>
+          <input type="text" id="colors" class="form-input" placeholder="Masalan: ko'k, oq, kulrang">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">✨ Dizayn uslubi</label>
+          <select id="designStyle" class="form-select">
+            <option value="">Uslubni tanlang</option>
+            <option value="modern">🔥 Zamonaviy</option>
+            <option value="minimalist">⚪ Minimalist</option>
+            <option value="classic">🎩 Klassik</option>
+            <option value="creative">🎨 Ijodiy</option>
+            <option value="professional">💼 Professional</option>
+            <option value="playful">🎈 O'ynoqi</option>
+            <option value="elegant">💎 Nafis</option>
+            <option value="bold">⚡ Dadil</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">📝 Batafsil talablar va izohlar</label>
+          <textarea id="requirements" class="form-textarea" placeholder="Sayt haqida batafsil ma'lumot, kerakli funksiyalar, misollar va boshqa talablarni yozing..."></textarea>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div class="form-section">
+        <h3 class="section-title">
+          <span>⚙️</span> Kerakli funksiyalar
+        </h3>
+
+        <div class="form-group">
+          <label class="form-label">🔧 Qo'shimcha funksiyalar</label>
+          <div class="checkbox-group">
+            <div class="checkbox-item">
+              <input type="checkbox" id="feature1" value="responsive">
+              <label for="feature1">📱 Mobil moslashuv</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="feature2" value="cms">
+              <label for="feature2">📝 Kontent boshqaruv</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="feature3" value="ecommerce">
+              <label for="feature3">🛒 Onlayn savdo</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="feature4" value="seo">
+              <label for="feature4">🔍 SEO optimallashtirish</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="feature5" value="analytics">
+              <label for="feature5">📊 Analitika</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="feature6" value="social">
+              <label for="feature6">📲 Ijtimoiy tarmoqlar</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="feature7" value="multilingual">
+              <label for="feature7">🌍 Ko'p tillilik</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="feature8" value="booking">
+              <label for="feature8">📅 Bron qilish</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="feature9" value="payment">
+              <label for="feature9">💳 To'lov tizimi</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="feature10" value="chat">
+              <label for="feature10">💬 Chat/Yordam</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="feature11" value="blog">
+              <label for="feature11">📰 Blog bo'limi</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="feature12" value="hosting">
+              <label for="feature12">🌐 Hosting va domen</label>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Business Information -->
-        <div class="form-section">
-          <h3 class="section-title">
-            <span>🏢</span> Biznes ma'lumotlari
-          </h3>
+      <!-- Price Display -->
+      <div class="price-display">
+        <div class="price-label">Taxminiy narx:</div>
+        <div class="price-amount" id="priceDisplay">500,000 so'm</div>
+      </div>
 
-          <div class="form-group">
-            <label class="form-label">🏪 Kompaniya/Biznes nomi</label>
-            <input type="text" id="companyName" class="form-input" placeholder="Masalan: Elbek Shop" required>
-          </div>
+      <!-- Submit Button -->
+      <button type="submit" class="submit-btn" id="submitBtn">
+        🚀 Buyurtma berish
+      </button>
+    </form>
 
-          <div class="form-group">
-            <label class="form-label">🎯 Biznes turi</label>
-            <select id="businessType" class="form-select" required>
-              <option value="">-- Tanlang --</option>
-              <option value="E-commerce">🛒 Onlayn do'kon (E-commerce)</option>
-              <option value="Portfolio">👨‍💼 Shaxsiy portfolio</option>
-              <option value="Corporate">🏢 Korporativ sayt</option>
-              <option value="Restaurant">🍕 Restoran/Kafe</option>
-              <option value="Medical">🏥 Tibbiyot markazi</option>
-              <option value="Education">🎓 Ta'lim muassasasi</option>
-              <option value="Real Estate">🏠 Ko'chmas mulk</option>
-              <option value="Beauty">💄 Go'zallik saloni</option>
-              <option value="Fitness">💪 Fitnes klub</option>
-              <option value="Blog">📝 Blog/Yangiliklar</option>
-              <option value="Other">🔧 Boshqa</option>
-            </select>
-          </div>
+    <!-- Loading -->
+    <div class="loading" id="loading">
+      <div class="loading-spinner"></div>
+      <p>Buyurtma yuborilmoqda...</p>
+    </div>
 
-          <div class="form-group">
-            <label class="form-label">🌐 Kerakli domen nomi (agar bor bo'lsa)</label>
-            <input type="text" id="domainName" class="form-input" placeholder="Masalan: elbekshop.uz">
-          </div>
-        </div>
-
-        <!-- Website Type -->
-        <div class="form-section">
-          <h3 class="section-title">
-            <span>🎨</span> Web sayt turi
-          </h3>
-
-          <div class="form-group">
-            <label class="form-label">📋 Web sayt turi va narxi</label>
-            <div class="radio-group">
-              <div class="radio-item">
-                <input type="radio" id="landing" name="websiteType" value="Landing Page" required>
-                <label for="landing">
-                  <strong>📄 Landing Page</strong><br>
-                  <small>Bir sahifali sayt - 500,000 so'm</small>
-                </label>
-              </div>
-              <div class="radio-item">
-                <input type="radio" id="business" name="websiteType" value="Business Website" required>
-                <label for="business">
-                  <strong>🏢 Business Website</strong><br>
-                  <small>5-10 sahifali sayt - 1,200,000 so'm</small>
-                </label>
-              </div>
-              <div class="radio-item">
-                <input type="radio" id="ecommerce" name="websiteType" value="E-commerce" required>
-                <label for="ecommerce">
-                  <strong>🛒 E-commerce</strong><br>
-                  <small>Onlayn do'kon - 2,500,000 so'm</small>
-                </label>
-              </div>
-              <div class="radio-item">
-                <input type="radio" id="custom" name="websiteType" value="Custom Website" required>
-                <label for="custom">
-                  <strong>⚡ Custom Website</strong><br>
-                  <small>Maxsus loyiha - Kelishiladi</small>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div id="priceDisplay" class="price-display">
-            <div class="price-amount" id="priceAmount"></div>
-            <div class="price-note">💡 Professional dizayn + responsive + SEO optimizatsiya</div>
-          </div>
-        </div>
-
-        <!-- Features -->
-        <div class="form-section">
-          <h3 class="section-title">
-            <span>⚙️</span> Kerakli funksiyalar
-          </h3>
-
-          <div class="form-group">
-            <label class="form-label">✅ Qo'shimcha funksiyalar (bir nechtasini tanlashingiz mumkin)</label>
-            <div class="checkbox-group">
-              <div class="checkbox-item">
-                <input type="checkbox" id="responsive" value="Responsive Design">
-                <label for="responsive">📱 Responsive dizayn</label>
-              </div>
-              <div class="checkbox-item">
-                <input type="checkbox" id="seo" value="SEO Optimization">
-                <label for="seo">🔍 SEO optimizatsiya</label>
-              </div>
-              <div class="checkbox-item">
-                <input type="checkbox" id="cms" value="CMS Integration">
-                <label for="cms">📝 CMS tizimi</label>
-              </div>
-              <div class="checkbox-item">
-                <input type="checkbox" id="ecommerce-func" value="E-commerce Functions">
-                <label for="ecommerce-func">🛒 Onlayn to'lov</label>
-              </div>
-              <div class="checkbox-item">
-                <input type="checkbox" id="multilang" value="Multi-language">
-                <label for="multilang">🌍 Ko'p tillilik</label>
-              </div>
-              <div class="checkbox-item">
-                <input type="checkbox" id="analytics" value="Analytics Integration">
-                <label for="analytics">📊 Analytics</label>
-              </div>
-              <div class="checkbox-item">
-                <input type="checkbox" id="social" value="Social Media Integration">
-                <label for="social">📲 Ijtimoiy tarmoqlar</label>
-              </div>
-              <div class="checkbox-item">
-                <input type="checkbox" id="chat" value="Live Chat">
-                <label for="chat">💬 Jonli chat</label>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Design Preferences -->
-        <div class="form-section">
-          <h3 class="section-title">
-            <span>🎨</span> Dizayn talablari
-          </h3>
-
-          <div class="form-group">
-            <label class="form-label">🎨 Ranglar (masalan: ko'k, qizil, yashil)</label>
-            <input type="text" id="colors" class="form-input" placeholder="Kerakli ranglarni kiriting">
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">🖼️ Dizayn uslubi</label>
-            <select id="designStyle" class="form-select">
-              <option value="">-- Tanlang --</option>
-              <option value="Modern">🔥 Zamonaviy (Modern)</option>
-              <option value="Minimalist">✨ Minimalist</option>
-              <option value="Corporate">🏢 Korporativ</option>
-              <option value="Creative">🎨 Ijodiy</option>
-              <option value="Elegant">💎 Nafis</option>
-              <option value="Bold">⚡ Dadil</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">📝 Batafsil talab va izohlar</label>
-            <textarea id="requirements" class="form-textarea" placeholder="Saytingiz haqida batafsil ma'lumot bering:
-- Qanday mahsulot/xizmat taklif qilasiz?
-- Maqsadli auditoriya kimlar?
-- Qanday sahifalar kerak?
-- Maxsus talablar bormi?
-- Namuna saytlar bormi?" required></textarea>
-          </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <button type="submit" class="btn btn-primary" id="submitBtn">
-          <span>🚀</span> Web Dizayn Buyurtmasi Berish
-        </button>
-        
-        <button type="button" class="btn btn-danger" id="deleteBtn">
-          <span>🗑️</span> Akkauntni o'chirish
-        </button>
-      </form>
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage">
+      <h3>✅ Buyurtma muvaffaqiyatli yuborildi!</h3>
+      <p>Tez orada siz bilan bog'lanamiz. To'lov sahifasiga o'tkazilmoqdasiz...</p>
     </div>
   </main>
 
@@ -836,7 +579,7 @@
   <script type="module">
     // Import Firebase functions
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-    import { getDatabase, ref, push, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+    import { getDatabase, ref, push } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
     // Firebase configuration
     const firebaseConfig = {
@@ -854,199 +597,135 @@
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
 
-    // Price mapping for website types
-    const websitePrices = {
-      "Landing Page": 500000,
-      "Business Website": 1200000,
-      "E-commerce": 2500000,
-      "Custom Website": "Kelishiladi"
+    // Price calculation
+    const basePrices = {
+      'landing': 300000,
+      'corporate': 500000,
+      'ecommerce': 800000,
+      'blog': 250000,
+      'portfolio': 200000,
+      'booking': 600000,
+      'learning': 700000,
+      'social': 1000000,
+      'custom': 500000
     };
 
-    // Check authentication
-    const user = localStorage.getItem('user');
-    if (!user) {
-      alert("Iltimos, avval ro'yxatdan o'ting!");
-      window.location.href = "register.html";
-    } else {
-      document.getElementById("userDisplay").textContent = user;
-    }
+    const featurePrices = {
+      'responsive': 50000,
+      'cms': 100000,
+      'ecommerce': 200000,
+      'seo': 75000,
+      'analytics': 30000,
+      'social': 25000,
+      'multilingual': 100000,
+      'booking': 150000,
+      'payment': 120000,
+      'chat': 80000,
+      'blog': 60000,
+      'hosting': 40000
+    };
 
-    // Theme toggle functionality
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = document.getElementById('themeIcon');
-    let isDark = localStorage.getItem('theme') === 'dark';
-
-    function setTheme(dark) {
-      document.body.classList.toggle('dark', dark);
-      themeIcon.textContent = dark ? '☀️' : '🌙';
-      localStorage.setItem('theme', dark ? 'dark' : 'light');
-    }
-
-    setTheme(isDark);
-    themeToggle.addEventListener('click', () => {
-      isDark = !isDark;
-      setTheme(isDark);
-    });
-
-    // Radio button styling and price display
-    document.querySelectorAll('input[name="websiteType"]').forEach(radio => {
-      radio.addEventListener('change', function() {
-        // Update radio styling
-        document.querySelectorAll('.radio-item').forEach(item => {
-          item.classList.remove('selected');
-        });
-        this.closest('.radio-item').classList.add('selected');
-
-        // Update price display
-        const websiteType = this.value;
-        const priceDisplay = document.getElementById('priceDisplay');
-        const priceAmount = document.getElementById('priceAmount');
-
-        if (websiteType && websitePrices[websiteType]) {
-          const price = websitePrices[websiteType];
-          if (typeof price === 'number') {
-            priceAmount.textContent = `💰 ${price.toLocaleString()} so'm`;
-          } else {
-            priceAmount.textContent = `💰 ${price}`;
-          }
-          priceDisplay.classList.add('show');
-        } else {
-          priceDisplay.classList.remove('show');
-        }
+    function calculatePrice() {
+      const websiteType = document.getElementById('websiteType').value;
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+      
+      let basePrice = basePrices[websiteType] || 500000;
+      let additionalPrice = 0;
+      
+      checkboxes.forEach(checkbox => {
+        additionalPrice += featurePrices[checkbox.value] || 0;
       });
-    });
+      
+      const totalPrice = basePrice + additionalPrice;
+      document.getElementById('priceDisplay').textContent = totalPrice.toLocaleString() + ' so\'m';
+      
+      return totalPrice;
+    }
 
-    // Checkbox styling
+    // Event listeners for price calculation
+    document.getElementById('websiteType').addEventListener('change', calculatePrice);
     document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-      checkbox.addEventListener('change', function() {
-        const item = this.closest('.checkbox-item');
-        if (this.checked) {
-          item.classList.add('selected');
-        } else {
-          item.classList.remove('selected');
-        }
-      });
-    });
-
-    // Phone number update based on country
-    document.getElementById('country').addEventListener('change', function() {
-      const phoneInput = document.getElementById('phone');
-      phoneInput.placeholder = this.value === '+7' ? '701234567' : '901234567';
+      checkbox.addEventListener('change', calculatePrice);
     });
 
     // Form submission
-    document.getElementById('webDesignForm').addEventListener('submit', async function(e) {
+    document.getElementById('orderForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       
+      const form = document.getElementById('orderForm');
+      const loading = document.getElementById('loading');
+      const successMessage = document.getElementById('successMessage');
       const submitBtn = document.getElementById('submitBtn');
       
-      // Collect form data
-      const formData = {
-        user: user,
-        email: document.getElementById('email').value.trim(),
-        telegram: document.getElementById('telegram').value.trim(),
-        phone: document.getElementById('country').value + ' ' + document.getElementById('phone').value.trim(),
-        companyName: document.getElementById('companyName').value.trim(),
-        businessType: document.getElementById('businessType').value,
-        domainName: document.getElementById('domainName').value.trim(),
-        websiteType: document.querySelector('input[name="websiteType"]:checked')?.value,
-        colors: document.getElementById('colors').value.trim(),
-        designStyle: document.getElementById('designStyle').value,
-        requirements: document.getElementById('requirements').value.trim(),
-        type: 'web',
-        status: 'pending',
-        price: websitePrices[document.querySelector('input[name="websiteType"]:checked')?.value],
-        createdAt: serverTimestamp()
-      };
-
-      // Collect selected features
-      const selectedFeatures = [];
-      document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
-        selectedFeatures.push(checkbox.value);
-      });
-      formData.features = selectedFeatures;
-
-      // Validation
-      if (!formData.websiteType) {
-        showMessage('❌ Iltimos, web sayt turini tanlang!', 'error');
-        return;
-      }
-
       // Show loading
-      submitBtn.classList.add('loading');
-      submitBtn.innerHTML = '<span>⏳</span> Yuborilmoqda...';
-
+      form.style.display = 'none';
+      loading.style.display = 'block';
+      submitBtn.disabled = true;
+      
       try {
-        // 1. Save order data to localStorage for payment
-        const orderForPayment = {
-          ...formData,
-          createdAt: new Date().toISOString() // Convert serverTimestamp to regular timestamp
+        // Collect form data
+        const formData = {
+          // Contact info
+          user: document.getElementById('email').value.split('@')[0],
+          email: document.getElementById('email').value,
+          phone: document.getElementById('phone').value,
+          telegram: document.getElementById('telegram').value,
+          
+          // Business info
+          companyName: document.getElementById('companyName').value,
+          businessType: document.getElementById('businessType').value,
+          websiteType: document.getElementById('websiteType').value,
+          domainName: document.getElementById('domainName').value,
+          
+          // Design preferences
+          colors: document.getElementById('colors').value,
+          designStyle: document.getElementById('designStyle').value,
+          requirements: document.getElementById('requirements').value,
+          
+          // Features
+          features: Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value),
+          
+          // Order details
+          type: 'web',
+          price: calculatePrice(),
+          status: 'pending',
+          createdAt: new Date().toISOString()
         };
-        localStorage.setItem('pendingOrder', JSON.stringify(orderForPayment));
 
-        // 2. Redirect to payment page instead of saving to Firebase
-        console.log('💳 To\'lov sahifasiga yo\'naltirilmoqda...');
-        showMessage('💳 To\'lov sahifasiga yo\'naltirilmoqda...', 'success');
+        console.log('📤 Buyurtma yuborilmoqda:', formData);
 
+        // Save to Firebase
+        const ordersRef = ref(database, 'orders');
+        await push(ordersRef, formData);
+
+        console.log('✅ Firebase ga saqlandi');
+
+        // Show success message
+        loading.style.display = 'none';
+        successMessage.style.display = 'block';
+
+        // Store order data for payment page
+        sessionStorage.setItem('currentOrder', JSON.stringify(formData));
+
+        // Redirect to payment page after 3 seconds
         setTimeout(() => {
           window.location.href = '/html/payment.html';
-        }, 2000);
+        }, 3000);
 
       } catch (error) {
         console.error('❌ Xatolik:', error);
-        showMessage('❌ Xatolik yuz berdi! Xatolik: ' + error.message, 'error');
-      } finally {
-        // Reset button state
-        submitBtn.classList.remove('loading');
-        submitBtn.innerHTML = '<span>🚀</span> Web Dizayn Buyurtmasi Berish';
+        
+        // Hide loading and show error
+        loading.style.display = 'none';
+        form.style.display = 'block';
+        submitBtn.disabled = false;
+        
+        alert('❌ Buyurtma yuborishda xatolik yuz berdi. Iltimos, qayta urinib ko\'ring.');
       }
     });
 
-    // Helper function to show status messages
-    function showMessage(message, type = 'success') {
-      const messageDiv = document.getElementById(type === 'success' ? 'successMessage' : 'errorMessage');
-      messageDiv.textContent = message;
-      messageDiv.classList.add(type);
-      messageDiv.style.display = 'block';
-
-      setTimeout(() => {
-        messageDiv.style.display = 'none';
-        messageDiv.classList.remove(type);
-      }, 8000);
-    }
-
-    // Delete account functionality
-    document.getElementById('deleteBtn').addEventListener('click', function() {
-      const confirmDelete = confirm('Haqiqatan ham akkauntingizni o\'chirmoqchimisiz?');
-      if (confirmDelete) {
-        localStorage.removeItem('user');
-        alert('Akkauntingiz muvaffaqiyatli o\'chirildi!');
-        window.location.href = 'register.html';
-      }
-    });
-
-    // Make functions global for HTML onclick events
-    window.showMessage = showMessage;
-  </script>
-
-  <script>
-    // Security functions
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('keydown', function(e) {
-      if (
-        (e.ctrlKey && ['u', 's', 'p', 'c'].includes(e.key.toLowerCase())) ||
-        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') ||
-        e.key === 'F12'
-      ) {
-        e.preventDefault();
-        alert("Bu amal bloklangan!");
-      }
-    });
-    document.addEventListener('selectstart', e => e.preventDefault());
-    document.addEventListener('copy', e => {
-      e.preventDefault();
-      alert("Nusxa olish mumkin emas!");
-    });
+    // Initialize price calculation
+    calculatePrice();
   </script>
 </body>
 </html>
