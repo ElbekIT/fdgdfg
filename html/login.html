@@ -321,7 +321,7 @@
       <h1 class="title">
         <span class="gradient-text">Xush kelibsiz!</span>
       </h1>
-      <p class="subtitle">Hisobingizga kirish uchun Google orqali kiring</p>
+      <p class="subtitle">Google yoki Telegram orqali hisobingizga kiring</p>
     </div>
 
     <div class="welcome-message">
@@ -332,12 +332,41 @@
 
     <!-- Authentication Methods -->
     <div class="auth-methods">
-      <p class="method-title">Tizimga kirish:</p>
+      <p class="method-title">Tizimga kirish usulini tanlang:</p>
       
-      <div class="auth-buttons">
-        <button class="auth-btn google" onclick="signInWithGoogle()">
-          <span>🔍</span>
-          Google orqali kirish
+      <!-- Auth Tabs -->
+      <div style="display: flex; gap: 0.5rem; margin-bottom: 2rem; background: rgba(99, 102, 241, 0.1); border-radius: 1rem; padding: 0.5rem;">
+        <button class="auth-tab active" onclick="switchAuthTab('google')" style="flex: 1; padding: 0.75rem 1rem; border: none; border-radius: 0.75rem; background: white; color: var(--primary); font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-family: 'Poppins', sans-serif; font-size: 0.9rem;">
+          🔍 Google
+        </button>
+        <button class="auth-tab" onclick="switchAuthTab('telegram')" style="flex: 1; padding: 0.75rem 1rem; border: none; border-radius: 0.75rem; background: transparent; color: var(--primary); font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-family: 'Poppins', sans-serif; font-size: 0.9rem;">
+          📱 Telegram
+        </button>
+      </div>
+      
+      <!-- Google Auth Section -->
+      <div id="googleAuthSection" class="auth-section" style="display: block;">
+        <div class="auth-buttons">
+          <button class="auth-btn google" onclick="signInWithGoogle()">
+            <span>🔍</span>
+            Google orqali kirish
+          </button>
+        </div>
+      </div>
+      
+      <!-- Telegram Auth Section -->
+      <div id="telegramAuthSection" class="auth-section" style="display: none;">
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--dark); font-size: 0.95rem;">📱 Telegram ID raqamingiz</label>
+          <input type="number" id="telegramIdLogin" placeholder="7833115003" style="width: 100%; padding: 1rem 1.5rem; border: 2px solid #e5e7eb; border-radius: 1rem; font-size: 1rem; font-family: 'Poppins', sans-serif; background: var(--white); color: var(--dark); transition: all 0.3s ease; margin-bottom: 1rem;" required>
+          <div style="font-size: 0.85rem; color: var(--gray); line-height: 1.4;">
+            💡 Ro'yxatdan o'tishda ishlatgan Telegram ID ni kiriting
+          </div>
+        </div>
+        
+        <button class="auth-btn" onclick="signInWithTelegram()" style="width: 100%; background: #0088cc; color: white; border: 2px solid #0088cc;">
+          <span>📱</span>
+          Telegram orqali kirish
         </button>
       </div>
     </div>
@@ -371,6 +400,98 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const database = getDatabase(app);
+
+    // Switch between auth tabs
+    window.switchAuthTab = function(tabName) {
+      // Update tab buttons
+      document.querySelectorAll('.auth-tab').forEach(tab => {
+        tab.style.background = 'transparent';
+      });
+      event.target.style.background = 'white';
+
+      // Update auth sections
+      if (tabName === 'google') {
+        document.getElementById('googleAuthSection').style.display = 'block';
+        document.getElementById('telegramAuthSection').style.display = 'none';
+      } else if (tabName === 'telegram') {
+        document.getElementById('googleAuthSection').style.display = 'none';
+        document.getElementById('telegramAuthSection').style.display = 'block';
+      }
+    };
+
+    // Telegram Sign In
+    window.signInWithTelegram = async function() {
+      const telegramId = document.getElementById('telegramIdLogin').value.trim();
+      
+      if (!telegramId) {
+        showMessage('❌ Telegram ID ni kiriting!', 'error');
+        return;
+      }
+      
+      if (!/^\d+$/.test(telegramId)) {
+        showMessage('❌ Telegram ID faqat raqamlardan iborat bo\'lishi kerak!', 'error');
+        return;
+      }
+      
+      try {
+        showMessage('📱 Telegram orqali kirilmoqda...', 'success');
+        
+        const userName = `telegram_${telegramId}`;
+        
+        // Check if user exists in Firebase
+        const usersRef = ref(database, 'users');
+        const snapshot = await get(usersRef);
+        
+        let userFound = false;
+        let userUID = null;
+        
+        if (snapshot.exists()) {
+          const users = snapshot.val();
+          
+          // Find user by telegram ID
+          for (const uid of Object.keys(users)) {
+            const user = users[uid];
+            if (user.telegramId === telegramId && user.authMethod === 'telegram') {
+              userFound = true;
+              userUID = uid;
+              break;
+            }
+          }
+        }
+        
+        if (!userFound) {
+          showMessage('❌ Bu Telegram ID bilan ro\'yxatdan o\'tilmagan! Avval ro\'yxatdan o\'ting.', 'error');
+          return;
+        }
+        
+        // Check if user is blocked
+        const isBlocked = await checkUserBlocked(userName);
+        if (isBlocked) {
+          return; // Don't proceed if blocked
+        }
+        
+        // Update last login
+        await update(ref(database, `users/${userUID}`), {
+          lastLogin: new Date().toISOString()
+        });
+        
+        showMessage('✅ Telegram orqali muvaffaqiyatli kirdingiz!', 'success');
+        
+        // Save to localStorage
+        localStorage.setItem('user', userName);
+        localStorage.setItem('userUID', userUID);
+        localStorage.setItem('telegramId', telegramId);
+        localStorage.setItem('authMethod', 'telegram');
+        
+        setTimeout(() => {
+          window.location.href = "order.html";
+        }, 2000);
+        
+      } catch (error) {
+        console.error('❌ Telegram kirish xatosi:', error);
+        showMessage('❌ Telegram orqali kirishda xatolik: ' + error.message, 'error');
+      }
+    };
 
     // Create particles
     function createParticles() {
