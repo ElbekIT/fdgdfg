@@ -1,673 +1,867 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buyurtma berish - Elbek Design Studio</title>
-<link rel="icon" href="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" type="image/png">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  :root {
-    --primary: #2563eb;
-    --primary-light: #60a5fa;
-    --primary-dark: #1e40af;
-    --secondary: #f472b6;
-    --background: #f3f4f6;
-    --surface: #fff;
-    --surface-alt: #f9fafb;
-    --text: #1e293b;
-    --text-light: #64748b;
-    --success: #22c55e;
-    --error: #ef4444;
-    --warning: #f59e0b;
-    --radius: 1.25rem;
-    --shadow: 0 4px 32px 0 rgba(37,99,235,0.08);
-    --shadow-hover: 0 8px 40px 0 rgba(37,99,235,0.16);
-    --gradient: linear-gradient(90deg, #2563eb 0%, #f472b6 100%);
-  }
-
-  body {
-    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
-    background: var(--background);
-    color: var(--text);
-    min-height: 100vh;
-    letter-spacing: 0.01em;
-    -webkit-font-smoothing: antialiased;
-    transition: background 0.3s;
-  }
-
-  /* Header */
-  .header {
-    background: var(--surface);
-    box-shadow: var(--shadow);
-    padding: 0.5rem 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    border-bottom: 1.5px solid #e0e7ef;
-  }
-
-  .header-content {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 2rem;
-  }
-
-  .logo-section {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .logo {
-    width: 48px;
-    height: 48px;
-    border-radius: 16px;
-    border: 2.5px solid var(--primary);
-    background: var(--surface-alt);
-    box-shadow: 0 2px 8px rgba(37,99,235,0.08);
-  }
-
-  .brand-name {
-    font-size: 1.35rem;
-    font-weight: 700;
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: 0.03em;
-  }
-
-  .user-info {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    padding: 0.5rem 1.2rem;
-    background: var(--primary);
-    border-radius: 2rem;
-    color: #fff;
-    font-weight: 500;
-    font-size: 1rem;
-    box-shadow: 0 2px 8px rgba(37,99,235,0.10);
-  }
-
-  /* Back Button */
-  .back-btn {
-    position: fixed;
-    top: 90px;
-    left: 2rem;
-    width: 44px;
-    height: 44px;
-    background: var(--surface);
-    border: none;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    color: var(--primary);
-    cursor: pointer;
-    box-shadow: var(--shadow);
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-    z-index: 1000;
-  }
-  .back-btn:hover {
-    background: var(--primary);
-    color: #fff;
-    box-shadow: var(--shadow-hover);
-  }
-
-  /* Main Content */
-  .main {
-    margin-top: 90px;
-    padding: 2.5rem 0.5rem 2rem 0.5rem;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .page-title {
-    text-align: center;
-    font-size: 2.3rem;
-    font-weight: 800;
-    margin-bottom: 0.5rem;
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: 0.04em;
-  }
-
-  .page-subtitle {
-    text-align: center;
-    color: var(--text-light);
-    font-size: 1.08rem;
-    margin-bottom: 2.5rem;
-    font-weight: 400;
-  }
-
-  /* Form */
-  .form-container {
-    background: var(--surface);
-    border-radius: var(--radius);
-    padding: 2.5rem;
-    box-shadow: var(--shadow);
-    border: 1.5px solid #e0e7ef;
-    margin-bottom: 2rem;
-  }
-
-  .form-group {
-    margin-bottom: 1.8rem;
-  }
-
-  .form-label {
-    display: block;
-    margin-bottom: 0.7rem;
-    font-weight: 600;
-    color: var(--text);
-    font-size: 1.05rem;
-  }
-
-  .form-input, .form-select, .form-textarea {
-    width: 100%;
-    padding: 1rem 1.2rem;
-    border: 2px solid #e5e7eb;
-    border-radius: 0.8rem;
-    font-size: 1rem;
-    font-family: 'Poppins', sans-serif;
-    background: var(--surface);
-    color: var(--text);
-    transition: all 0.3s ease;
-  }
-
-  .form-input:focus, .form-select:focus, .form-textarea:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
-    transform: translateY(-1px);
-  }
-
-  .form-textarea {
-    resize: vertical;
-    min-height: 120px;
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.7rem;
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 0.8rem;
-    font-size: 1.05rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: 'Poppins', sans-serif;
-    text-decoration: none;
-  }
-
-  .btn-primary {
-    background: var(--gradient);
-    color: #fff;
-    width: 100%;
-    box-shadow: var(--shadow);
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-  }
-
-  .btn-primary:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-  }
-
-  /* Loading */
-  .loading {
-    text-align: center;
-    padding: 3rem 0 2rem 0;
-    color: var(--text-light);
-  }
-
-  .loading-spinner {
-    width: 44px;
-    height: 44px;
-    border: 4px solid #e5e7eb;
-    border-top: 4px solid var(--primary);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 1rem;
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg);}
-    100% { transform: rotate(360deg);}
-  }
-
-  /* Responsive */
-  @media (max-width: 900px) {
-    .header-content {
-      padding: 0 1rem;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buyurtma berish - Elbek Design Studio</title>
+  <link rel="icon" href="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    .main {
-      padding: 1.2rem 0.2rem 2rem 0.2rem;
+
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #8b5cf6;
+      --accent: #06b6d4;
+      --dark: #0f172a;
+      --light: #f8fafc;
+      --gray: #64748b;
+      --white: #ffffff;
+      --success: #22c55e;
+      --error: #ef4444;
+      --warning: #f59e0b;
+      --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      --shadow: 0 10px 40px rgba(99, 102, 241, 0.1);
+      --shadow-hover: 0 20px 60px rgba(99, 102, 241, 0.2);
     }
-  }
-  @media (max-width: 600px) {
-    .main {
-      margin-top: 80px;
-      padding: 0.7rem 0.1rem 1.5rem 0.1rem;
-      max-width: 98vw;
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--light);
+      line-height: 1.6;
+      color: var(--dark);
+      min-height: 100vh;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
-    .page-title {
-      font-size: 1.45rem;
-    }
-    .back-btn {
-      left: 0.7rem;
-      top: 75px;
-      width: 38px;
-      height: 38px;
-      font-size: 1.1rem;
-    }
-    .form-container {
-      padding: 1.5rem;
-    }
-  }
-</style>
-</head>
-<body>
-<!-- Header -->
-<header class="header">
-  <div class="header-content">
-    <div class="logo-section">
-      <img src="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Logo" class="logo">
-      <div class="brand-name">Elbek Design Studio</div>
-    </div>
-    <div class="user-info">
-      <span>👤</span>
-      <span id="userDisplay"></span>
-    </div>
-  </div>
-</header>
 
-<!-- Back Button -->
-<button class="back-btn" onclick="goBack()">
-  ←
-</button>
-
-<!-- Main Content -->
-<main class="main">
-  <h1 class="page-title">🎮 Gaming Dizayn Buyurtmasi</h1>
-  <p class="page-subtitle">Professional gaming dizayn uchun buyurtma bering</p>
-
-  <!-- Loading State -->
-  <div id="loadingState" class="loading" style="display: none;">
-    <div class="loading-spinner"></div>
-    <p>Buyurtma yuborilmoqda...</p>
-  </div>
-
-  <!-- Order Form -->
-  <div class="form-container" id="orderForm">
-    <form onsubmit="submitOrder(event)">
-      <div class="form-group">
-        <label class="form-label">🎮 O'yin turini tanlang:</label>
-        <select id="gameType" class="form-select" required>
-          <option value="">-- O'yin tanlang --</option>
-          <option value="pubg">PUBG Mobile</option>
-          <option value="freefire">Free Fire</option>
-          <option value="csgo">CS:GO</option>
-          <option value="valorant">Valorant</option>
-          <option value="other">Boshqa</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">🎨 Dizayn turini tanlang:</label>
-        <select id="designType" class="form-select" required>
-          <option value="">-- Dizayn turi tanlang --</option>
-          <option value="logo">Logo</option>
-          <option value="banner">Banner</option>
-          <option value="avatar">Avatar</option>
-          <option value="thumbnail">Thumbnail</option>
-          <option value="overlay">Stream Overlay</option>
-          <option value="package">To'liq paket</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">📱 Telefon raqamingiz:</label>
-        <input type="tel" id="phoneNumber" class="form-input" placeholder="+998 90 123 45 67" required>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">📧 Email manzilingiz:</label>
-        <input type="email" id="emailAddress" class="form-input" placeholder="example@gmail.com" required>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">💬 Telegram username (ixtiyoriy):</label>
-        <input type="text" id="telegramUsername" class="form-input" placeholder="@username">
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">📝 Qo'shimcha talablar:</label>
-        <textarea id="requirements" class="form-textarea" placeholder="Dizayn haqida batafsil yozing: ranglar, uslub, matn va boshqa talablaringiz..."></textarea>
-      </div>
-
-      <button type="submit" class="btn btn-primary">
-        <span>🚀</span> Buyurtma berish
-      </button>
-    </form>
-  </div>
-</main>
-
-<!-- Firebase SDK -->
-<script type="module">
-  // Import Firebase functions
-  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-  import { getDatabase, ref, push, get, remove } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
-
-  // Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyA_B0OC6Y91ontwJWM-o615jg7Dr5jUVvA",
-    authDomain: "dizaynowner.firebaseapp.com",
-    databaseURL: "https://dizaynowner-default-rtdb.firebaseio.com/",
-    projectId: "dizaynowner",
-    storageBucket: "dizaynowner.firebasestorage.app",
-    messagingSenderId: "976762018041",
-    appId: "1:976762018041:web:e43227005165059158ea28",
-    measurementId: "G-0S6KV8DFKJ"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const database = getDatabase(app);
-
-  // Check if user is blocked
-  async function checkUserBlock() {
-    const user = localStorage.getItem('user');
-    if (!user) return false;
-
-    try {
-      const blockedRef = ref(database, `blocked_users/${user}`);
-      const snapshot = await get(blockedRef);
-      
-      if (snapshot.exists()) {
-        const blockData = snapshot.val();
-        const now = new Date().getTime();
-        const blockEndTime = new Date(blockData.blockEndTime).getTime();
-        
-        if (now < blockEndTime) {
-          const remainingTime = Math.ceil((blockEndTime - now) / 1000 / 60);
-          showBlockModal(blockData.reason, remainingTime, blockData.blockEndTime);
-          return true;
-        } else {
-          await remove(blockedRef);
-          return false;
-        }
-      }
-      
-      return false;
-    } catch (error) {
-      console.error('Block tekshirishda xatolik:', error);
-      return false;
-    }
-  }
-
-  // Show block modal
-  function showBlockModal(reason, remainingMinutes, blockEndTime) {
-    const modal = document.createElement('div');
-    modal.id = 'blockModal';
-    modal.style.cssText = `
+    /* Header */
+    .header {
+      background: var(--white);
+      box-shadow: var(--shadow);
+      padding: 1rem 0;
       position: fixed;
       top: 0;
-      left: 0;
       width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
       backdrop-filter: blur(20px);
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      z-index: 10000;
+      padding: 0 2rem;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 3px solid var(--primary);
+    }
+
+    .brand-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--gradient);
+      border-radius: 2rem;
+      color: var(--white);
+      font-weight: 600;
+      box-shadow: var(--shadow);
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 100px;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      background: var(--white);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* Navigation */
+    .nav-tabs {
+      display: flex;
+      gap: 1rem;
+      margin-top: 100px;
+      padding: 1rem 2rem;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      justify-content: center;
+    }
+
+    .nav-tab {
+      padding: 0.75rem 1.5rem;
+      border: 2px solid var(--primary);
+      border-radius: 1rem;
+      background: var(--white);
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .nav-tab:hover, .nav-tab.active {
+      background: var(--primary);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    /* My Orders Button */
+    .my-orders-btn {
+      position: fixed;
+      top: 100px;
+      left: 2rem;
+      padding: 0.75rem 1.5rem;
+      background: var(--gradient);
+      color: var(--white);
+      border: none;
+      border-radius: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+      z-index: 1000;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .my-orders-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* Main Content */
+    .main {
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .form-container {
+      background: var(--white);
+      border-radius: 2rem;
+      padding: 3rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: slideUp 0.8s ease-out;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .form-title {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Form Groups */
+    .form-section {
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--dark);
+      font-size: 1rem;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 1rem;
+      font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
+      background: var(--white);
+      color: var(--dark);
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    /* Special Input Groups */
+    .input-group {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .input-group .form-input,
+    .input-group .form-select {
+      flex: 1;
+    }
+
+    /* Gender Radio Group */
+    .radio-group {
+      display: flex;
+      gap: 2rem;
+      margin-top: 0.5rem;
+    }
+
+    .radio-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      padding: 0.75rem 1.5rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 1rem;
+      transition: all 0.3s ease;
+      background: var(--white);
+    }
+
+    .radio-item:hover {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, 0.05);
+    }
+
+    .radio-item input[type="radio"] {
+      accent-color: var(--primary);
+      width: 18px;
+      height: 18px;
+    }
+
+    .radio-item.selected {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* Price Display */
+    .price-display {
+      background: rgba(34, 197, 94, 0.1);
+      border: 2px solid rgba(34, 197, 94, 0.2);
+      border-radius: 1rem;
+      padding: 1rem;
+      margin-top: 1rem;
+      text-align: center;
+      display: none;
+    }
+
+    .price-display.show {
+      display: block;
+      animation: slideDown 0.5s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .price-amount {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--success);
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 1rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: var(--gradient);
+      color: var(--white);
+      box-shadow: var(--shadow);
+      width: 100%;
+      margin-top: 2rem;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, var(--error) 0%, #dc2626 100%);
+      color: var(--white);
+      width: 100%;
+      margin-top: 1rem;
+      box-shadow: 0 10px 40px rgba(239, 68, 68, 0.1);
+    }
+
+    .btn-danger:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 60px rgba(239, 68, 68, 0.2);
+    }
+
+    /* Loading State */
+    .btn.loading {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .btn.loading::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 2px solid transparent;
+      border-top: 2px solid var(--white);
+      border-radius: 50%;
+      right: 1rem;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Status Messages */
+    .status-message {
+      padding: 1rem;
+      border-radius: 1rem;
+      margin: 1rem 0;
+      font-weight: 500;
+      text-align: center;
+      display: none;
       animation: fadeIn 0.5s ease;
-    `;
-    
-    const endDate = new Date(blockEndTime);
-    const formattedEndTime = endDate.toLocaleString('uz-UZ');
-    
-    modal.innerHTML = `
-      <div style="
-        background: linear-gradient(135deg, #ef4444, #dc2626);
-        border-radius: 2rem;
-        padding: 3rem;
-        max-width: 500px;
-        width: 90%;
-        text-align: center;
-        color: white;
-        box-shadow: 0 20px 60px rgba(239, 68, 68, 0.3);
-        border: 2px solid rgba(255, 255, 255, 0.1);
-        animation: modalSlide 0.8s ease;
-      ">
-        <div style="font-size: 4rem; margin-bottom: 1rem;">🚫</div>
-        <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem; color: white;">
-          Hisobingiz bloklangan!
-        </h2>
-        
-        <div style="background: rgba(255, 255, 255, 0.1); border-radius: 1rem; padding: 1.5rem; margin: 2rem 0; border: 1px solid rgba(255, 255, 255, 0.2);">
-          <h3 style="color: #fecaca; margin-bottom: 1rem; font-size: 1.2rem;">📝 Block sababi:</h3>
-          <p style="font-size: 1.1rem; line-height: 1.6; color: white; font-weight: 500;">
-            ${reason}
-          </p>
-        </div>
-        
-        <div style="background: rgba(255, 255, 255, 0.1); border-radius: 1rem; padding: 1.5rem; margin: 2rem 0; border: 1px solid rgba(255, 255, 255, 0.2);">
-          <h3 style="color: #fecaca; margin-bottom: 1rem; font-size: 1.2rem;">⏰ Qolgan vaqt:</h3>
-          <p id="remainingTime" style="font-size: 1.5rem; font-weight: 700; color: #fef2f2;">
-            ${remainingMinutes} daqiqa
-          </p>
-          <p style="font-size: 0.9rem; color: #fecaca; margin-top: 0.5rem;">
-            Block tugash vaqti: ${formattedEndTime}
-          </p>
-        </div>
-        
-        <div style="margin-top: 2rem;">
-          <p style="font-size: 0.9rem; color: #fecaca; margin-bottom: 1rem;">
-            ⚠️ Bu vaqt tugagach avtomatik ravishda blokdan chiqasiz
-          </p>
-          <button onclick="window.location.href='/'" style="
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            padding: 1rem 2rem;
-            border-radius: 1rem;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Poppins', sans-serif;
-          " onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
-            🏠 Bosh sahifaga qaytish
-          </button>
-        </div>
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .status-message.success {
+      background: rgba(34, 197, 94, 0.1);
+      color: var(--success);
+      border: 2px solid rgba(34, 197, 94, 0.2);
+    }
+
+    .status-message.error {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--error);
+      border: 2px solid rgba(239, 68, 68, 0.2);
+    }
+
+    /* Dark Theme */
+    body.dark {
+      background: var(--dark);
+      color: var(--light);
+    }
+
+    body.dark .header,
+    body.dark .nav-tabs {
+      background: #1e293b;
+    }
+
+    body.dark .form-container {
+      background: #1e293b;
+      border-color: #334155;
+    }
+
+    body.dark .form-input,
+    body.dark .form-select,
+    body.dark .form-textarea {
+      background: #0f172a;
+      border-color: #334155;
+      color: var(--light);
+    }
+
+    body.dark .radio-item {
+      background: #0f172a;
+      border-color: #334155;
+      color: var(--light);
+    }
+
+    body.dark .theme-toggle {
+      background: #1e293b;
+      color: var(--light);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-content {
+        padding: 0 1rem;
+      }
+
+      .brand-name {
+        font-size: 1.2rem;
+      }
+
+      .user-info {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+      }
+
+      .nav-tabs {
+        flex-wrap: wrap;
+        padding: 1rem;
+      }
+
+      .theme-toggle {
+        top: 90px;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+      }
+
+      .my-orders-btn {
+        top: 90px;
+        left: 1rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .main {
+        padding: 1rem;
+      }
+
+      .form-container {
+        padding: 2rem;
+      }
+
+      .form-title {
+        font-size: 2rem;
+      }
+
+      .radio-group {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .input-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo-section">
+        <img src="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Logo" class="logo">
+        <div class="brand-name">Elbek Design Studio</div>
       </div>
-    `;
-    
-    document.body.appendChild(modal);
-    
-    // Update remaining time every minute
-    const updateTimer = setInterval(async () => {
-      const now = new Date().getTime();
-      const blockEnd = new Date(blockEndTime).getTime();
-      const remaining = Math.ceil((blockEnd - now) / 1000 / 60);
-      
-      if (remaining <= 0) {
-        clearInterval(updateTimer);
-        modal.remove();
-        location.reload();
+      <div class="user-info">
+        <span>👤</span>
+        <span id="userDisplay"></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle">
+    <span id="themeIcon">🌙</span>
+  </button>
+
+  <!-- My Orders Button -->
+  <a href="/html/menby.html" class="my-orders-btn">
+    <span>📋</span> Mening buyurtmalarim
+  </a>
+
+  <!-- Navigation Tabs -->
+  <nav class="nav-tabs">
+    <a href="/html/order.html" class="nav-tab active">🎮 Gaming Dizayn</a>
+    <a href="/html/webdizayn.html" class="nav-tab">🌐 Web Dizayn</a>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="form-container">
+      <h1 class="form-title">🎨 Professional Dizayn Buyurtmasi</h1>
+
+      <!-- Status Messages -->
+      <div id="successMessage" class="status-message success"></div>
+      <div id="errorMessage" class="status-message error"></div>
+
+      <form id="orderForm">
+        <!-- Contact Information -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <span>📞</span> Aloqa ma'lumotlari
+          </h3>
+          
+          <div class="form-group">
+            <label class="form-label">📧 Elektron pochta</label>
+            <input type="email" id="email" class="form-input" placeholder="example@gmail.com" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">📱 Telegram Username</label>
+            <input type="text" id="telegram" class="form-input" placeholder="@username">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">📞 Telefon raqami</label>
+            <div class="input-group">
+              <select id="country" class="form-select" required>
+                <option value="+998">🇺🇿 +998</option>
+                <option value="+7">🇷🇺 +7</option>
+              </select>
+              <input type="tel" id="phone" class="form-input" placeholder="901234567" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- Design Information -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <span>🎮</span> Dizayn ma'lumotlari
+          </h3>
+
+          <div class="form-group">
+            <label class="form-label">🎯 O'yin yoki platforma</label>
+            <select id="game" class="form-select" required>
+              <option value="">-- Tanlang --</option>
+              <option value="PUBG">🎮 PUBG</option>
+              <option value="Telegram">📢 Telegram</option>
+              <option value="CSGO 2">💣 CS:GO 2</option>
+              <option value="DOTA 2">💎 DOTA 2</option>
+              <option value="Free Fire">🔥 Free Fire</option>
+              <option value="Call of Duty">⚔️ Call of Duty</option>
+              <option value="Minecraft">⛏ Minecraft</option>
+              <option value="Valorant">🎯 Valorant</option>
+              <option value="Resident Evil">🧟‍♂️ Resident Evil</option>
+              <option value="Silent Hill">🌫 Silent Hill</option>
+              <option value="Amnesia">😱 Amnesia</option>
+              <option value="Outlast">💀 Outlast</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">🎨 Dizayn turi</label>
+            <select id="designType" class="form-select" required>
+              <option value="">-- Tanlang --</option>
+              <option value="Prevyou">📺 Prevyou</option>
+              <option value="Banner">🖼 Banner</option>
+              <option value="Avatarka">👤 Avatarka</option>
+              <option value="Logo">🎨 Logo</option>
+            </select>
+          </div>
+
+          <div id="priceDisplay" class="price-display">
+            <div class="price-amount" id="priceAmount"></div>
+            <div style="font-size: 0.9rem; color: var(--gray); margin-top: 0.5rem;">
+              💡 Professional sifat kafolati bilan
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">📝 Qo'shimcha izoh va talablar</label>
+            <textarea id="comment" class="form-textarea" placeholder="Masalan: O'yinchi nomi, kerakli ranglar, maxsus yozuvlar, o'lcham talablari va boshqa muhim tafsilotlar..." required></textarea>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <button type="submit" class="btn btn-primary" id="submitBtn">
+          <span>🚀</span> Buyurtma berish
+        </button>
+        
+        <button type="button" class="btn btn-danger" id="deleteBtn">
+          <span>🗑️</span> Akkauntni o'chirish
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Import Firebase functions
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getDatabase, ref, push, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyA_B0OC6Y91ontwJWM-o615jg7Dr5jUVvA",
+      authDomain: "dizaynowner.firebaseapp.com",
+      databaseURL: "https://dizaynowner-default-rtdb.firebaseio.com/",
+      projectId: "dizaynowner",
+      storageBucket: "dizaynowner.firebasestorage.app",
+      messagingSenderId: "976762018041",
+      appId: "1:976762018041:web:e43227005165059158ea28",
+      measurementId: "G-0S6KV8DFKJ"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    // Price mapping
+    const priceMap = {
+      "Prevyou": 25000,
+      "Banner": 15000,
+      "Avatarka": 10000,
+      "Logo": 15000
+    };
+
+    // Check authentication
+    const user = localStorage.getItem('user');
+    if (!user) {
+      alert("Iltimos, avval ro'yxatdan o'ting!");
+      window.location.href = "register.html";
+    } else {
+      document.getElementById("userDisplay").textContent = user;
+    }
+
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    let isDark = localStorage.getItem('theme') === 'dark';
+
+    function setTheme(dark) {
+      document.body.classList.toggle('dark', dark);
+      themeIcon.textContent = dark ? '☀️' : '🌙';
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+    }
+
+    setTheme(isDark);
+    themeToggle.addEventListener('click', () => {
+      isDark = !isDark;
+      setTheme(isDark);
+    });
+
+    // Price display
+    document.getElementById('designType').addEventListener('change', function() {
+      const designType = this.value;
+      const priceDisplay = document.getElementById('priceDisplay');
+      const priceAmount = document.getElementById('priceAmount');
+
+      if (designType && priceMap[designType]) {
+        const price = priceMap[designType];
+        priceAmount.textContent = `💰 ${price.toLocaleString()} so'm`;
+        priceDisplay.classList.add('show');
       } else {
-        const timeElement = document.getElementById('remainingTime');
-        if (timeElement) {
-          if (remaining >= 60) {
-            const hours = Math.floor(remaining / 60);
-            const minutes = remaining % 60;
-            timeElement.textContent = `${hours} soat ${minutes} daqiqa`;
-          } else {
-            timeElement.textContent = `${remaining} daqiqa`;
-          }
-        }
-      }
-    }, 60000);
-    
-    document.body.style.overflow = 'hidden';
-    
-    modal.addEventListener('click', (e) => {
-      e.stopPropagation();
-    });
-  }
-
-  // Check authentication and block status
-  const user = localStorage.getItem('user');
-  if (!user) {
-    alert("Iltimos, avval ro'yxatdan o'ting!");
-    window.location.href = "register.html";
-  } else {
-    document.getElementById("userDisplay").textContent = user;
-    
-    // Check if user is blocked
-    checkUserBlock().then(isBlocked => {
-      if (!isBlocked) {
-        // User is not blocked, show the form
-        console.log('Foydalanuvchi bloklanmagan, forma ko\'rsatiladi');
+        priceDisplay.classList.remove('show');
       }
     });
-  }
 
-  // Check block status periodically
-  setInterval(async () => {
-    await checkUserBlock();
-  }, 30000);
+    // Phone number update based on country
+    document.getElementById('country').addEventListener('change', function() {
+      const phoneInput = document.getElementById('phone');
+      phoneInput.placeholder = this.value === '+7' ? '701234567' : '901234567';
+    });
 
-  // Submit order
-  window.submitOrder = async function(event) {
-    event.preventDefault();
-    
-    const loadingState = document.getElementById('loadingState');
-    const orderForm = document.getElementById('orderForm');
-    
-    try {
-      loadingState.style.display = 'block';
-      orderForm.style.display = 'none';
-      
-      const orderData = {
-        user: user,
-        type: 'gaming',
-        game: document.getElementById('gameType').value,
-        designType: document.getElementById('designType').value,
-        phone: document.getElementById('phoneNumber').value,
-        email: document.getElementById('emailAddress').value,
-        telegram: document.getElementById('telegramUsername').value,
-        requirements: document.getElementById('requirements').value,
-        status: 'pending',
-        createdAt: new Date().toISOString()
-      };
-      
-      const ordersRef = ref(database, 'orders');
-      await push(ordersRef, orderData);
-      
-      // Send Telegram notification
-      await sendTelegramNotification(orderData);
-      
-      alert('✅ Buyurtma muvaffaqiyatli yuborildi! Tez orada siz bilan bog\'lanamiz.');
-      window.location.href = '/index.html';
-      
-    } catch (error) {
-      console.error('❌ Buyurtma yuborishda xatolik:', error);
-      alert('❌ Buyurtma yuborishda xatolik yuz berdi. Qaytadan urinib ko\'ring.');
-      
-      loadingState.style.display = 'none';
-      orderForm.style.display = 'block';
-    }
-  };
-
-  // Send Telegram notification
-  async function sendTelegramNotification(orderData) {
-    try {
-      const message = `🆕 *YANGI GAMING DIZAYN BUYURTMASI*
-
-👤 *Mijoz:* ${orderData.user}
-📧 *Email:* ${orderData.email}
-📱 *Telefon:* ${orderData.phone}
-💬 *Telegram:* ${orderData.telegram || 'Berilmagan'}
-
-🎮 *O'yin:* ${orderData.game}
-🎨 *Dizayn turi:* ${orderData.designType}
-
-📝 *Talablar:*
-${orderData.requirements || 'Qo\'shimcha talablar yo\'q'}
-
-📅 *Sana:* ${new Date().toLocaleString('uz-UZ')}
-
-✅ Mijoz bilan bog'laning!`;
-
-      const response = await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendMessage`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          chat_id: '7833115003',
-          text: message,
-          parse_mode: 'Markdown'
-        })
-      });
-
-      if (response.ok) {
-        console.log('✅ Telegram xabari yuborildi');
-      }
-    } catch (error) {
-      console.error('❌ Telegram xabar yuborishda xatolik:', error);
-    }
-  }
-
-  // Back button
-  window.goBack = function() {
-    window.location.href = '/index.html';
-  };
-</script>
-
-<script>
-  // Security functions
-  document.addEventListener('contextmenu', e => e.preventDefault());
-  document.addEventListener('keydown', function(e) {
-    if (
-      (e.ctrlKey && ['u', 's', 'p', 'c'].includes(e.key.toLowerCase())) ||
-      (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') ||
-      e.key === 'F12'
-    ) {
+    // Form submission
+    document.getElementById('orderForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      alert("Bu amal bloklangan!");
+      
+      const submitBtn = document.getElementById('submitBtn');
+      const formData = {
+        user: user,
+        email: document.getElementById('email').value.trim(),
+        telegram: document.getElementById('telegram').value.trim(),
+        phone: document.getElementById('country').value + ' ' + document.getElementById('phone').value.trim(),
+        game: document.getElementById('game').value,
+        designType: document.getElementById('designType').value,
+        comment: document.getElementById('comment').value.trim(),
+        type: 'gaming',
+        status: 'pending',
+        price: priceMap[document.getElementById('designType').value],
+        createdAt: serverTimestamp()
+      };
+
+      // Validation
+      if (!formData.designType) {
+        showMessage('❌ Iltimos, dizayn turini tanlang!', 'error');
+        return;
+      }
+
+      // Show loading
+      submitBtn.classList.add('loading');
+      submitBtn.innerHTML = '<span>⏳</span> Yuborilmoqda...';
+
+      try {
+        // Form submission qismida (try blokida, Firebase ga saqlashdan oldin):
+        // 1. Save order data to localStorage for payment
+        const orderForPayment = {
+          ...formData,
+          createdAt: new Date().toISOString() // Convert serverTimestamp to regular timestamp
+        };
+        localStorage.setItem('pendingOrder', JSON.stringify(orderForPayment));
+
+        // 2. Redirect to payment page instead of saving to Firebase
+        console.log('💳 To\'lov sahifasiga yo\'naltirilmoqda...');
+        showMessage('💳 To\'lov sahifasiga yo\'naltirilmoqda...', 'success');
+
+        setTimeout(() => {
+          window.location.href = '/html/payment.html';
+        }, 2000);
+
+      } catch (error) {
+        console.error('❌ Xatolik:', error);
+        showMessage('❌ Xatolik yuz berdi! Xatolik: ' + error.message, 'error');
+      } finally {
+        // Reset button state
+        submitBtn.classList.remove('loading');
+        submitBtn.innerHTML = '<span>💳</span> To\'lovga o\'tish';
+      }
+    });
+
+    // Delete account
+    document.getElementById('deleteBtn').addEventListener('click', async function() {
+      if (!confirm('❌ Haqiqatan ham akkauntingizni o\'chirishni xohlaysizmi? Bu amal qaytarib bo\'lmaydi!')) {
+        return;
+      }
+
+      try {
+        const message = `🗑️ *Akkaunt o'chirildi*
+
+👤 *Foydalanuvchi:* ${user}
+📅 *Sana:* ${new Date().toLocaleString('uz-UZ')}
+❌ *Status:* Akkaunt o'chirildi
+`;
+
+        await fetch(`https://api.telegram.org/bot7606592691:AAEX0POICKvjbOEwNQuAdUn-wqcqKdl-Gvc/sendMessage`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            chat_id: '7833115003',
+            text: message,
+            parse_mode: 'Markdown'
+          })
+        });
+
+        localStorage.removeItem('user');
+        localStorage.removeItem('theme');
+        alert('✅ Akkauntingiz muvaffaqiyatli o\'chirildi!');
+        window.location.href = '/index.html';
+      } catch (error) {
+        alert('❌ Xatolik yuz berdi!');
+      }
+    });
+
+    // Show message function
+    function showMessage(text, type) {
+      const messageEl = document.getElementById(type === 'success' ? 'successMessage' : 'errorMessage');
+      messageEl.textContent = text;
+      messageEl.style.display = 'block';
+
+      setTimeout(() => {
+        messageEl.style.display = 'none';
+      }, 8000);
     }
-  });
-  document.addEventListener('selectstart', e => e.preventDefault());
-  document.addEventListener('copy', e => {
-    e.preventDefault();
-    alert("Nusxa olish mumkin emas!");
-  });
-</script>
+
+    // Make functions global for HTML onclick events
+    window.showMessage = showMessage;
+  </script>
+
+  <script>
+    // Security functions
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', function(e) {
+      if (
+        (e.ctrlKey && ['u', 's', 'p', 'c'].includes(e.key.toLowerCase())) ||
+        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') ||
+        e.key === 'F12'
+      ) {
+        e.preventDefault();
+        alert("Bu amal bloklangan!");
+      }
+    });
+    document.addEventListener('selectstart', e => e.preventDefault());
+    document.addEventListener('copy', e => {
+      e.preventDefault();
+      alert("Nusxa olish mumkin emas!");
+    });
+  </script>
 </body>
 </html>
