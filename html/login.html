@@ -206,6 +206,45 @@
       border-color: #db4437;
     }
 
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--dark);
+      font-size: 0.95rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 1rem;
+      font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
+      background: var(--white);
+      color: var(--dark);
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .input-hint {
+      font-size: 0.85rem;
+      color: var(--gray);
+      margin-top: 0.5rem;
+      line-height: 1.4;
+    }
+
     /* Success/Error Messages */
     .message {
       padding: 1rem;
@@ -325,7 +364,7 @@
     </div>
 
     <div class="welcome-message">
-      ✨ Siz allaqachon ro'yxatdan o'tgansiz! Tizimga kirish uchun Google orqali kiring.
+      ✨ Siz allaqachon ro'yxatdan o'tgansiz! Tizimga kirish uchun usulni tanlang.
     </div>
 
     <div id="message" class="message"></div>
@@ -357,10 +396,10 @@
       <!-- Telegram Auth Section -->
       <div id="telegramAuthSection" class="auth-section" style="display: none;">
         <div style="margin-bottom: 1rem;">
-          <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--dark); font-size: 0.95rem;">📱 Telegram ID raqamingiz</label>
-          <input type="number" id="telegramIdLogin" placeholder="7833115003" style="width: 100%; padding: 1rem 1.5rem; border: 2px solid #e5e7eb; border-radius: 1rem; font-size: 1rem; font-family: 'Poppins', sans-serif; background: var(--white); color: var(--dark); transition: all 0.3s ease; margin-bottom: 1rem;" required>
-          <div style="font-size: 0.85rem; color: var(--gray); line-height: 1.4;">
-            💡 Ro'yxatdan o'tishda ishlatgan Telegram ID ni kiriting
+          <label class="form-label">👤 Ismingiz (Nickname)</label>
+          <input type="text" id="nicknameLogin" class="form-input" placeholder="Masalan: Elbek_Designer" required>
+          <div class="input-hint">
+            💡 Ro'yxatdan o'tishda ishlatgan ismingizni kiriting
           </div>
         </div>
         
@@ -382,7 +421,7 @@
     // Import Firebase functions
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
     import { getAuth, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-    import { getDatabase, ref, update, get } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+    import { getDatabase, ref, update, get, remove } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
     // Firebase configuration
     const firebaseConfig = {
@@ -421,51 +460,46 @@
 
     // Telegram Sign In
     window.signInWithTelegram = async function() {
-      const telegramId = document.getElementById('telegramIdLogin').value.trim();
+      const nickname = document.getElementById('nicknameLogin').value.trim();
       
-      if (!telegramId) {
-        showMessage('❌ Telegram ID ni kiriting!', 'error');
-        return;
-      }
-      
-      if (!/^\d+$/.test(telegramId)) {
-        showMessage('❌ Telegram ID faqat raqamlardan iborat bo\'lishi kerak!', 'error');
+      if (!nickname) {
+        showMessage('❌ Ismingizni kiriting!', 'error');
         return;
       }
       
       try {
         showMessage('📱 Telegram orqali kirilmoqda...', 'success');
         
-        const userName = `telegram_${telegramId}`;
-        
-        // Check if user exists in Firebase
+        // Check if user exists in Firebase by nickname
         const usersRef = ref(database, 'users');
         const snapshot = await get(usersRef);
         
         let userFound = false;
         let userUID = null;
+        let userData = null;
         
         if (snapshot.exists()) {
           const users = snapshot.val();
           
-          // Find user by telegram ID
+          // Find user by nickname
           for (const uid of Object.keys(users)) {
             const user = users[uid];
-            if (user.telegramId === telegramId && user.authMethod === 'telegram') {
+            if (user.nickname && user.nickname.toLowerCase() === nickname.toLowerCase() && user.authMethod === 'telegram') {
               userFound = true;
               userUID = uid;
+              userData = user;
               break;
             }
           }
         }
         
         if (!userFound) {
-          showMessage('❌ Bu Telegram ID bilan ro\'yxatdan o\'tilmagan! Avval ro\'yxatdan o\'ting.', 'error');
+          showMessage('❌ Bu ism bilan ro\'yxatdan o\'tilmagan! Avval ro\'yxatdan o\'ting.', 'error');
           return;
         }
         
         // Check if user is blocked
-        const isBlocked = await checkUserBlocked(userName);
+        const isBlocked = await checkUserBlocked(nickname);
         if (isBlocked) {
           return; // Don't proceed if blocked
         }
@@ -478,9 +512,9 @@
         showMessage('✅ Telegram orqali muvaffaqiyatli kirdingiz!', 'success');
         
         // Save to localStorage
-        localStorage.setItem('user', userName);
+        localStorage.setItem('user', nickname);
         localStorage.setItem('userUID', userUID);
-        localStorage.setItem('telegramId', telegramId);
+        localStorage.setItem('telegramId', userData.telegramId);
         localStorage.setItem('authMethod', 'telegram');
         
         setTimeout(() => {
@@ -620,6 +654,7 @@
         localStorage.setItem('user', user.displayName || user.email);
         localStorage.setItem('userUID', user.uid);
         localStorage.setItem('userEmail', user.email);
+        localStorage.setItem('authMethod', 'google');
         
         setTimeout(() => {
           window.location.href = "order.html";
@@ -662,6 +697,17 @@
 
     // Initialize particles
     createParticles();
+
+    // Auto-format nickname input
+    document.addEventListener('DOMContentLoaded', function() {
+      const nicknameInput = document.getElementById('nicknameLogin');
+      if (nicknameInput) {
+        nicknameInput.addEventListener('input', function(e) {
+          // Only allow letters, numbers, and underscore
+          this.value = this.value.replace(/[^a-zA-Z0-9_]/g, '');
+        });
+      }
+    });
 
     // Make functions global
     window.showMessage = showMessage;

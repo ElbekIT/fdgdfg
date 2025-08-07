@@ -602,7 +602,7 @@
       <h3>Elbek Qoriyev</h3>
       <p><strong>📞 +998 90 406 30 90</strong></p>
       <p style="color: #ef4444; font-size: 0.9rem; margin-top: 1rem;">
-        ⚠️ Diqqat: Bu raqam faqat ish vaqtida (01:00 – 00:00) faol!
+        ⚠️ Diqqat: Bu raqam faqat ish vaqtida (07:00 – 01:00) faol!
       </p>
     </div>
   </div>
@@ -810,11 +810,10 @@
           const hour = now.getHours();
           const minute = now.getMinutes();
           const currentMinutes = hour * 60 + minute;
-          const startWork = 1 * 60; // 01:00
-          const endWork = 24 * 60;  // 00:00 (next day, 24:00)
+          const startWork = 7 * 60; // 07:00
+          const endWork = 1 * 60;   // 01:00
 
-          // Ish vaqti: 01:00 dan 00:00 gacha (ya'ni 01:00 dan kechasi 00:00 gacha)
-          const isWorkTime = currentMinutes >= startWork && currentMinutes < endWork;
+          const isWorkTime = currentMinutes >= startWork || currentMinutes < endWork;
           const statusIndicator = document.querySelector('.status-indicator');
           const statusDot = document.querySelector('.status-dot');
           
@@ -899,11 +898,10 @@
       const hour = now.getHours();
       const minute = now.getMinutes();
       const currentMinutes = hour * 60 + minute;
-      const startWork = 1 * 60; // 01:00
-      const endWork = 24 * 60;  // 00:00 (next day, 24:00)
+      const startWork = 7 * 60;
+      const endWork = 1 * 60;
 
-      // Ish vaqti: 01:00 dan 00:00 gacha
-      if (currentMinutes >= startWork && currentMinutes < endWork) {
+      if (currentMinutes >= startWork || currentMinutes < endWork) {
         // Show service selection modal
         const modal = document.createElement('div');
         modal.className = 'order-modal-overlay';
@@ -943,7 +941,7 @@
           modal.remove();
         });
       } else {
-        alert('⚠️ Hozir ish vaqti emas. Buyurtma berish uchun 01:00 dan 00:00 gacha kutib turing.');
+        alert('⚠️ Hozir ish vaqti emas. Buyurtma berish uchun 07:00 dan 01:00 gacha kutib turing.');
       }
     }
 

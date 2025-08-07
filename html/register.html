@@ -592,12 +592,20 @@
 
     <!-- Telegram Authentication -->
     <div id="telegramAuth" class="auth-section">
-      <!-- Step 1: Enter Telegram ID -->
+      <!-- Step 1: Enter Telegram ID and Nickname -->
       <div id="telegramStep1" class="telegram-step">
         <div class="auth-methods">
-          <p class="method-title">Telegram ID orqali ro'yxatdan o'ting:</p>
+          <p class="method-title">Telegram orqali ro'yxatdan o'ting:</p>
           
           <div class="telegram-auth">
+            <div class="form-group">
+              <label class="form-label">👤 Ismingiz (Nickname)</label>
+              <input type="text" id="userNickname" class="form-input" placeholder="Masalan: Elbek_Designer" required>
+              <div class="input-hint">
+                💡 Bu ism bilan saytda ko'rinasiz. Faqat harflar, raqamlar va _ ishlatish mumkin
+              </div>
+            </div>
+
             <div class="form-group">
               <label class="form-label">📱 Telegram ID raqamingiz</label>
               <input type="number" id="telegramId" class="form-input" placeholder="7833115003" required>
@@ -679,6 +687,7 @@
     const TELEGRAM_API_URL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
 
     let currentTelegramId = null;
+    let currentNickname = null;
     let currentVerificationCode = null;
     let countdownTimer = null;
 
@@ -862,9 +871,49 @@
       }
     };
 
+    // Validate nickname
+    function validateNickname(nickname) {
+      // Only allow letters, numbers, and underscore
+      const regex = /^[a-zA-Z0-9_]+$/;
+      return regex.test(nickname) && nickname.length >= 3 && nickname.length <= 20;
+    }
+
+    // Check if nickname is already taken
+    async function isNicknameTaken(nickname) {
+      try {
+        const usersRef = ref(database, 'users');
+        const snapshot = await get(usersRef);
+        
+        if (snapshot.exists()) {
+          const users = snapshot.val();
+          for (const uid of Object.keys(users)) {
+            const user = users[uid];
+            if (user.nickname && user.nickname.toLowerCase() === nickname.toLowerCase()) {
+              return true;
+            }
+          }
+        }
+        return false;
+      } catch (error) {
+        console.error('Nickname tekshirishda xatolik:', error);
+        return false;
+      }
+    }
+
     // Send verification code via Telegram
     window.sendVerificationCode = async function() {
+      const nickname = document.getElementById('userNickname').value.trim();
       const telegramId = document.getElementById('telegramId').value.trim();
+      
+      if (!nickname) {
+        showMessage('❌ Ismingizni kiriting!', 'error');
+        return;
+      }
+      
+      if (!validateNickname(nickname)) {
+        showMessage('❌ Ism 3-20 ta belgi bo\'lishi va faqat harflar, raqamlar, _ dan iborat bo\'lishi kerak!', 'error');
+        return;
+      }
       
       if (!telegramId) {
         showMessage('❌ Telegram ID ni kiriting!', 'error');
@@ -876,6 +925,13 @@
         return;
       }
       
+      // Check if nickname is already taken
+      const nicknameTaken = await isNicknameTaken(nickname);
+      if (nicknameTaken) {
+        showMessage('❌ Bu ism allaqachon band! Boshqa ism tanlang.', 'error');
+        return;
+      }
+      
       const sendBtn = document.getElementById('sendCodeBtn');
       sendBtn.classList.add('loading');
       sendBtn.innerHTML = '<span>⏳</span> Yuborilmoqda...';
@@ -884,12 +940,15 @@
         // Generate unique 6-digit verification code
         const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
         currentTelegramId = telegramId;
+        currentNickname = nickname;
         currentVerificationCode = verificationCode;
         
         console.log('🔐 Tasdiqlash kodi yaratildi:', verificationCode);
         
         // Send code via Telegram bot
         const message = `🔐 *Elbek Design Studio*
+
+Salom ${nickname}!
 
 Sizning tasdiqlash kodingiz: *${verificationCode}*
 
@@ -977,10 +1036,8 @@ Agar siz bu kodni so'ramaganingiz bo'lsa, bu xabarni e'tiborsiz qoldiring.`;
         if (enteredCode === currentVerificationCode) {
           console.log('✅ Tasdiqlash kodi to\'g\'ri');
           
-          const userName = `telegram_${currentTelegramId}`;
-          
           // Check if user is blocked before proceeding
-          const isBlocked = await checkUserBlocked(userName);
+          const isBlocked = await checkUserBlocked(currentNickname);
           if (isBlocked) {
             return;
           }
@@ -990,7 +1047,8 @@ Agar siz bu kodni so'ramaganingiz bo'lsa, bu xabarni e'tiborsiz qoldiring.`;
           
           // Save user data to Firebase
           await saveUserToFirebase(userUID, {
-            displayName: userName,
+            nickname: currentNickname,
+            displayName: currentNickname,
             telegramId: currentTelegramId,
             authMethod: 'telegram',
             createdAt: new Date().toISOString(),
@@ -1000,17 +1058,20 @@ Agar siz bu kodni so'ramaganingiz bo'lsa, bu xabarni e'tiborsiz qoldiring.`;
           showMessage('✅ Muvaffaqiyatli ro\'yxatdan o\'tdingiz!', 'success');
           
           // Save to localStorage
-          localStorage.setItem('user', userName);
+          localStorage.setItem('user', currentNickname);
           localStorage.setItem('userUID', userUID);
           localStorage.setItem('telegramId', currentTelegramId);
           localStorage.setItem('authMethod', 'telegram');
           
           // Clear verification data
+          const tempTelegramId = currentTelegramId;
+          const tempNickname = currentNickname;
           currentTelegramId = null;
+          currentNickname = null;
           currentVerificationCode = null;
           
           // Send welcome message
-          await sendWelcomeMessage(currentTelegramId || document.getElementById('telegramId').value);
+          await sendWelcomeMessage(tempTelegramId, tempNickname);
           
           setTimeout(() => {
             window.location.href = "order.html";
@@ -1033,8 +1094,8 @@ Agar siz bu kodni so'ramaganingiz bo'lsa, bu xabarni e'tiborsiz qoldiring.`;
 
     // Resend verification code
     window.resendCode = async function() {
-      if (!currentTelegramId) {
-        showMessage('❌ Telegram ID topilmadi!', 'error');
+      if (!currentTelegramId || !currentNickname) {
+        showMessage('❌ Ma\'lumotlar topilmadi!', 'error');
         return;
       }
       
@@ -1087,9 +1148,9 @@ Agar siz bu kodni so'ramaganingiz bo'lsa, bu xabarni e'tiborsiz qoldiring.`;
     }
 
     // Send welcome message
-    async function sendWelcomeMessage(telegramId) {
+    async function sendWelcomeMessage(telegramId, nickname) {
       try {
-        const welcomeMessage = `🎉 *Xush kelibsiz, Elbek Design Studio ga!*
+        const welcomeMessage = `🎉 *Xush kelibsiz, ${nickname}!*
 
 ✅ Siz muvaffaqiyatli ro'yxatdan o'tdingiz!
 
@@ -1155,6 +1216,15 @@ Omad tilaymiz! 🌟`;
               verifyCode();
             }, 500);
           }
+        });
+      }
+
+      // Auto-format nickname input
+      const nicknameInput = document.getElementById('userNickname');
+      if (nicknameInput) {
+        nicknameInput.addEventListener('input', function(e) {
+          // Only allow letters, numbers, and underscore
+          this.value = this.value.replace(/[^a-zA-Z0-9_]/g, '');
         });
       }
     });
