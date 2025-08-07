@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Habarnoma - Elbek Design Studio</title>
     <link rel="icon" href="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,44 +14,85 @@
         }
 
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #8b5cf6;
-            --accent: #06b6d4;
-            --dark: #0f172a;
-            --light: #f8fafc;
-            --gray: #64748b;
+            --primary: #667eea;
+            --primary-dark: #5a67d8;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --error: #f56565;
+            --dark: #1a202c;
+            --gray-50: #f7fafc;
+            --gray-100: #edf2f7;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e0;
+            --gray-400: #a0aec0;
+            --gray-500: #718096;
+            --gray-600: #4a5568;
+            --gray-700: #2d3748;
+            --gray-800: #1a202c;
+            --gray-900: #171923;
             --white: #ffffff;
-            --success: #22c55e;
-            --error: #ef4444;
-            --warning: #f59e0b;
-            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            --shadow: 0 10px 40px rgba(99, 102, 241, 0.1);
-            --shadow-hover: 0 20px 60px rgba(99, 102, 241, 0.2);
+            
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.18);
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--light);
-            line-height: 1.6;
-            color: var(--dark);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gradient-bg);
             min-height: 100vh;
+            color: var(--gray-800);
+            line-height: 1.6;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+            z-index: -1;
+            animation: backgroundShift 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
         }
 
         /* Header */
         .header {
-            background: var(--white);
-            box-shadow: var(--shadow);
-            padding: 1rem 0;
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 1000;
             backdrop-filter: blur(20px);
+            background: var(--glass-bg);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 0;
         }
 
         .header-content {
@@ -73,28 +114,52 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            border: 3px solid var(--primary);
+            border: 3px solid var(--white);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: var(--shadow-lg);
         }
 
         .brand-name {
             font-size: 1.5rem;
-            font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-weight: 800;
+            color: var(--white);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .user-info {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
             padding: 0.75rem 1.5rem;
-            background: var(--gradient);
-            border-radius: 2rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
             color: var(--white);
             font-weight: 600;
+            backdrop-filter: blur(10px);
             box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .user-info:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient-secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
         }
 
         /* Back Button */
@@ -102,70 +167,82 @@
             position: fixed;
             top: 100px;
             left: 2rem;
-            width: 50px;
-            height: 50px;
-            background: var(--white);
-            border: none;
+            width: 56px;
+            height: 56px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
             box-shadow: var(--shadow);
             z-index: 1000;
+            color: var(--white);
+            font-size: 1.25rem;
+            font-weight: 600;
         }
 
         .back-btn:hover {
-            background: var(--primary);
-            color: var(--white);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: var(--shadow-xl);
+            background: var(--white);
+            color: var(--primary);
         }
 
         /* Main Content */
         .main {
-            margin-top: 100px;
+            margin-top: 120px;
             padding: 2rem;
-            max-width: 800px;
+            max-width: 1000px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .page-title {
+        .page-header {
             text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--white);
             margin-bottom: 1rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); }
+            50% { text-shadow: 0 4px 20px rgba(255, 255, 255, 0.3); }
         }
 
         .page-subtitle {
-            text-align: center;
-            color: var(--gray);
-            font-size: 1.1rem;
-            margin-bottom: 3rem;
-            font-weight: 300;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         /* Loading */
         .loading {
             text-align: center;
-            padding: 3rem;
-            color: var(--gray);
+            padding: 4rem 2rem;
+            color: var(--white);
         }
 
         .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid #e5e7eb;
-            border-top: 4px solid var(--primary);
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top: 4px solid var(--white);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
+            margin: 0 auto 2rem;
         }
 
         @keyframes spin {
@@ -173,49 +250,199 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .stat-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: var(--gradient-secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        /* Filter Buttons */
+        .filter-section {
+            margin-bottom: 3rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 1rem 2rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            background: var(--glass-bg);
+            color: var(--white);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .filter-btn.active::before,
+        .filter-btn:hover::before {
+            left: 0;
+        }
+
+        .filter-btn.active {
+            border-color: var(--white);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
         /* Notifications Container */
         .notifications-container {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
         .notification-card {
-            background: var(--white);
-            border-radius: 1.5rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
             padding: 2rem;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-            animation: slideUp 0.5s ease-out;
+            animation: slideUp 0.6s ease-out;
         }
 
-        .notification-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .notification-card.unread {
-            border-left: 5px solid var(--primary);
-            background: rgba(99, 102, 241, 0.02);
-        }
-
-        .notification-card.unread::before {
+        .notification-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 4px;
-            background: var(--gradient);
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .notification-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .notification-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .notification-card.unread {
+            border-color: rgba(102, 126, 234, 0.5);
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .notification-card.unread::after {
+            content: '';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 12px;
+            height: 12px;
+            background: var(--gradient-secondary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(40px);
             }
             to {
                 opacity: 1;
@@ -227,30 +454,46 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .notification-from {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-weight: 600;
-            color: var(--primary);
+            gap: 1rem;
+            font-weight: 700;
+            color: var(--white);
             font-size: 1.1rem;
         }
 
+        .sender-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow);
+        }
+
         .notification-date {
-            color: var(--gray);
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.9rem;
-            font-weight: 400;
+            font-weight: 500;
         }
 
         .notification-message {
-            color: var(--dark);
+            color: var(--white);
             font-size: 1rem;
             line-height: 1.7;
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
             white-space: pre-wrap;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .notification-actions {
@@ -260,64 +503,94 @@
         }
 
         .btn {
-            padding: 0.75rem 1.5rem;
+            padding: 0.875rem 1.75rem;
             border: none;
-            border-radius: 1rem;
+            border-radius: 50px;
             font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn-primary {
-            background: var(--gradient);
+            background: var(--gradient-success);
             color: var(--white);
             box-shadow: var(--shadow);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .btn-secondary {
-            background: rgba(99, 102, 241, 0.1);
-            color: var(--primary);
-            border: 2px solid rgba(99, 102, 241, 0.2);
-        }
-
-        .btn-secondary:hover {
-            background: var(--primary);
-            color: var(--white);
-            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         .btn-danger {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--error);
-            border: 2px solid rgba(239, 68, 68, 0.2);
+            background: var(--gradient-secondary);
+            color: var(--white);
+            box-shadow: var(--shadow);
         }
 
         .btn-danger:hover {
-            background: var(--error);
-            color: var(--white);
             transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
-        /* Empty State */
-        .empty-state {
+        /* Status Badge */
+        .status-badge {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(10px);
+        }
+
+        .status-unread {
+            background: rgba(102, 126, 234, 0.2);
+            color: var(--white);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .status-read {
+            background: rgba(72, 187, 120, 0.2);
+            color: var(--white);
+            border: 1px solid rgba(72, 187, 120, 0.3);
+        }
+
+        /* Empty States */
+        .empty-state, .no-notifications {
             text-align: center;
             padding: 4rem 2rem;
-            color: var(--gray);
-            background: var(--white);
-            border-radius: 2rem;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
             animation: fadeIn 0.8s ease-out;
+            margin-top: 2rem;
         }
 
         @keyframes fadeIn {
@@ -331,146 +604,46 @@
             }
         }
 
-        .empty-icon {
+        .empty-icon, .no-notifications-icon {
             font-size: 5rem;
-            margin-bottom: 1.5rem;
-            opacity: 0.6;
-            animation: float 3s ease-in-out infinite;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+            animation: float 4s ease-in-out infinite;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-15px); }
         }
 
-        .empty-title {
-            font-size: 1.8rem;
-            font-weight: 700;
+        .empty-title, .no-notifications-title {
+            font-size: 2rem;
+            font-weight: 800;
             margin-bottom: 1rem;
-            color: var(--dark);
+            color: var(--white);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        .empty-subtitle {
+        .empty-subtitle, .no-notifications-text {
             margin-bottom: 2rem;
             font-size: 1.1rem;
             line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        /* Status Badge */
-        .status-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 1rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .status-unread {
-            background: rgba(99, 102, 241, 0.1);
-            color: var(--primary);
-        }
-
-        .status-read {
-            background: rgba(34, 197, 94, 0.1);
-            color: var(--success);
-        }
-
-        /* Notification Stats */
-        .notification-stats {
-            background: var(--white);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            margin-bottom: 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--gray);
-            font-weight: 500;
-        }
-
-        /* Filter Buttons */
-        .filter-buttons {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 0.75rem 1.5rem;
-            border: 2px solid var(--primary);
-            border-radius: 1rem;
-            background: var(--white);
-            color: var(--primary);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
-        }
-
-        .filter-btn.active {
-            background: var(--primary);
-            color: var(--white);
-        }
-
-        .filter-btn:hover {
-            background: var(--primary);
-            color: var(--white);
-            transform: translateY(-2px);
-        }
-
-        /* No Notifications Message */
         .no-notifications {
-            text-align: center;
-            padding: 3rem 2rem;
-            color: var(--gray);
-            background: rgba(245, 158, 11, 0.05);
-            border: 2px solid rgba(245, 158, 11, 0.1);
-            border-radius: 1.5rem;
-            margin-top: 2rem;
-            animation: slideUp 0.5s ease-out;
-        }
-
-        .no-notifications-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.7;
+            background: rgba(237, 137, 54, 0.1);
+            border-color: rgba(237, 137, 54, 0.2);
         }
 
         .no-notifications-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
             color: var(--warning);
         }
 
-        .no-notifications-text {
-            font-size: 1rem;
-            line-height: 1.5;
-        }
-
-        /* Responsive */
+        /* Responsive Design */
         @media (max-width: 768px) {
             .header-content {
                 padding: 0 1rem;
@@ -478,16 +651,27 @@
 
             .main {
                 padding: 1rem;
+                margin-top: 100px;
             }
 
             .page-title {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
 
             .back-btn {
                 left: 1rem;
-                width: 40px;
-                height: 40px;
+                width: 48px;
+                height: 48px;
+                font-size: 1.1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .stat-card {
+                padding: 1.5rem;
             }
 
             .notification-card {
@@ -496,13 +680,13 @@
 
             .notification-header {
                 flex-direction: column;
-                gap: 0.5rem;
+                gap: 1rem;
                 align-items: flex-start;
             }
 
             .notification-actions {
                 flex-direction: column;
-                gap: 0.5rem;
+                gap: 0.75rem;
             }
 
             .btn {
@@ -512,6 +696,7 @@
 
             .filter-buttons {
                 flex-direction: column;
+                gap: 0.75rem;
             }
 
             .filter-btn {
@@ -519,24 +704,36 @@
                 text-align: center;
             }
 
-            .notification-stats {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-                gap: 1rem;
-                padding: 1.5rem;
+            .status-badge {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: 1rem;
+                display: inline-block;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 2rem;
             }
 
-            .empty-icon {
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .empty-icon, .no-notifications-icon {
                 font-size: 4rem;
             }
 
-            .empty-title {
+            .empty-title, .no-notifications-title {
                 font-size: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-     Header 
+    <!-- Header -->
     <header class="header">
         <div class="header-content">
             <div class="logo-section">
@@ -544,73 +741,80 @@
                 <div class="brand-name">Elbek Design Studio</div>
             </div>
             <div class="user-info">
-                <span>👤</span>
+                <div class="user-avatar">👤</div>
                 <span id="userDisplay"></span>
             </div>
         </div>
     </header>
 
-     Back Button 
+    <!-- Back Button -->
     <button class="back-btn" onclick="goBack()">
         ←
     </button>
 
-     Main Content 
+    <!-- Main Content -->
     <main class="main">
-        <h1 class="page-title">📢 Habarlar</h1>
-        <p class="page-subtitle">Sizga yuborilgan barcha habarlar va bildirishnomalar</p>
+        <div class="page-header">
+            <h1 class="page-title">📢 Habarlar</h1>
+            <p class="page-subtitle">Sizga yuborilgan barcha habarlar va bildirishnomalar zamonavi interfeys orqali</p>
+        </div>
 
-         Notification Stats 
-        <div class="notification-stats">
-            <div class="stat-item">
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
                 <div class="stat-number" id="totalNotifications">0</div>
                 <div class="stat-label">Jami habarlar</div>
             </div>
-            <div class="stat-item">
+            <div class="stat-card">
+                <div class="stat-icon">🔔</div>
                 <div class="stat-number" id="unreadNotifications">0</div>
                 <div class="stat-label">O'qilmagan</div>
             </div>
-            <div class="stat-item">
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
                 <div class="stat-number" id="readNotifications">0</div>
                 <div class="stat-label">O'qilgan</div>
             </div>
         </div>
 
-         Filter Buttons 
-        <div class="filter-buttons">
-            <button class="filter-btn active" onclick="filterNotifications('all')">
-                📋 Barchasi
-            </button>
-            <button class="filter-btn" onclick="filterNotifications('unread')">
-                🔔 O'qilmagan
-            </button>
-            <button class="filter-btn" onclick="filterNotifications('read')">
-                ✅ O'qilgan
-            </button>
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterNotifications('all')">
+                    📋 Barchasi
+                </button>
+                <button class="filter-btn" onclick="filterNotifications('unread')">
+                    🔔 O'qilmagan
+                </button>
+                <button class="filter-btn" onclick="filterNotifications('read')">
+                    ✅ O'qilgan
+                </button>
+            </div>
         </div>
 
-         Loading State 
+        <!-- Loading State -->
         <div id="loadingState" class="loading">
             <div class="loading-spinner"></div>
             <p>Habarlar yuklanmoqda...</p>
         </div>
 
-         Notifications Container 
+        <!-- Notifications Container -->
         <div id="notificationsContainer" class="notifications-container" style="display: none;"></div>
 
-         No Notifications for Current Filter 
+        <!-- No Notifications for Current Filter -->
         <div id="noNotificationsFilter" class="no-notifications" style="display: none;">
             <div class="no-notifications-icon">🔍</div>
             <h3 class="no-notifications-title">Bu kategoriyada habarlar yo'q</h3>
-            <p class="no-notifications-text">Tanlangan filtr bo'yicha habarlar topilmadi. Boshqa kategoriyani tanlang.</p>
+            <p class="no-notifications-text">Tanlangan filtr bo'yicha habarlar topilmadi. Boshqa kategoriyani tanlang yoki yangi habarlar kelishini kuting.</p>
         </div>
 
-         Empty State (No notifications at all) 
+        <!-- Empty State (No notifications at all) -->
         <div id="emptyState" class="empty-state" style="display: none;">
             <div class="empty-icon">📭</div>
             <h3 class="empty-title">Hali habarlar yo'q</h3>
             <p class="empty-subtitle">
-                Sizga habarlar kelganda bu yerda ko'rinadi.<br>
+                Sizga habarlar kelganda bu yerda zamonavi dizayn bilan ko'rinadi.<br>
                 Owner tomonidan yuborilgan barcha bildirishnomalar shu yerda saqlanadi.
             </p>
             <a href="/index.html" class="btn btn-primary">
@@ -619,7 +823,7 @@
         </div>
     </main>
 
-     Firebase SDK 
+    <!-- Firebase SDK -->
     <script type="module">
         // Import Firebase functions
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
@@ -692,7 +896,7 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background: rgba(0, 0, 0, 0.9);
+                background: rgba(0, 0, 0, 0.95);
                 backdrop-filter: blur(20px);
                 display: flex;
                 justify-content: center;
@@ -706,41 +910,42 @@
             
             modal.innerHTML = `
                 <div style="
-                    background: linear-gradient(135deg, #ef4444, #dc2626);
+                    background: linear-gradient(135deg, #f56565, #e53e3e);
                     border-radius: 2rem;
                     padding: 3rem;
                     max-width: 500px;
                     width: 90%;
                     text-align: center;
                     color: white;
-                    box-shadow: 0 20px 60px rgba(239, 68, 68, 0.3);
+                    box-shadow: 0 25px 50px rgba(245, 101, 101, 0.4);
                     border: 2px solid rgba(255, 255, 255, 0.1);
                     animation: modalSlide 0.8s ease;
+                    backdrop-filter: blur(20px);
                 ">
-                    <div style="font-size: 4rem; margin-bottom: 1rem;">🚫</div>
-                    <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem; color: white;">
+                    <div style="font-size: 4rem; margin-bottom: 1.5rem; animation: bounce 2s infinite;">🚫</div>
+                    <h2 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 1.5rem; color: white;">
                         Hisobingiz bloklangan!
                     </h2>
                     
-                    <div style="background: rgba(255, 255, 255, 0.1); border-radius: 1rem; padding: 1.5rem; margin: 2rem 0; border: 1px solid rgba(255, 255, 255, 0.2);">
-                        <h3 style="color: #fecaca; margin-bottom: 1rem; font-size: 1.2rem;">📝 Block sababi:</h3>
+                    <div style="background: rgba(255, 255, 255, 0.15); border-radius: 1.5rem; padding: 2rem; margin: 2rem 0; border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);">
+                        <h3 style="color: #fed7d7; margin-bottom: 1rem; font-size: 1.3rem; font-weight: 700;">📝 Block sababi:</h3>
                         <p style="font-size: 1.1rem; line-height: 1.6; color: white; font-weight: 500;">
                             ${reason}
                         </p>
                     </div>
                     
-                    <div style="background: rgba(255, 255, 255, 0.1); border-radius: 1rem; padding: 1.5rem; margin: 2rem 0; border: 1px solid rgba(255, 255, 255, 0.2);">
-                        <h3 style="color: #fecaca; margin-bottom: 1rem; font-size: 1.2rem;">⏰ Qolgan vaqt:</h3>
-                        <p id="remainingTime" style="font-size: 1.5rem; font-weight: 700; color: #fef2f2;">
+                    <div style="background: rgba(255, 255, 255, 0.15); border-radius: 1.5rem; padding: 2rem; margin: 2rem 0; border: 1px solid rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);">
+                        <h3 style="color: #fed7d7; margin-bottom: 1rem; font-size: 1.3rem; font-weight: 700;">⏰ Qolgan vaqt:</h3>
+                        <p id="remainingTime" style="font-size: 1.8rem; font-weight: 800; color: #fff5f5;">
                             ${remainingMinutes} daqiqa
                         </p>
-                        <p style="font-size: 0.9rem; color: #fecaca; margin-top: 0.5rem;">
+                        <p style="font-size: 0.95rem; color: #fed7d7; margin-top: 0.75rem;">
                             Block tugash vaqti: ${formattedEndTime}
                         </p>
                     </div>
                     
                     <div style="margin-top: 2rem;">
-                        <p style="font-size: 0.9rem; color: #fecaca; margin-bottom: 1rem;">
+                        <p style="font-size: 1rem; color: #fed7d7; margin-bottom: 1.5rem;">
                             ⚠️ Bu vaqt tugagach avtomatik ravishda blokdan chiqasiz
                         </p>
                         <button onclick="window.location.href='/'" style="
@@ -748,13 +953,14 @@
                             color: white;
                             border: 2px solid rgba(255, 255, 255, 0.3);
                             padding: 1rem 2rem;
-                            border-radius: 1rem;
+                            border-radius: 50px;
                             font-size: 1rem;
-                            font-weight: 600;
+                            font-weight: 700;
                             cursor: pointer;
                             transition: all 0.3s ease;
-                            font-family: 'Poppins', sans-serif;
-                        " onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+                            font-family: 'Inter', sans-serif;
+                            backdrop-filter: blur(10px);
+                        " onmouseover="this.style.background='rgba(255,255,255,0.3)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'; this.style.transform='translateY(0)'">
                             🏠 Bosh sahifaga qaytish
                         </button>
                     </div>
@@ -844,10 +1050,10 @@
             }, (error) => {
                 console.error('❌ Firebase xatosi:', error);
                 loadingState.innerHTML = `
-                    <div style="color: var(--error);">
+                    <div style="color: var(--white);">
                         <p>❌ Firebase bilan bog'lanishda xatolik!</p>
-                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Xatolik: ${error.message}</p>
-                        <button onclick="location.reload()" class="btn btn-secondary" style="margin-top: 1rem;">
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Xatolik: ${error.message}</p>
+                        <button onclick="location.reload()" class="btn btn-primary" style="margin-top: 1.5rem;">
                             🔄 Qayta yuklash
                         </button>
                     </div>
@@ -861,9 +1067,31 @@
             const unread = allNotifications.filter(n => !n.read).length;
             const read = allNotifications.filter(n => n.read).length;
 
-            document.getElementById('totalNotifications').textContent = total;
-            document.getElementById('unreadNotifications').textContent = unread;
-            document.getElementById('readNotifications').textContent = read;
+            // Animate numbers
+            animateNumber('totalNotifications', total);
+            animateNumber('unreadNotifications', unread);
+            animateNumber('readNotifications', read);
+        }
+
+        function animateNumber(elementId, targetValue) {
+            const element = document.getElementById(elementId);
+            const startValue = parseInt(element.textContent) || 0;
+            const duration = 1000;
+            const startTime = performance.now();
+
+            function updateNumber(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const currentValue = Math.floor(startValue + (targetValue - startValue) * progress);
+                
+                element.textContent = currentValue;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateNumber);
+                }
+            }
+            
+            requestAnimationFrame(updateNumber);
         }
 
         // Filter notifications
@@ -951,7 +1179,7 @@
                 
                 <div class="notification-header">
                     <div class="notification-from">
-                        <span>👑</span>
+                        <div class="sender-avatar">👑</div>
                         <span>${notification.from || 'Owner'}</span>
                     </div>
                     <div class="notification-date">
