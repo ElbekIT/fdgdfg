@@ -615,14 +615,14 @@
             }, (error) => {
                 console.error('Habarnomalarni yuklashda xatolik:', error);
                 document.getElementById('loadingState').innerHTML = `
-                    <div style="color: var(--error);">
-                        <p>❌ Habarnomalarni yuklashda xatolik!</p>
-                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Xatolik: ${error.message}</p>
-                        <button onclick="location.reload()" class="btn-small" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: var(--primary); color: white; border: none; border-radius: 0.5rem; cursor: pointer;">
-                            🔄 Qayta yuklash
-                        </button>
-                    </div>
-                `;
+            <div style="color: var(--error);">
+                <p>❌ Habarnomalarni yuklashda xatolik!</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Xatolik: ${error.message}</p>
+                <button onclick="location.reload()" class="btn-small" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: var(--primary); color: white; border: none; border-radius: 0.5rem; cursor: pointer;">
+                    🔄 Qayta yuklash
+                </button>
+            </div>
+        `;
             });
         }
 
@@ -630,6 +630,12 @@
         function renderNotifications() {
             const container = document.getElementById('notificationsList');
             container.innerHTML = '';
+
+            if (notifications.length === 0) {
+                document.getElementById('emptyState').style.display = 'block';
+                document.getElementById('notificationsList').style.display = 'none';
+                return;
+            }
 
             notifications.forEach(notification => {
                 const notificationElement = document.createElement('div');
@@ -639,31 +645,34 @@
                 const createdAt = new Date(notification.createdAt).toLocaleString('uz-UZ');
 
                 notificationElement.innerHTML = `
-                    <div class="notification-header">
-                        <div class="notification-from ${isOwnerMessage ? 'owner' : ''}">
-                            ${isOwnerMessage ? '👑 Owner' : `📧 ${notification.from}`}
-                            ${!notification.read ? '<span style="color: var(--primary); margin-left: 0.5rem;">●</span>' : ''}
-                        </div>
-                        <div class="notification-date">${createdAt}</div>
-                    </div>
-                    <div class="notification-message ${isOwnerMessage ? 'owner-message' : ''}">
-                        ${notification.message}
-                    </div>
-                    ${notification.sentVia === 'telegram' ? '<p style="color: var(--accent); font-size: 0.85rem; margin-top: 0.5rem;">📱 Telegram orqali ham yuborilgan</p>' : ''}
-                    <div class="notification-actions">
-                        ${!notification.read ? `
-                            <button class="btn-small btn-mark-read" onclick="markAsRead('${notification.id}')">
-                                ✅ O'qilgan deb belgilash
-                            </button>
-                        ` : ''}
-                        <button class="btn-small btn-delete" onclick="deleteNotification('${notification.id}')">
-                            🗑️ O'chirish
-                        </button>
-                    </div>
-                `;
+            <div class="notification-header">
+                <div class="notification-from ${isOwnerMessage ? 'owner' : ''}">
+                    ${isOwnerMessage ? '👑 Owner' : `📧 ${notification.from}`}
+                    ${!notification.read ? '<span style="color: var(--primary); margin-left: 0.5rem;">●</span>' : ''}
+                </div>
+                <div class="notification-date">${createdAt}</div>
+            </div>
+            <div class="notification-message ${isOwnerMessage ? 'owner-message' : ''}">
+                ${notification.message}
+            </div>
+            ${notification.sentVia === 'both' ? '<p style="color: var(--accent); font-size: 0.85rem; margin-top: 0.5rem;">📱 Telegram orqali ham yuborilgan</p>' : ''}
+            <div class="notification-actions">
+                ${!notification.read ? `
+                    <button class="btn-small btn-mark-read" onclick="markAsRead('${notification.id}')">
+                        ✅ O'qilgan deb belgilash
+                    </button>
+                ` : ''}
+                <button class="btn-small btn-delete" onclick="deleteNotification('${notification.id}')">
+                    🗑️ O'chirish
+                </button>
+            </div>
+        `;
 
                 container.appendChild(notificationElement);
             });
+
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('notificationsList').style.display = 'block';
         }
 
         // Update notification count
@@ -677,6 +686,15 @@
             try {
                 const notificationRef = ref(database, `notifications/${currentUser}/${notificationId}`);
                 await update(notificationRef, { read: true });
+        
+                // Update local notification
+                const notification = notifications.find(n => n.id === notificationId);
+                if (notification) {
+                    notification.read = true;
+                    renderNotifications();
+                    updateNotificationCount();
+                }
+        
                 showNotification('✅ Habar o\'qilgan deb belgilandi', 'success');
             } catch (error) {
                 console.error('Xatolik:', error);
