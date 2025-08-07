@@ -713,6 +713,9 @@
         return;
       }
       
+      // Test telegram bot
+      await testTelegramBot();
+      
       // Initialize particles and other UI elements
       createParticles();
     });
@@ -900,6 +903,13 @@
       }
     }
 
+    // Telegram ID formatini tekshirish
+    function validateTelegramId(telegramId) {
+      // Telegram ID odatda 9-10 raqamli bo'ladi
+      const regex = /^\d{8,12}$/;
+      return regex.test(telegramId);
+    }
+
     // Send verification code via Telegram
     window.sendVerificationCode = async function() {
       const nickname = document.getElementById('userNickname').value.trim();
@@ -917,6 +927,11 @@
       
       if (!telegramId) {
         showMessage('❌ Telegram ID ni kiriting!', 'error');
+        return;
+      }
+      
+      if (!validateTelegramId(telegramId)) {
+        showMessage('❌ Telegram ID 8-12 ta raqamdan iborat bo\'lishi kerak!', 'error');
         return;
       }
       
@@ -945,7 +960,7 @@
         
         console.log('🔐 Tasdiqlash kodi yaratildi:', verificationCode);
         
-        // Send code via Telegram bot
+        // Send code via Telegram bot with better error handling
         const message = `🔐 *Elbek Design Studio*
 
 Salom ${nickname}!
@@ -956,6 +971,10 @@ Sizning tasdiqlash kodingiz: *${verificationCode}*
 🔒 Kodni hech kimga bermang!
 
 Agar siz bu kodni so'ramaganingiz bo'lsa, bu xabarni e'tiborsiz qoldiring.`;
+
+        console.log('📤 Telegram API ga so\'rov yuborilmoqda...');
+        console.log('Bot Token:', TELEGRAM_BOT_TOKEN.substring(0, 10) + '...');
+        console.log('Chat ID:', telegramId);
 
         const response = await fetch(`${TELEGRAM_API_URL}/sendMessage`, {
           method: 'POST',
@@ -969,7 +988,10 @@ Agar siz bu kodni so'ramaganingiz bo'lsa, bu xabarni e'tiborsiz qoldiring.`;
           })
         });
 
+        console.log('📥 Telegram API javob status:', response.status);
+        
         const data = await response.json();
+        console.log('📥 Telegram API javob:', data);
         
         if (data.ok) {
           console.log('✅ Telegram orqali kod yuborildi');
@@ -993,16 +1015,39 @@ Agar siz bu kodni so'ramaganingiz bo'lsa, bu xabarni e'tiborsiz qoldiring.`;
         } else {
           console.error('❌ Telegram API xatosi:', data);
           
-          if (data.error_code === 400 && data.description.includes('chat not found')) {
-            showMessage('❌ Telegram ID topilmadi! Avval botga /start yozing: @ElbekDesignBot', 'error');
+          let errorMessage = '❌ Telegram orqali kod yuborishda xatolik!';
+          
+          if (data.error_code === 400) {
+            if (data.description && data.description.includes('chat not found')) {
+              errorMessage = '❌ Telegram ID topilmadi! Iltimos:\n1. @ElbekDesignBot ga /start yozing\n2. Keyin qaytadan urinib ko\'ring';
+            } else if (data.description && data.description.includes('user not found')) {
+              errorMessage = '❌ Bu Telegram ID mavjud emas! To\'g\'ri ID kiriting.';
+            } else {
+              errorMessage = `❌ Telegram xatosi: ${data.description}`;
+            }
+          } else if (data.error_code === 403) {
+            errorMessage = '❌ Bot bloklangan! @ElbekDesignBot ga /start yozing.';
           } else {
-            showMessage('❌ Telegram orqali kod yuborishda xatolik: ' + data.description, 'error');
+            errorMessage = `❌ Telegram API xatosi (${data.error_code}): ${data.description}`;
           }
+          
+          showMessage(errorMessage, 'error');
         }
         
       } catch (error) {
-        console.error('❌ Kod yuborishda xatolik:', error);
-        showMessage('❌ Kod yuborishda xatolik yuz berdi!', 'error');
+        console.error('❌ Network yoki boshqa xatolik:', error);
+        
+        let errorMessage = '❌ Internetga ulanishda muammo!';
+        
+        if (error.name === 'TypeError' && error.message.includes('fetch')) {
+          errorMessage = '❌ Internet aloqasi yo\'q! Internetni tekshiring.';
+        } else if (error.name === 'SyntaxError') {
+          errorMessage = '❌ Server javobida xatolik!';
+        } else {
+          errorMessage = `❌ Xatolik: ${error.message}`;
+        }
+        
+        showMessage(errorMessage, 'error');
       } finally {
         sendBtn.classList.remove('loading');
         sendBtn.innerHTML = '<span>📤</span> Tasdiqlash kodini yuborish';
@@ -1231,6 +1276,27 @@ Omad tilaymiz! 🌟`;
 
     // Make functions global
     window.showMessage = showMessage;
+
+    // Bot token va API ni tekshirish funksiyasi
+    async function testTelegramBot() {
+      try {
+        console.log('🤖 Telegram bot holatini tekshirmoqda...');
+        
+        const response = await fetch(`${TELEGRAM_API_URL}/getMe`);
+        const data = await response.json();
+        
+        if (data.ok) {
+          console.log('✅ Telegram bot ishlayapti:', data.result);
+          return true;
+        } else {
+          console.error('❌ Telegram bot xatosi:', data);
+          return false;
+        }
+      } catch (error) {
+        console.error('❌ Telegram bot tekshirishda xatolik:', error);
+        return false;
+      }
+    }
   </script>
 
   <script>
