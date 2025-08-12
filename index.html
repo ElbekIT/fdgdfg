@@ -1,972 +1,339 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Elbek Qoriyev - Digital Creative</title>
-  <link rel="icon" href="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elbek Design Studio - Professional Web Designer</title>
+    <link rel="icon" href="img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" type="image/png">
+    <!-- Bootstrap CSS va Google Fonts qo'shildi -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        /* Bootstrap bilan oddiy va professional CSS */
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #7c3aed;
+            --accent-color: #06b6d4;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+        }
 
-    :root {
-      --bg: #18181b;
-      --bg-light: #23232a;
-      --accent: #00ff88;
-      --accent2: #0080ff;
-      --text: #fff;
-      --text-muted: #b0b0b0;
-      --border: #262630;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-    }
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
 
-    nav {
-      width: 100%;
-      background: var(--bg-light);
-      border-bottom: 1px solid var(--border);
-      padding: 1rem 0;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
 
-    .nav-container {
-      max-width: 900px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 1.5rem;
-    }
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-weight: 700;
-      color: var(--accent);
-      text-decoration: none;
-      font-size: 1.2rem;
-    }
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
 
-    .logo img {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 2px solid var(--accent);
-    }
+        .service-card {
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
 
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-      list-style: none;
-    }
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
 
-    .nav-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
+        .btn-custom {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
 
-    .nav-links a:hover {
-      color: var(--accent);
-    }
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+            color: white;
+        }
 
-    .notification-badge {
-      background: var(--accent2);
-      color: #fff;
-      border-radius: 50%;
-      padding: 0.15rem 0.5rem;
-      font-size: 0.75rem;
-      font-weight: 700;
-      margin-left: 0.3rem;
-    }
+        .stats-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
 
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
+        .contact-section {
+            background: #f8fafc;
+        }
 
-    .hero {
-      min-height: 70vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 80px 0 40px;
-    }
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
 
-    .hero-content {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2.5rem;
-      align-items: center;
-      width: 100%;
-    }
+        .social-link:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            color: white;
+        }
 
-    .hero-text {
-      flex: 1 1 320px;
-    }
-
-    .hero-title {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-    }
-
-    .hero-subtitle {
-      font-size: 1.2rem;
-      color: var(--text-muted);
-      margin-bottom: 1.2rem;
-    }
-
-    .hero-description {
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-      font-size: 1rem;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .btn {
-      padding: 0.7rem 1.5rem;
-      border-radius: 6px;
-      border: none;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #18181b;
-    }
-
-    .btn-primary:hover {
-      background: var(--accent2);
-      color: #fff;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--accent);
-      border: 1px solid var(--accent);
-    }
-
-    .btn-secondary:hover {
-      background: var(--accent);
-      color: #18181b;
-    }
-
-    .social-links {
-      display: flex;
-      gap: 0.7rem;
-      margin-top: 1rem;
-    }
-
-    .social-link {
-      width: 38px;
-      height: 38px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--bg-light);
-      border-radius: 8px;
-      color: var(--accent2);
-      font-size: 1.1rem;
-      text-decoration: none;
-      border: 1px solid var(--border);
-      transition: background 0.2s, color 0.2s;
-    }
-
-    .social-link:hover {
-      background: var(--accent2);
-      color: #fff;
-    }
-
-    .hero-visual {
-      flex: 1 1 220px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .visual-container {
-      position: relative;
-      width: 220px;
-      height: 220px;
-    }
-
-    .profile-image {
-      width: 180px;
-      height: 180px;
-      border-radius: 16px;
-      object-fit: cover;
-      border: 2px solid var(--accent);
-      background: var(--bg-light);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-      margin: 20px;
-    }
-
-    .floating-elements {
-      display: none;
-    }
-
-    /* Stats Section */
-    .stats {
-      padding: 60px 0 40px;
-    }
-
-    .stats-grid {
-      display: flex;
-      gap: 2rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .stat-item {
-      background: var(--bg-light);
-      border-radius: 10px;
-      padding: 1.5rem 2rem;
-      text-align: center;
-      min-width: 140px;
-      border: 1px solid var(--border);
-    }
-
-    .stat-number {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 0.3rem;
-      display: block;
-    }
-
-    .stat-label {
-      color: var(--text-muted);
-      font-size: 1rem;
-    }
-
-    /* Services Section */
-    .services {
-      padding: 60px 0 40px;
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--accent2);
-      margin-bottom: 2rem;
-    }
-
-    .services-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      justify-content: center;
-    }
-
-    .service-card {
-      background: var(--bg-light);
-      border-radius: 12px;
-      padding: 1.5rem;
-      min-width: 220px;
-      max-width: 270px;
-      border: 1px solid var(--border);
-      text-align: center;
-      transition: border 0.2s;
-    }
-
-    .service-card:hover {
-      border: 1.5px solid var(--accent2);
-    }
-
-    .service-icon {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: var(--accent);
-    }
-
-    .service-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--accent);
-    }
-
-    .service-description {
-      color: var(--text-muted);
-      font-size: 0.97rem;
-    }
-
-    /* Contact Section */
-    .contact {
-      padding: 60px 0 40px;
-      background: var(--bg-light);
-      text-align: center;
-    }
-
-    .contact-content {
-      max-width: 420px;
-      margin: 0 auto;
-    }
-
-    .contact-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--accent2);
-      margin-bottom: 0.7rem;
-    }
-
-    .contact-subtitle {
-      color: var(--text-muted);
-      font-size: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .contact-info {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-      background: var(--bg);
-      border-radius: 8px;
-      padding: 0.7rem 1.2rem;
-      color: var(--text);
-      font-size: 1rem;
-      justify-content: center;
-    }
-
-    .contact-icon {
-      color: var(--accent);
-      font-size: 1.1rem;
-    }
-
-    /* Footer */
-    footer {
-      padding: 1.5rem 0;
-      border-top: 1px solid var(--border);
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    /* Responsive */
-    @media (max-width: 900px) {
-      .container {
-        padding: 0 1rem;
-      }
-      .hero-content {
-        flex-direction: column;
-        gap: 2rem;
-        text-align: center;
-      }
-      .hero-visual {
-        margin-bottom: 1.5rem;
-      }
-      .stats-grid, .services-grid {
-        flex-direction: column;
-        gap: 1.2rem;
-        align-items: center;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .hero-title {
-        font-size: 1.5rem;
-      }
-      .section-title {
-        font-size: 1.2rem;
-      }
-      .profile-image {
-        width: 120px;
-        height: 120px;
-        margin: 10px;
-      }
-      .visual-container {
-        width: 140px;
-        height: 140px;
-      }
-    }
-  </style>
+        /* Security */
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
 </head>
 <body>
-  <!-- Grid Background -->
-  <div class="grid-bg"></div>
-
-  <!-- Floating Particles -->
-  <div class="particles" id="particles"></div>
-
-  <!-- Navigation -->
-  <nav>
-    <div class="nav-container">
-      <a href="#" class="logo">
-        <img src="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Elbek Qoriyev" />
-        <span>Elbek.dev</span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="#home">Bosh sahifa</a></li>
-        <li><a href="/html/byqan.html">Xizmatlar</a></li>
-        <li><a href="/html/habarnoma.html" id="notificationLink">
-          Habarnoma <span id="notificationBadge" class="notification-badge" style="display: none;">0</span>
-        </a></li>
-        <li><a href="#contact">Bog'lanish</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <!-- Hero Section -->
-  <section class="hero" id="home">
-    <div class="container">
-      <div class="hero-content">
-        <div class="hero-text">
-          <div class="hero-badge">
-            <div class="status-dot"></div>
-            <span>Available for work</span>
-          </div>
-
-          <h1 class="hero-title">
-            Digital Creative<br>
-            & Developer
-          </h1>
-
-          <h2 class="hero-subtitle">
-            Elbek Qoriyev - Professional Designer
-          </h2>
-
-          <p class="hero-description">
-            Gaming va Web dizayn sohasida 3+ yillik tajribaga ega professional. 
-            Zamonaviy texnologiyalar yordamida kreativ va sifatli dizayn yechimlar yarataman.
-          </p>
-
-          <div class="hero-buttons">
-            <button class="btn btn-primary" onclick="checkOrderTime()">
-              <span>🚀</span> Loyiha boshlash
-            </button>
-            <a href="/html/byqan.html" class="btn btn-secondary">
-              <span>📖</span> Xizmatlar
+    <!-- Bootstrap navbar bilan oddiy header -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Logo" width="40" height="40" class="rounded-circle me-2">
+                <span class="fw-bold">Elbek Design</span>
             </a>
-          </div>
-
-          <div class="social-links">
-            <a href="#" class="social-link" title="Telegram">📱</a>
-            <a href="#" class="social-link" title="Instagram">📷</a>
-            <a href="#" class="social-link" title="YouTube">📺</a>
-            <a href="#" class="social-link" title="GitHub">💻</a>
-          </div>
-        </div>
-
-        <div class="hero-visual">
-          <div class="visual-container">
-            <div class="visual-bg"></div>
-            <img src="/img/36cc6850-12bc-4bd8-8721-4833a90f2da8.png" alt="Elbek Qoriyev" class="profile-image" />
-            <div class="floating-elements">
-              <div class="floating-element">🎮</div>
-              <div class="floating-element">🌐</div>
-              <div class="floating-element">🎨</div>
-              <div class="floating-element">📱</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Stats Section -->
-  <section class="stats">
-    <div class="container">
-      <div class="stats-grid">
-        <div class="stat-item">
-          <span class="stat-number" id="projectsCount">150+</span>
-          <span class="stat-label">Bajarilgan loyihalar</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number" id="clientsCount">80+</span>
-          <span class="stat-label">Mamnun mijozlar</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number" id="experienceCount">3+</span>
-          <span class="stat-label">Yillik tajriba</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">24/7</span>
-          <span class="stat-label">Qo'llab-quvvatlash</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Services Section -->
-  <section class="services">
-    <div class="container">
-      <h2 class="section-title">Xizmatlarim</h2>
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-icon">🎮</div>
-          <h3 class="service-title">Gaming Dizayn</h3>
-          <p class="service-description">
-            PUBG, Free Fire, CS:GO va boshqa mashhur o'yinlar uchun professional 
-            banner, logo, avatar va turnir dizaynlari yaratish.
-          </p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🌐</div>
-          <h3 class="service-title">Web Development</h3>
-          <p class="service-description">
-            Zamonaviy va responsive web saytlar, e-commerce platformalar va 
-            portfolio saytlarini yaratish va ishlab chiqish.
-          </p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🎨</div>
-          <h3 class="service-title">UI/UX Dizayn</h3>
-          <p class="service-description">
-            Foydalanuvchi interfeysi va tajriba dizayni, mobil ilovalar va 
-            web platformalar uchun intuitiv dizaynlar.
-          </p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">📱</div>
-          <h3 class="service-title">Branding & Identity</h3>
-          <p class="service-description">
-            Korporativ identifikatsiya, logo dizayni, brand strategiyasi va 
-            marketing materiallari yaratish.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section class="contact" id="contact">
-    <div class="container">
-      <div class="contact-content">
-        <h2 class="contact-title">Loyiha boshlaylik</h2>
-        <p class="contact-subtitle">
-          Sizning g'oyangizni hayotga tatbiq etish uchun men bilan bog'laning. 
-          Professional xizmat va sifatli natija kafolatlanadi.
-        </p>
-
-        <div class="contact-info">
-          <div class="contact-item">
-            <span class="contact-icon">📞</span>
-            <span>+998 90 406 30 90</span>
-          </div>
-          <div class="contact-item">
-            <span class="contact-icon">📧</span>
-            <span>elbekqoriyev@gmail.com</span>
-          </div>
-          <div class="contact-item">
-            <span class="contact-icon">🕐</span>
-            <span id="workStatus">07:00 - 01:00</span>
-          </div>
-        </div>
-
-        <div class="hero-buttons">
-          <button class="btn btn-primary" onclick="checkOrderTime()">
-            <span>💬</span> Bog'lanish
-          </button>
-          <a href="/html/byqan.html" class="btn btn-secondary">
-            <span>📋</span> Xizmatlar ro'yxati
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <p>&copy; 2024 Elbek Qoriyev. Barcha huquqlar himoyalangan.</p>
-    </div>
-  </footer>
-
-  <script>
-    // Create floating particles
-    function createParticles() {
-      const particlesContainer = document.getElementById('particles');
-      const particleCount = 50;
-
-      for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 15 + 's';
-        particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
-        particlesContainer.appendChild(particle);
-      }
-    }
-
-    // Check if user is blocked
-    async function checkUserBlock() {
-      const user = localStorage.getItem('user');
-      if (!user) return;
-
-      try {
-        // Import Firebase functions
-        const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js');
-        const { getDatabase, ref, get, remove } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js');
-        
-        const firebaseConfig = {
-          apiKey: "AIzaSyA_B0OC6Y91ontwJWM-o615jg7Dr5jUVvA",
-          authDomain: "dizaynowner.firebaseapp.com",
-          databaseURL: "https://dizaynowner-default-rtdb.firebaseio.com/",
-          projectId: "dizaynowner",
-          storageBucket: "dizaynowner.firebasestorage.app",
-          messagingSenderId: "976762018041",
-          appId: "1:976762018041:web:e43227005165059158ea28"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-
-        const blockedRef = ref(database, `blocked_users/${user}`);
-        const snapshot = await get(blockedRef);
-        
-        if (snapshot.exists()) {
-          const blockData = snapshot.val();
-          const now = new Date().getTime();
-          const blockEndTime = new Date(blockData.blockEndTime).getTime();
-          
-          if (now < blockEndTime) {
-            // User is still blocked
-            const remainingTime = Math.ceil((blockEndTime - now) / 1000 / 60); // minutes
-            showBlockModal(blockData.reason, remainingTime, blockData.blockEndTime);
-            return true;
-          } else {
-            // Block expired, remove it
-            await remove(blockedRef);
-            return false;
-          }
-        }
-        
-        return false;
-      } catch (error) {
-        console.error('Block tekshirishda xatolik:', error);
-        return false;
-      }
-    }
-
-    // Show block modal
-    function showBlockModal(reason, remainingMinutes, blockEndTime) {
-      const modal = document.createElement('div');
-      modal.id = 'blockModal';
-      modal.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.95);
-        backdrop-filter: blur(20px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 10000;
-        animation: fadeIn 0.5s ease;
-      `;
-      
-      const endDate = new Date(blockEndTime);
-      const formattedEndTime = endDate.toLocaleString('uz-UZ');
-      
-      modal.innerHTML = `
-        <div style="
-          background: var(--bg-secondary);
-          border: 1px solid var(--accent-secondary);
-          border-radius: 16px;
-          padding: 3rem;
-          max-width: 500px;
-          width: 90%;
-          text-align: center;
-          color: var(--text-primary);
-          box-shadow: var(--shadow-lg);
-        ">
-          <div style="font-size: 4rem; margin-bottom: 1rem;">🚫</div>
-          <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem; color: var(--accent-secondary);">
-            Hisobingiz bloklangan!
-          </h2>
-          
-          <div style="background: var(--bg-tertiary); border-radius: 12px; padding: 1.5rem; margin: 2rem 0; border: 1px solid var(--border);">
-            <h3 style="color: var(--accent-primary); margin-bottom: 1rem; font-size: 1.2rem;">📝 Block sababi:</h3>
-            <p style="font-size: 1.1rem; line-height: 1.6; color: var(--text-primary); font-weight: 500;">
-              ${reason}
-            </p>
-          </div>
-          
-          <div style="background: var(--bg-tertiary); border-radius: 12px; padding: 1.5rem; margin: 2rem 0; border: 1px solid var(--border);">
-            <h3 style="color: var(--accent-primary); margin-bottom: 1rem; font-size: 1.2rem;">⏰ Qolgan vaqt:</h3>
-            <p id="remainingTime" style="font-size: 1.5rem; font-weight: 800; color: var(--accent-secondary);">
-              ${remainingMinutes} daqiqa
-            </p>
-            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.5rem;">
-              Block tugash vaqti: ${formattedEndTime}
-            </p>
-          </div>
-          
-          <div style="margin-top: 2rem;">
-            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">
-              ⚠️ Bu vaqt tugagach avtomatik ravishda blokdan chiqasiz
-            </p>
-            <button onclick="location.reload()" class="btn btn-primary">
-              🔄 Sahifani yangilash
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
             </button>
-          </div>
-        </div>
-      `;
-      
-      document.body.appendChild(modal);
-      
-      // Update remaining time every minute
-      const updateTimer = setInterval(async () => {
-        const now = new Date().getTime();
-        const blockEnd = new Date(blockEndTime).getTime();
-        const remaining = Math.ceil((blockEnd - now) / 1000 / 60);
-        
-        if (remaining <= 0) {
-          clearInterval(updateTimer);
-          modal.remove();
-          location.reload();
-        } else {
-          const timeElement = document.getElementById('remainingTime');
-          if (timeElement) {
-            if (remaining >= 60) {
-              const hours = Math.floor(remaining / 60);
-              const minutes = remaining % 60;
-              timeElement.textContent = `${hours} soat ${minutes} daqiqa`;
-            } else {
-              timeElement.textContent = `${remaining} daqiqa`;
-            }
-          }
-        }
-      }, 60000); // Update every minute
-      
-      // Disable page interactions
-      document.body.style.overflow = 'hidden';
-      
-      // Prevent closing modal
-      modal.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
-    }
-
-    // Animate numbers
-    function animateNumbers() {
-      const counters = [
-        { element: document.getElementById('projectsCount'), target: 150, suffix: '+' },
-        { element: document.getElementById('clientsCount'), target: 80, suffix: '+' },
-        { element: document.getElementById('experienceCount'), target: 3, suffix: '+' }
-      ];
-
-      counters.forEach(counter => {
-        let current = 0;
-        const increment = counter.target / 100;
-        const timer = setInterval(() => {
-          current += increment;
-          if (current >= counter.target) {
-            current = counter.target;
-            clearInterval(timer);
-          }
-          counter.element.textContent = Math.floor(current) + counter.suffix;
-        }, 30);
-      });
-    }
-
-    // Update work status
-    function updateWorkStatus() {
-      const now = new Date();
-      const hour = now.getHours();
-      const minute = now.getMinutes();
-      const currentMinutes = hour * 60 + minute;
-      const startWork = 7 * 60; // 07:00
-      const endWork = 1 * 60;   // 01:00
-
-      const isWorkTime = currentMinutes >= startWork || currentMinutes < endWork;
-      const statusElement = document.getElementById('workStatus');
-      
-      if (isWorkTime) {
-        statusElement.textContent = '🟢 Hozir faolmiz';
-        statusElement.style.color = 'var(--accent-primary)';
-      } else {
-        statusElement.textContent = '🔴 Ish vaqti tugagan';
-        statusElement.style.color = 'var(--accent-secondary)';
-      }
-    }
-
-    // Check for user block on page load
-    window.addEventListener('load', async () => {
-      const isBlocked = await checkUserBlock();
-      if (!isBlocked) {
-        // Only initialize page if user is not blocked
-        createParticles();
-        animateNumbers();
-        updateWorkStatus();
-        setInterval(updateWorkStatus, 60000);
-        
-        // Check notifications
-        function checkNotifications() {
-          const user = localStorage.getItem('user');
-          if (!user) return;
-
-          // Import Firebase functions
-          import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js').then(({ initializeApp }) => {
-            import('https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js').then(({ getDatabase, ref, onValue }) => {
-              const firebaseConfig = {
-                apiKey: "AIzaSyA_B0OC6Y91ontwJWM-o615jg7Dr5jUVvA",
-                authDomain: "dizaynowner.firebaseapp.com",
-                databaseURL: "https://dizaynowner-default-rtdb.firebaseio.com/",
-                projectId: "dizaynowner",
-                storageBucket: "dizaynowner.firebasestorage.app",
-                messagingSenderId: "976762018041",
-                appId: "1:976762018041:web:e43227005165059158ea28"
-              };
-
-              const app = initializeApp(firebaseConfig);
-              const database = getDatabase(app);
-
-              const notificationsRef = ref(database, `notifications/${user}`);
-              onValue(notificationsRef, (snapshot) => {
-                let unreadCount = 0;
-                if (snapshot.exists()) {
-                  const notifications = snapshot.val();
-                  Object.values(notifications).forEach(notification => {
-                    if (!notification.read) {
-                      unreadCount++;
-                    }
-                  });
-                }
-
-                const badge = document.getElementById('notificationBadge');
-                if (unreadCount > 0) {
-                  badge.textContent = unreadCount;
-                  badge.style.display = 'inline';
-                } else {
-                  badge.style.display = 'none';
-                }
-              });
-            });
-          });
-        }
-        checkNotifications();
-        setInterval(checkNotifications, 30000);
-      }
-    });
-
-    // Check block status periodically
-    setInterval(async () => {
-      await checkUserBlock();
-    }, 30000); // Check every 30 seconds
-
-    // Check Order Time
-    function checkOrderTime() {
-      const now = new Date();
-      const hour = now.getHours();
-      const minute = now.getMinutes();
-      const currentMinutes = hour * 60 + minute;
-      const startWork = 7 * 60;
-      const endWork = 1 * 60;
-
-      if (currentMinutes >= startWork || currentMinutes < endWork) {
-        // Show service selection modal
-        const modal = document.createElement('div');
-        modal.className = 'order-modal-overlay';
-        modal.style.cssText = `
-          position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-          background: rgba(0,0,0,0.9); backdrop-filter: blur(20px);
-          display: flex; justify-content: center; align-items: center;
-          z-index: 3000; animation: fadeIn 0.3s ease;
-        `;
-        
-        modal.innerHTML = `
-          <div style="background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; max-width: 450px; width: 90%; text-align: center; box-shadow: var(--shadow-lg);">
-            <h3 style="color: var(--text-primary); margin-bottom: 2rem; font-size: 1.8rem; font-weight: 800;">🎯 Xizmat turini tanlang</h3>
-            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-              <button onclick="window.location.href='/html/order.html'" class="btn btn-primary" style="width: 100%;">
-                🎮 Gaming Dizayn Buyurtmasi
-              </button>
-              <button onclick="window.location.href='/html/webdizayn.html'" class="btn btn-secondary" style="width: 100%; background: var(--gradient-secondary); color: var(--bg-primary); border: none;">
-                🌐 Web Dizayn Buyurtmasi
-              </button>
-              <button class="order-cancel-btn btn btn-secondary" style="width: 100%;">
-                ❌ Bekor qilish
-              </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Bosh sahifa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Xizmatlar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="html/habarnoma.html">Habarnoma</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Bog'lanish</a>
+                    </li>
+                </ul>
             </div>
-          </div>
-        `;
-        
-        document.body.appendChild(modal);
+        </div>
+    </nav>
 
-        // Close modal when clicking outside modal content
-        modal.addEventListener('click', (e) => {
-          if (e.target === modal) modal.remove();
+    <!-- Bootstrap bilan hero section -->
+    <section class="hero-section d-flex align-items-center" id="home">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-3 fw-bold font-display mb-4">Elbek Qoriyev</h1>
+                    <h2 class="h4 mb-4 opacity-75">Professional Web Designer & Developer</h2>
+                    <p class="lead mb-5 opacity-75">
+                        Zamonaviy va kreativ web dizaynlar yarataman. Sizning biznesingiz uchun 
+                        professional va ta'sirli veb-saytlar ishlab chiqaman.
+                    </p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="html/byqan.html" class="btn btn-custom">
+                            <i class="bi bi-rocket me-2"></i>Xizmatlar
+                        </a>
+                        <a href="#contact" class="btn btn-outline-light">
+                            <i class="bi bi-telephone me-2"></i>Bog'lanish
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 text-center mt-5 mt-lg-0">
+                    <div class="position-relative">
+                        <img src="img/misoluchunchek.jpg" alt="Elbek Qoriyev" class="profile-img rounded-circle mb-4">
+                        
+                        <!-- Stats Cards -->
+                        <div class="row g-2 mt-4">
+                            <div class="col-4">
+                                <div class="stats-card rounded-3 p-3 text-center">
+                                    <div class="h4 fw-bold mb-1">50+</div>
+                                    <small class="opacity-75">Loyihalar</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="stats-card rounded-3 p-3 text-center">
+                                    <div class="h4 fw-bold mb-1">3+</div>
+                                    <small class="opacity-75">Yil tajriba</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="stats-card rounded-3 p-3 text-center">
+                                    <div class="h4 fw-bold mb-1">100%</div>
+                                    <small class="opacity-75">Sifat</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap bilan services section -->
+    <section class="py-5" id="services">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold font-display mb-3">Xizmatlarim</h2>
+                <p class="lead text-muted">Professional web dizayn va dasturlash xizmatlari</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card service-card h-100 text-center p-4">
+                        <div class="card-body">
+                            <div class="display-4 text-primary mb-3">
+                                <i class="bi bi-palette"></i>
+                            </div>
+                            <h5 class="card-title fw-bold">Web Dizayn</h5>
+                            <p class="card-text text-muted">
+                                Zamonaviy va responsive web dizaynlar yarataman. 
+                                Sizning brendingizga mos keladigan noyob dizaynlar.
+                            </p>
+                            <div class="h5 text-primary fw-bold">$200 dan</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="card service-card h-100 text-center p-4">
+                        <div class="card-body">
+                            <div class="display-4 text-primary mb-3">
+                                <i class="bi bi-code-slash"></i>
+                            </div>
+                            <h5 class="card-title fw-bold">Frontend Development</h5>
+                            <p class="card-text text-muted">
+                                HTML, CSS, JavaScript yordamida interaktiv 
+                                va tez ishlaydigan veb-saytlar yarataman.
+                            </p>
+                            <div class="h5 text-primary fw-bold">$300 dan</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="card service-card h-100 text-center p-4">
+                        <div class="card-body">
+                            <div class="display-4 text-primary mb-3">
+                                <i class="bi bi-phone"></i>
+                            </div>
+                            <h5 class="card-title fw-bold">Mobile Optimization</h5>
+                            <p class="card-text text-muted">
+                                Barcha qurilmalarda mukammal ko'rinadigan 
+                                responsive dizaynlar yarataman.
+                            </p>
+                            <div class="h5 text-primary fw-bold">$150 dan</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap bilan contact section -->
+    <section class="contact-section py-5" id="contact">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold font-display mb-3">Bog'lanish</h2>
+                <p class="lead text-muted">Loyihangizni muhokama qilish uchun men bilan bog'laning</p>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="row g-4 text-center">
+                        <div class="col-md-4">
+                            <a href="https://t.me/misoluchunchek" class="social-link mx-auto mb-3">
+                                <i class="bi bi-telegram"></i>
+                            </a>
+                            <h6 class="fw-bold">Telegram</h6>
+                            <p class="text-muted small">@misoluchunchek</p>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <a href="tel:+998901234567" class="social-link mx-auto mb-3">
+                                <i class="bi bi-telephone"></i>
+                            </a>
+                            <h6 class="fw-bold">Telefon</h6>
+                            <p class="text-muted small">+998 90 123 45 67</p>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <a href="mailto:elbek@example.com" class="social-link mx-auto mb-3">
+                                <i class="bi bi-envelope"></i>
+                            </a>
+                            <h6 class="fw-bold">Email</h6>
+                            <p class="text-muted small">elbek@example.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JavaScript va security -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
         });
 
-        // Close modal when clicking "Bekor qilish"
-        modal.querySelector('.order-cancel-btn').addEventListener('click', function() {
-          modal.remove();
+        // Security functions
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', function(e) {
+            if (
+                (e.ctrlKey && ['u', 's', 'p', 'c'].includes(e.key.toLowerCase())) ||
+                (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') ||
+                e.key === 'F12'
+            ) {
+                e.preventDefault();
+                alert('Bu amal bloklangan!');
+            }
         });
-      } else {
-        alert('⚠️ Hozir ish vaqti emas. Buyurtma berish uchun 07:00 dan 01:00 gacha kutib turing.');
-      }
-    }
-
-    // Security Functions
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('keydown', function(e) {
-      if (
-        (e.ctrlKey && ['u', 's', 'p', 'c'].includes(e.key.toLowerCase())) ||
-        (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') ||
-        e.key === 'F12'
-      ) {
-        e.preventDefault();
-        alert('Bu amal bloklangan!');
-      }
-    });
-    document.addEventListener('selectstart', e => e.preventDefault());
-    document.addEventListener('copy', e => {
-      e.preventDefault();
-      alert('Nusxa olish mumkin emas!');
-    });
-
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      });
-    });
-  </script>
+        document.addEventListener('selectstart', e => e.preventDefault());
+        document.addEventListener('copy', e => {
+            e.preventDefault();
+            alert('Nusxa olish mumkin emas!');
+        });
+    </script>
 </body>
 </html>
