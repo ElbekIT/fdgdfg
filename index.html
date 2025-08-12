@@ -114,25 +114,35 @@
             user-select: none;
         }
 
-        /* Notification Badge */
-        .notification-badge {
-            animation: pulse 2s infinite;
+        /* Notification Bell Styles */
+        .notification-bell {
+            transition: all 0.3s ease;
+            color: #6b7280; /* Default gray color */
         }
 
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
+        .notification-bell.has-notifications {
+            color: #dc2626 !important; /* Red color when has notifications */
+            animation: bellRing 2s infinite;
+        }
+
+        @keyframes bellRing {
+            0%, 50%, 100% {
+                transform: rotate(0deg);
             }
-            50% {
-                transform: scale(1.1);
+            10%, 30% {
+                transform: rotate(-10deg);
             }
-            100% {
-                transform: scale(1);
+            20%, 40% {
+                transform: rotate(10deg);
             }
         }
 
-        .nav-link {
-            position: relative;
+        .nav-link:hover .notification-bell {
+            color: var(--primary-color) !important;
+        }
+
+        .nav-link:hover .notification-bell.has-notifications {
+            color: #dc2626 !important;
         }
     </style>
 </head>
@@ -157,12 +167,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#services">Xizmatlar</a>
                     </li>
-                    <li class="nav-item position-relative">
+                    <li class="nav-item">
                         <a class="nav-link" href="html/habarnoma.html" id="notificationLink">
-                            <i class="bi bi-bell me-1"></i>Habarnoma
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notificationBadge" style="display: none; font-size: 0.7rem;">
-                                0
-                            </span>
+                            <i class="bi bi-bell me-1 notification-bell" id="notificationBell"></i>Habarnoma
                         </a>
                     </li>
                     <li class="nav-item">
@@ -398,8 +405,7 @@
             // Listen for notifications
             const notificationsRef = ref(database, `notifications/${user}`);
             onValue(notificationsRef, (snapshot) => {
-                const notificationBadge = document.getElementById('notificationBadge');
-                const notificationLink = document.getElementById('notificationLink');
+                const notificationBell = document.getElementById('notificationBell');
                 
                 if (snapshot.exists()) {
                     const notifications = snapshot.val();
@@ -415,35 +421,18 @@
                     console.log('O\'qilmagan habarlar soni:', unreadCount);
                     
                     if (unreadCount > 0) {
-                        notificationBadge.textContent = unreadCount > 99 ? '99+' : unreadCount;
-                        notificationBadge.style.display = 'inline-block';
-                        notificationBadge.classList.add('notification-badge');
-                        
-                        // Add bell icon animation
-                        const bellIcon = notificationLink.querySelector('i');
-                        if (bellIcon) {
-                            bellIcon.style.animation = 'pulse 2s infinite';
-                        }
+                        // Make bell red and animate
+                        notificationBell.classList.add('has-notifications');
+                        console.log('🔔 Qo\'ng\'iroqcha qizil rangga o\'zgartirildi');
                     } else {
-                        notificationBadge.style.display = 'none';
-                        notificationBadge.classList.remove('notification-badge');
-                        
-                        // Remove bell icon animation
-                        const bellIcon = notificationLink.querySelector('i');
-                        if (bellIcon) {
-                            bellIcon.style.animation = 'none';
-                        }
+                        // Make bell normal color
+                        notificationBell.classList.remove('has-notifications');
+                        console.log('🔔 Qo\'ng\'iroqcha oddiy rangga qaytarildi');
                     }
                 } else {
                     console.log('Habarlar topilmadi');
-                    notificationBadge.style.display = 'none';
-                    notificationBadge.classList.remove('notification-badge');
-                    
-                    // Remove bell icon animation
-                    const bellIcon = notificationLink.querySelector('i');
-                    if (bellIcon) {
-                        bellIcon.style.animation = 'none';
-                    }
+                    // Make bell normal color
+                    notificationBell.classList.remove('has-notifications');
                 }
             }, (error) => {
                 console.error('Firebase xatosi:', error);
