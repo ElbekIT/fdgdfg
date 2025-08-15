@@ -611,6 +611,7 @@
             }
         }
 
+        // Create notification element
         function createNotificationElement(notification, index) {
             const div = document.createElement('div');
             div.className = `notification ${!notification.read ? 'unread' : ''}`;
@@ -625,14 +626,11 @@
                 minute: '2-digit'
             });
 
-            const sourceIcon = notification.type === 'owner_message' ? '👑' : '📢';
-            const sourceText = notification.type === 'owner_message' ? 'Owner xabari' : 'Tizim xabari';
-
             div.innerHTML = `
                 <div class="notification-header">
                     <div>
-                        <div class="notification-title">${sourceIcon} ${notification.title || 'Habar'}</div>
-                        <div class="notification-date">${formattedDate} • ${sourceText}</div>
+                        <div class="notification-title">${notification.title || 'Habar'}</div>
+                        <div class="notification-date">${formattedDate}</div>
                     </div>
                 </div>
                 <div class="notification-content">
