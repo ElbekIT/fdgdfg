@@ -1564,9 +1564,12 @@ Omad tilaymiz! 🌟`;
         // Save user data to Firebase
         await saveUserToFirebase(currentTelegramId, {
           displayName: currentNickname,
+          nickname: currentNickname,
+          telegramId: currentTelegramId,
           authMethod: 'telegram',
           createdAt: new Date().toISOString(),
-          lastLogin: new Date().toISOString()
+          lastLogin: new Date().toISOString(),
+          registrationDate: new Date().toISOString()
         });
         
         showMessage('✅ Tasdiqlash muvaffaqiyatli!', 'success');
