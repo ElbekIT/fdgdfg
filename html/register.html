@@ -523,24 +523,224 @@
     /* Responsive */
     @media (max-width: 480px) {
       body {
-        padding: 1rem;
+        padding: 0.5rem;
+        min-height: 100vh;
       }
 
       .container {
-        padding: 2rem;
+        padding: 1.5rem;
+        border-radius: 1.5rem;
+        max-width: 100%;
+        margin: 0;
+        min-height: calc(100vh - 1rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .back-btn {
+        top: 1rem;
+        left: 1rem;
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+      }
+
+      .logo {
+        width: 60px;
+        height: 60px;
       }
 
       .title {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .subtitle {
+        font-size: 0.9rem;
       }
 
       .auth-tabs {
-        flex-direction: column;
+        flex-direction: row;
+        gap: 0.25rem;
+        padding: 0.25rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .auth-tab {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+      }
+
+      .form-input {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .auth-btn {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .input-hint {
+        font-size: 0.8rem;
+      }
+
+      .verification-icon {
+        font-size: 3rem;
+      }
+
+      .verification-title {
+        font-size: 1.3rem;
+      }
+
+      .verification-text {
+        font-size: 0.9rem;
       }
 
       .code-input {
-        font-size: 1.2rem;
-        letter-spacing: 0.3rem;
+        font-size: 1.1rem;
+        letter-spacing: 0.2rem;
+        padding: 0.75rem 1rem;
+      }
+
+      .login-link {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+      }
+
+      .login-link p {
+        font-size: 0.9rem;
+      }
+
+      .message {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Tablet screens (481px - 768px) */
+    @media (min-width: 481px) and (max-width: 768px) {
+      .container {
+        max-width: 450px;
+        padding: 2.5rem;
+      }
+
+      .title {
+        font-size: 1.8rem;
+      }
+
+      .auth-btn, .btn {
+        padding: 0.9rem 1.3rem;
+      }
+
+      .verification-icon {
+        font-size: 3.5rem;
+      }
+    }
+
+    /* Desktop screens (769px and up) */
+    @media (min-width: 769px) {
+      body {
+        padding: 2rem;
+      }
+
+      .container {
+        max-width: 500px;
+        padding: 3rem;
+      }
+
+      .back-btn {
+        top: 2rem;
+        left: 2rem;
+      }
+
+      .title {
+        font-size: 2rem;
+      }
+
+      .auth-btn:hover, .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .form-input:hover {
+        border-color: rgba(99, 102, 241, 0.3);
+      }
+
+      .auth-tab:hover:not(.active) {
+        background: rgba(255, 255, 255, 0.5);
+      }
+    }
+
+    /* Large desktop screens (1200px and up) */
+    @media (min-width: 1200px) {
+      .container {
+        max-width: 550px;
+        padding: 3.5rem;
+      }
+
+      .title {
+        font-size: 2.2rem;
+      }
+
+      .verification-icon {
+        font-size: 4.5rem;
+      }
+    }
+
+    /* Landscape orientation for mobile */
+    @media (max-width: 768px) and (orientation: landscape) {
+      body {
+        padding: 0.5rem;
+      }
+
+      .container {
+        padding: 1rem 2rem;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      .logo {
+        width: 50px;
+        height: 50px;
+      }
+
+      .title {
+        font-size: 1.3rem;
+      }
+
+      .auth-methods {
+        margin-bottom: 1rem;
+      }
+
+      .verification-icon {
+        font-size: 2.5rem;
+      }
+    }
+
+    /* Extra small screens (max-width: 320px) */
+    @media (max-width: 320px) {
+      .container {
+        padding: 1rem;
+      }
+
+      .title {
+        font-size: 1.3rem;
+      }
+
+      .auth-tab {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.75rem;
+      }
+
+      .form-input, .auth-btn, .btn {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.85rem;
       }
     }
   </style>
@@ -870,7 +1070,7 @@
         
       } catch (error) {
         console.error('❌ Google ro\'yxatdan o\'tishda xatolik:', error);
-        showMessage('❌ Google orqali ro\'yxatdan o\'tishda xatolik: ' + error.message, 'error');
+        showMessage('❌ Google ro\'yxatdan o\'tishda xatolik: ' + error.message, 'error');
       }
     };
 
