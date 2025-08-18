@@ -743,6 +743,40 @@
         font-size: 0.85rem;
       }
     }
+
+    /* Loading and Message Indicators */
+    .loading-indicator {
+      color: #007bff;
+      font-size: 14px;
+      margin-top: 5px;
+      animation: pulse 1.5s infinite;
+    }
+    
+    .error-message {
+      color: #dc3545;
+      font-size: 14px;
+      margin-top: 5px;
+      background: #f8d7da;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #f5c6cb;
+    }
+    
+    .success-message {
+      color: #155724;
+      font-size: 14px;
+      margin-top: 5px;
+      background: #d4edda;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background: #6c757d;
+    }
   </style>
 </head>
 <body>
@@ -792,7 +826,6 @@
 
     <!-- Telegram Authentication -->
     <div id="telegramAuth" class="auth-section">
-      <!-- Modified to create two separate steps for nickname and telegram ID -->
       <!-- Step 1: Enter Nickname Only -->
       <div id="nicknameStep" class="telegram-step">
         <div class="auth-methods">
@@ -805,9 +838,14 @@
               <div class="input-hint">
                 💡 Bu ism bilan saytda ko'rinasiz
               </div>
+              <div id="nicknameLoading" class="loading-indicator" style="display: none;">
+                ⏳ Tekshirilmoqda...
+              </div>
+              <div id="nicknameError" class="error-message" style="display: none;"></div>
+              <div id="nicknameSuccess" class="success-message" style="display: none;"></div>
             </div>
             
-            <button class="btn btn-primary" onclick="checkNicknameAndProceed()" id="nextBtn">
+            <button class="btn btn-primary" onclick="checkNicknameAndProceed()" id="nextBtn" disabled>
               <span>➡️</span> Keyingi qadam
             </button>
           </div>
@@ -908,6 +946,8 @@
     let currentNickname = null;
     let currentVerificationCode = null;
     let countdownTimer = null;
+    let nicknameCheckTimeout;
+    let isNicknameValid = false;
 
     // Check if user is already registered
     window.addEventListener('load', async () => {
@@ -1093,47 +1133,69 @@
       }
     };
 
-    // Check nickname and proceed to next step
-    window.checkNicknameAndProceed = async function() {
-      const nickname = document.getElementById('userNickname').value.trim();
+    // Real-time nickname validation
+    window.validateNicknameRealTime = async function(nickname) {
+      const loadingEl = document.getElementById('nicknameLoading');
+      const errorEl = document.getElementById('nicknameError');
+      const successEl = document.getElementById('nicknameSuccess');
+      const nextBtn = document.getElementById('nextBtn');
       
-      if (!nickname) {
-        showMessage('❌ Ismingizni kiriting!', 'error');
+      // Hide all messages
+      loadingEl.style.display = 'none';
+      errorEl.style.display = 'none';
+      successEl.style.display = 'none';
+      nextBtn.disabled = true;
+      isNicknameValid = false;
+      
+      if (!nickname.trim()) {
+        errorEl.textContent = '❌ Ismingizni kiriting!';
+        errorEl.style.display = 'block';
         return;
       }
       
       if (!validateNickname(nickname)) {
-        showMessage('❌ Ism 3-20 ta belgi bo\'lishi va faqat harflar, raqamlar, _ dan iborat bo\'lishi kerak!', 'error');
+        errorEl.textContent = '❌ Ism 3-20 ta belgi bo\'lishi va faqat harflar, raqamlar, _ dan iborat bo\'lishi kerak!';
+        errorEl.style.display = 'block';
         return;
       }
       
-      const nextBtn = document.getElementById('nextBtn');
-      nextBtn.classList.add('loading');
-      nextBtn.innerHTML = '<span>⏳</span> Tekshirilmoqda...';
+      // Show loading
+      loadingEl.style.display = 'block';
       
       try {
         // Check if nickname is already taken
         const nicknameTaken = await isNicknameTaken(nickname);
+        loadingEl.style.display = 'none';
+        
         if (nicknameTaken) {
-          showMessage('❌ Bu ism band! Boshqa ism tanlang.', 'error');
-          return;
+          errorEl.textContent = '❌ Bu ism band! Boshqa ism tanlang.';
+          errorEl.style.display = 'block';
+        } else {
+          successEl.textContent = '✅ Ism mavjud!';
+          successEl.style.display = 'block';
+          nextBtn.disabled = false;
+          isNicknameValid = true;
+          currentNickname = nickname;
         }
-        
-        // Nickname is available, proceed to next step
-        currentNickname = nickname;
-        showMessage('✅ Ism mavjud! Telegram ID ni kiriting.', 'success');
-        
-        // Hide nickname step and show telegram ID step
-        document.getElementById('nicknameStep').style.display = 'none';
-        document.getElementById('telegramIdStep').style.display = 'block';
-        
       } catch (error) {
+        loadingEl.style.display = 'none';
+        errorEl.textContent = '❌ Ismni tekshirishda xatolik yuz berdi!';
+        errorEl.style.display = 'block';
         console.error('❌ Nickname tekshirishda xatolik:', error);
-        showMessage('❌ Ismni tekshirishda xatolik yuz berdi!', 'error');
-      } finally {
-        nextBtn.classList.remove('loading');
-        nextBtn.innerHTML = '<span>➡️</span> Keyingi qadam';
       }
+    };
+
+    // Check nickname and proceed to next step
+    window.checkNicknameAndProceed = async function() {
+      if (!isNicknameValid || !currentNickname) {
+        showMessage('❌ Avval to\'g\'ri ism kiriting!', 'error');
+        return;
+      }
+      
+      // Hide nickname step and show telegram ID step
+      document.getElementById('nicknameStep').style.display = 'none';
+      document.getElementById('telegramIdStep').style.display = 'block';
+      showMessage('✅ Telegram ID ni kiriting.', 'success');
     };
 
     // Go back to nickname step
@@ -1408,6 +1470,16 @@ Omad tilaymiz! 🌟`;
         nicknameInput.addEventListener('input', function(e) {
           // Only allow letters, numbers, and underscore
           this.value = this.value.replace(/[^a-zA-Z0-9_]/g, '');
+          
+          // Clear previous timeout
+          if (nicknameCheckTimeout) {
+            clearTimeout(nicknameCheckTimeout);
+          }
+          
+          // Set new timeout for validation (500ms delay)
+          nicknameCheckTimeout = setTimeout(() => {
+            validateNicknameRealTime(this.value);
+          }, 500);
         });
       }
     });
@@ -1435,6 +1507,90 @@ Omad tilaymiz! 🌟`;
         return false;
       }
     }
+
+    // Validate nickname function
+    function validateNickname(nickname) {
+      const regex = /^[a-zA-Z0-9_]{3,20}$/;
+      return regex.test(nickname);
+    }
+
+    // Validate Telegram ID function
+    function validateTelegramId(telegramId) {
+      return telegramId.length >= 8 && telegramId.length <= 12;
+    }
+
+    // Check if nickname is already taken
+    async function isNicknameTaken(nickname) {
+      try {
+        const usersRef = ref(database, 'users');
+        const snapshot = await get(usersRef);
+        const users = snapshot.val();
+        
+        if (users) {
+          for (const uid in users) {
+            if (users[uid].displayName === nickname) {
+              return true;
+            }
+          }
+        }
+        
+        return false;
+      } catch (error) {
+        console.error('❌ Nickname tekshirishda xatolik:', error);
+        throw error;
+      }
+    }
+
+    // Verify code function
+    window.verifyCode = async function() {
+      const codeInput = document.getElementById('verificationCode');
+      const code = codeInput.value.trim();
+      
+      if (!code) {
+        showMessage('❌ Tasdiqlash kodini kiriting!', 'error');
+        return;
+      }
+      
+      if (code !== currentVerificationCode) {
+        showMessage('❌ Noto\'g\'ri tasdiqlash kodi!', 'error');
+        return;
+      }
+      
+      const verifyBtn = document.getElementById('verifyBtn');
+      verifyBtn.classList.add('loading');
+      verifyBtn.innerHTML = '<span>⏳</span> Tekshirilmoqda...';
+      
+      try {
+        // Save user data to Firebase
+        await saveUserToFirebase(currentTelegramId, {
+          displayName: currentNickname,
+          authMethod: 'telegram',
+          createdAt: new Date().toISOString(),
+          lastLogin: new Date().toISOString()
+        });
+        
+        showMessage('✅ Tasdiqlash muvaffaqiyatli!', 'success');
+        
+        // Save to localStorage
+        localStorage.setItem('user', currentNickname);
+        localStorage.setItem('userUID', currentTelegramId);
+        localStorage.setItem('authMethod', 'telegram');
+        
+        // Send welcome message
+        await sendWelcomeMessage(currentTelegramId, currentNickname);
+        
+        setTimeout(() => {
+          window.location.href = "order.html";
+        }, 2000);
+        
+      } catch (error) {
+        console.error('❌ Tasdiqlashda xatolik:', error);
+        showMessage('❌ Tasdiqlashda xatolik: ' + error.message, 'error');
+      } finally {
+        verifyBtn.classList.remove('loading');
+        verifyBtn.innerHTML = '<span>✅</span> Kodni tasdiqlash';
+      }
+    };
   </script>
 
   <script>
